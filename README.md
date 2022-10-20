@@ -29,7 +29,7 @@ Repository for Team wikimini-b for deploy(impact) 2022
     - Getting Apache and MySQL running
     - Creating your database
     - Editing PHP.ini
-        - you should also look for "php-intl" in the php.ini file and uncomment the php-intl extension line (remove the #)
+       - you should also look for "intl" in the php.ini file and uncomment the intl extension line (remove the ;), and then restart the server
     - Setting up MediaWiki
     
 ## Run Wikimini (to be completed)

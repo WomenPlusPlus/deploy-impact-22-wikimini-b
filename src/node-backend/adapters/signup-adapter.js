@@ -1,14 +1,22 @@
-
-
-
 const { mwn } = require('mwn');
 
-const wiki = new mwn();
+const testUser = "exampleTeacher";
+const testPw = "xtfpds";
 
-// use async/await
-export function signUp(username, password) {
-    const token = wiki.createAccount(username, password).then({
-        // set email, change to teacher user group
-    });
-    return token;
+// init API connection
+
+const wiki = new mwn({
+    apiUrl: "localhost/mediawiki/api.php"
+});
+
+// try signUp
+try {
+    signUp(testUser, testPw).then(token => console.log(token.toString()));
+} catch (e) {
+    console.log("Error during signup: " + e);
+}
+
+// do signUp
+async function signUp(username, password) {
+    return wiki.createAccount(username, password);
 }

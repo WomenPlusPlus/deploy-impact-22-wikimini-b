@@ -1,7 +1,8 @@
-import express;
-import * as adapter from "../adapters/signup-adapter";
+import express from "express";
+import {doTeacherSignUp} from "../adapters/signup-adapter";
 
-// teacher clicks on signup button
-function signup(email, password, username) {
-    return adapter.signUp(email, password, username);
-}
+const router = express.Router();
+
+router.get('/:id', doTeacherSignUp);
+
+export default router;

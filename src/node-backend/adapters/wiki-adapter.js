@@ -1,5 +1,3 @@
-const { mwn } = require('mwn');
-
 // init API connection -> should be somewhere else later probably, and we just pass the object?
 const {mwn} = require("mwn");
 const apiUrl = "http://localhost/mediawiki/api.php";
@@ -22,8 +20,8 @@ export async function request(params) {
     return ourOwnObject;
 }
 
-export function createAccount(credentials) {
-    return wiki.createAccount(credentials.username, credentials.password);
+export function overwriteToken(token) {
+    wiki.csrfToken = token;
 }
 
 export async function login(credentials) {

@@ -2,14 +2,8 @@
 
 // TODO should those be classes?
 
-function SimpleCredentials(username = "", password = "") {
-    this.username = username;
-    this.password = password;
-}
-
-function FullCredentials(username, password, email, realName) {
+function Credentials(username = "", password = "", email = "") {
     this.username = username;
     this.password = password;
     this.email = email;
-    this.realName = realName;
 }

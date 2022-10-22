@@ -1,8 +1,8 @@
 import express from "express";
-import {doTeacherSignUp} from "../adapters/signup-adapter";
+import {doTeacherAccountCreation} from "../adapters/signup-adapter";
 
 const router = express.Router();
 
-router.get('/:id', doTeacherSignUp);
+router.get('/:id', doTeacherAccountCreation);
 
 export default router;

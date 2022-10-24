@@ -1,4 +1,4 @@
-import * as wikiAdapter from "./wiki-adapter";
+import * as wikiAdapter from "../adapters/wiki-adapter";
 
 const teacherUserGroup = "teacher";
 const userRightsAction = "userrights";
@@ -22,9 +22,10 @@ Code used for local testing:
  } catch (e) {
      console.log("Error during signup: " + e);
  }
-I think this code should not be in an adapter class, but not sure where it fits best
-do sign up
 */
+
+// TODO where should this code be?
+
 export async function doTeacherAccountCreation(credentials = new Credentials()) {
     // does this work?
     if (typeof credentials !== Credentials) {

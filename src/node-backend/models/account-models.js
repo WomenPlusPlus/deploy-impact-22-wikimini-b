@@ -1,6 +1,6 @@
 // DomainObjects related to accounts (signup, login, etc)
 
-// TODO should those be classes?
+// TODO should those be classes or objects?
 
 function Credentials(username = "", password = "", email = "") {
     this.username = username;

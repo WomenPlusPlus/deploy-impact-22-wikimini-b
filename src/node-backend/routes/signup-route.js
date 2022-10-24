@@ -1,7 +1,9 @@
 import express from "express";
-import {doTeacherAccountCreation} from "../adapters/signup-adapter";
+import {doTeacherAccountCreation} from "../controller/signup-impl";
 
 const router = express.Router();
+
+// TODO is this correct?
 
 router.get('/:id', doTeacherAccountCreation);
 

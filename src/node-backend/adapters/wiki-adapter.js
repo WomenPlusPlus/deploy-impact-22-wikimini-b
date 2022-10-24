@@ -1,18 +1,19 @@
-// init API connection -> should be somewhere else later probably, and we just pass the object?
+// init API connection
 const {mwn} = require("mwn");
 const apiUrl = "http://localhost/mediawiki/api.php";
 const wiki = new mwn({
     apiUrl: apiUrl
 });
 
-// we could have all calls to the wiki in here, and return a readable callback/error object we define in api-models
+// TODO we could have all calls to the wiki in here, and return a readable callback/error object we define in api-models
+
 export async function request(params) {
-    // add this or not?
+    // add this or not? --> for error handling task
     params.errorformat = 'html';
     params.errorsuselocal = true;
     return wiki.request(params);
 
-    // to be discussed
+    // TODO to be discussed: what do we want to return here?
     const defaultReturnObject = wiki.request(params);
     //extract data we need
 

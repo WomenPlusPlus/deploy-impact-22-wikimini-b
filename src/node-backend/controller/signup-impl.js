@@ -7,22 +7,28 @@ const noSuchUserCode = "nosuchuser";
 const userExistsCode = "userexists";
 const createAccountAction = "createaccount";
 
-/*
-Code used for local testing:
- const testUser = "exampleUser";
+// Code used for local testing:
+ const testUser = "exampleUser2";
  const testPw = "xtfpds";
- const testEmail = "email";
+ const testEmail = "luciana.kolbeck@ik.me";
  const testName = "Ms Teacher";
+ const emailConfToken = "123/+";
+ const testCred = new Credentials(testUser, testPw, testEmail);
 
  // try signUp
  try {
-     signUp(testEmail, testUser, testPw, testName)
-         .then(token => console.log(token.toString()))
+     doTeacherAccountCreation(testCred)
+         .then(token => console.log("Created with token: " + token.toString()))
          .catch(e => console.log("Error during signup: " + e));
+
+     completeTeacherAccount(emailConfToken, testCred, testName)
+         .then(obj => console.log("Email confirmed, account created: " + obj.toString()))
+         .catch(e => console.log("Error during confirmation etc: " + e));
  } catch (e) {
-     console.log("Error during signup: " + e);
+     console.log("Error: " + e);
  }
-*/
+
+
 
 // TODO where should this code be?
 

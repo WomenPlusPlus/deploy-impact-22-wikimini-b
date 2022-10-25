@@ -46,4 +46,4 @@ Repository for Team wikimini-b for deploy(impact) 2022
 
 ## Installing MariaDB
 - https://www.mariadbtutorial.com/getting-started/install-mariadb/
-- keep configurations as is
+- keep configurations as is (in HeidiSQL)

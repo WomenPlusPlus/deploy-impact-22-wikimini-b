@@ -9,16 +9,9 @@ const wiki = new mwn({
 
 export async function request(params) {
     // add this or not? --> for error handling task
-    params.errorformat = 'html';
+    params.errorformat = 'json';
     params.errorsuselocal = true;
     return wiki.request(params);
-
-    // TODO to be discussed: what do we want to return here?
-    const defaultReturnObject = wiki.request(params);
-    //extract data we need
-
-    //convert to our own object and return
-    return ourOwnObject;
 }
 
 export function overwriteToken(token) {
@@ -26,7 +19,7 @@ export function overwriteToken(token) {
 }
 
 export async function login(credentials) {
-    return wiki.login(credentials);
+    return wiki.login(credentials.username, credentials.password);
 }
 
 export async function getToken() {

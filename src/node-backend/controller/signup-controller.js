@@ -5,11 +5,22 @@ const router = express.Router(); // where is this used?
 
 export const doTeacherSignUp = async (req, res) => {
     try {
-        // not sure how I can pass the required parameters here correctly
-        const credentials = new Credentials();
+        const {username, password, email} = req.body;
+        const credentials = new Credentials(username, password, email);
         const teacherSignUpResult = await signupImpl.doTeacherAccountCreation(credentials);
         res.status(200).json(teacherSignUpResult);
     } catch (error) {
         res.status(404).json({ message: error.message });
+    }
+}
+
+export const confirmTeacherAccount = async (req, res) => {
+    try {
+        const {emailConfToken, username, password, email, chosenName} = req.body;
+        const credentials = new Credentials(username, password, email);
+        const confirmationResult = await signupImpl.confirmTeacherAccount(emailConfToken, credentials, chosenName);
+        res.status(200).json(confirmationResult);
+    } catch (error) {
+        res.status(404).json({message: error.message });
     }
 }

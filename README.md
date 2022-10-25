@@ -43,3 +43,7 @@ Repository for Team wikimini-b for deploy(impact) 2022
 - follow installation wizard
   * no need to install "tools for native modules" once you get to that screen in wizard
 - once done, open your terminal and write "node -v" and "npm -v", you should see on your screen the versions
+
+## Installing MariaDB
+- https://www.mariadbtutorial.com/getting-started/install-mariadb/
+- keep configurations as is

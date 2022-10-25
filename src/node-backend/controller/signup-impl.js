@@ -7,24 +7,6 @@ const noSuchUserCode = "nosuchuser";
 const userExistsCode = "userexists";
 const createAccountAction = "createaccount";
 
-/*
-Code used for local testing:
- const testUser = "exampleUser";
- const testPw = "xtfpds";
- const testEmail = "email";
- const testName = "Ms Teacher";
-
- // try signUp
- try {
-     signUp(testEmail, testUser, testPw, testName)
-         .then(token => console.log(token.toString()))
-         .catch(e => console.log("Error during signup: " + e));
- } catch (e) {
-     console.log("Error during signup: " + e);
- }
-*/
-
-// TODO where should this code be?
 
 export async function doTeacherAccountCreation(credentials = new Credentials()) {
     // does this work?
@@ -63,7 +45,7 @@ export async function doTeacherAccountCreation(credentials = new Credentials()) 
     });
 }
 
-export async function completeTeacherAccount(emailConfToken, credentials = new Credentials(),
+export async function confirmTeacherAccount(emailConfToken, credentials = new Credentials(),
                                              realName = "") {
     // not tested yet, maybe we need to set the correct token again
     wikiAdapter.overwriteToken(emailConfToken);
@@ -71,6 +53,7 @@ export async function completeTeacherAccount(emailConfToken, credentials = new C
     const token = await wikiAdapter.getToken();
 
     await wikiAdapter.request({
+        action: "useroptions",
         optionname: "realname",
         optionvalue: realName,
         token: token

@@ -1,11 +1,29 @@
-const express = require('express')
-const app = express()
-const port = 3000
+const express = require("express");
+const app = express();
+const port = 3000;
 
-app.get('/', (req, res) => {
-  res.send('Hello Luci!')
-})
+/**
+ * Middleware
+ */
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
+/**
+ * Routes
+ */
+
+app.get("/", (request, response) => {
+  response
+    .status(200)
+    .send(
+      "Home"
+    );
+});
+
+const userRouter = require("./routes/users");
+app.use("/user", userRouter);
+
+/**Start listening */
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+  console.log(`Example app listening on port ${port}`);
+});

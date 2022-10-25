@@ -1,10 +1,14 @@
 import express from "express";
-import {doTeacherAccountCreation} from "../controller/signup-impl";
+import * as signup from "../controller/signup-controller";
 
 const router = express.Router();
 
-// TODO is this correct?
+// to test: use postman, select Body -> raw type, json, format: "username":"exampleUser, "password":"examplePassword"
 
-router.get('/:id', doTeacherAccountCreation);
+// teacher sign up
+router.post('/teacherSignup', signup.doTeacherSignUp);
+router.post('/teacherEmailConfirmed', signup.confirmTeacherAccount);
+
+// router.post('/createClassroom', createClassroom);
 
 export default router;

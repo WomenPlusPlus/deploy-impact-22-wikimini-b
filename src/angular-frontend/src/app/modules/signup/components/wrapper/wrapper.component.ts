@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SignupSharedService } from '../../signup-shared.service';
 
 @Component({
   selector: 'app-wrapper',
@@ -7,7 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WrapperComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public signupShared: SignupSharedService
+  ) {
+  }
 
   ngOnInit(): void {
   }

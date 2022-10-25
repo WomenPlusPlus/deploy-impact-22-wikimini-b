@@ -6,6 +6,7 @@ import { SignupFormComponent } from './components/signup-form/signup-form.compon
 import { SignupSuccessComponent } from './components/signup-success/signup-success.component';
 import { SignupEmailConfirmationComponent } from './components/signup-email-confirmation/signup-email-confirmation.component';
 import { SignupPitchComponent } from './components/signup-pitch/signup-pitch.component';
+import { SignupCodeComponent } from './components/signup-code/signup-code.component';
 
 
 
@@ -16,10 +17,19 @@ import { SignupPitchComponent } from './components/signup-pitch/signup-pitch.com
     SignupFormComponent,
     SignupSuccessComponent,
     SignupEmailConfirmationComponent,
-    SignupPitchComponent
+    SignupPitchComponent,
+    SignupCodeComponent
   ],
   imports: [
     CommonModule
+  ],
+  exports: [
+    WrapperComponent,
+    SignupChoiceComponent,
+    SignupFormComponent,
+    SignupSuccessComponent,
+    SignupEmailConfirmationComponent,
+    SignupPitchComponent
   ]
 })
 export class SignupModule { }

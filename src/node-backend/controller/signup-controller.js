@@ -65,7 +65,7 @@ async function createTeacherAccount(credentials = new Credentials()) {
         }
     });
 
-
+    return createAccountResult;
 
 }
 

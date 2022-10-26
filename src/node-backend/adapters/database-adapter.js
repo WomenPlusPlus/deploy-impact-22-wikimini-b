@@ -1,12 +1,10 @@
 import mariadb from "mariadb";
 
-import {dbAuth} from "./connection-data.js";
-
 export const pool = mariadb.createPool({
   host: 3306,
-  user: dbAuth.user,
+  user: "wikiuser",
   // add your password here
-  password: dbAuth.password,
+  password: "yourpassword",
   database: "factorydb",
   connectionLimit: 5,
 });

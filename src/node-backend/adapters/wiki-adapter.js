@@ -1,12 +1,11 @@
 import {mwn} from "mwn";
-import {wikiAuth} from "./connection-data.js";
 
 const apiUrl = "http://localhost/mediawiki/api.php";
 
 const wiki = await mwn.init({
     apiUrl: apiUrl,
-    username: wikiAuth.username,
-    password: wikiAuth.password
+    username: "wikiuser",
+    password: "yourpassword"
 }).catch(e => {
     console.error("Problem connecting to MediaWiki API: " + e);
 });

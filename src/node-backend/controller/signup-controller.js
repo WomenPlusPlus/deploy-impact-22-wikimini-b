@@ -54,9 +54,11 @@ async function createTeacherAccount(credentials = new Credentials()) {
         action: createAccountAction,
         username: username,
         password: password,
+        retype: password,
         email: email,
         createtoken: token,
-        createcontinue: "true"
+        createreturnurl: "http://localhost/mediawiki",
+        reason: "Teacher account creation"
     }).catch((e) => {
         if (e.code === userExistsCode) {
             throw Error("User does already exist, can't register as teacher");

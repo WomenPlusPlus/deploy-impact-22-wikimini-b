@@ -10,3 +10,6 @@ router.post('/teacherEmailConfirmed', signupController.confirmTeacherAccount);
 
 // students sign up
 router.post('/studentSignup', signupController.doStudentSignUp);
+
+// students log in
+router.post('/studentLogin', signupController.doStudentLogin);

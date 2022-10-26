@@ -7,8 +7,9 @@ const userRightsAction = "userrights";
 const validatePasswordAction = "validatepassword";
 const noSuchUserCode = "nosuchuser";
 const userExistsCode = "userexists";
-
 const createAccountAction = "createaccount";
+const loginAction = "clientlogin";
+
 export const doTeacherSignUp = async (req, res) => {
     try {
         const {username, password, email} = req.body;
@@ -43,9 +44,38 @@ export const doStudentSignUp = async (req, res) => {
         const studentSignUpResult = await createNewAccount(credentials);
         res.status(200).json(studentSignUpResult);
     } catch (error) {
-        res.status(405).json({ message: error.message });
+        res.status(407).json({ message: error.message });
     }
 
+}
+
+export const doStudentLogin = async (req, res) => {
+    try {
+        const {username, password} = req.body;
+        const credentials = new Credentials(username, password);
+        const loginResult = await login(credentials);
+        res.status(200).json(loginResult);
+    } catch (error) {
+        res.status(408).json({ message: error.message });
+    }
+}
+
+async function login(credentials = new Credentials()) {
+    const token = wikiAdapter.getTokenOfType("login");
+    const loginResult = await wikiAdapter.request({
+        action: loginAction,
+        username: credentials.username,
+        password: credentials.password,
+        logintoken: token,
+        loginreturnurl: returnUrl,
+    }).catch((e) => {
+        if (e.code === noSuchUserCode) {
+            throw Error("No such user exists, can't login");
+        } else {
+            throw Error("Error while trying to log in: " + e);
+        }
+    });
+    return loginResult;
 }
 
 async function createNewAccount(credentials = new Credentials()) {

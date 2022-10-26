@@ -7,3 +7,6 @@ export const router = express.Router();
 // teacher sign up
 router.post('/teacherSignup', signupController.doTeacherSignUp);
 router.post('/teacherEmailConfirmed', signupController.confirmTeacherAccount);
+
+// students sign up
+router.post('/studentSignup', signupController.doStudentSignUp);

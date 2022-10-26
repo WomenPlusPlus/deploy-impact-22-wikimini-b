@@ -11,7 +11,7 @@ const wiki = await mwn.init({
 
 export async function request(params) {
     // add this or not? --> for error handling task
-    // params.errorformat = 'json';
+    // params.errorformat = 'raw';
     // params.errorsuselocal = true;
     return wiki.request(params);
 }
@@ -24,6 +24,20 @@ export async function login(credentials) {
     return wiki.login(credentials);
 }
 
-export async function getToken() {
+export async function getEditToken() {
     return wiki.getCsrfToken();
+}
+
+export async function getAccountCreationToken() {
+    return getTokenOfType("createaccount");
+}
+
+export async function getTokenOfType(type) {
+    const tokenResponse = await wiki.request({
+        action: "query",
+        meta: "tokens",
+        type: type
+    });
+    const token = tokenResponse.query.tokens[type + "token"];
+    return token;
 }

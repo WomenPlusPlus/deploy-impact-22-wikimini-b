@@ -1,5 +1,6 @@
 import * as wikiAdapter from "../adapters/wiki-adapter.js";
 import {Credentials} from "../models/account-models.js";
+import {getAccountCreationToken} from "../adapters/wiki-adapter.js";
 
 const teacherUserGroup = "teacher";
 const userRightsAction = "userrights";
@@ -48,14 +49,14 @@ async function createTeacherAccount(credentials = new Credentials()) {
         }
     });
 
-    const token = await wikiAdapter.getToken();
-    await wikiAdapter.request({
+    const token = await wikiAdapter.getAccountCreationToken();
+    const createAccountResult = await wikiAdapter.request({
         action: createAccountAction,
         username: username,
         password: password,
         email: email,
-        createtoken: token// I still need to test this
-        // createreturnurl: returnUrl // possible if necessary, but probably not necessary
+        createtoken: token,
+        createcontinue: "true"
     }).catch((e) => {
         if (e.code === userExistsCode) {
             throw Error("User does already exist, can't register as teacher");
@@ -63,6 +64,9 @@ async function createTeacherAccount(credentials = new Credentials()) {
             throw Error("Error in creating new user: " + e);
         }
     });
+
+
+
 }
 
 async function confirmEmail(emailConfToken, credentials = new Credentials(),
@@ -70,7 +74,7 @@ async function confirmEmail(emailConfToken, credentials = new Credentials(),
     // not tested yet, maybe we need to set the correct token again
     wikiAdapter.overwriteToken(emailConfToken);
     await wikiAdapter.login(credentials);
-    const token = await wikiAdapter.getToken();
+    const token = await wikiAdapter.getEditToken();
 
     await wikiAdapter.request({
         action: "useroptions",
@@ -90,7 +94,7 @@ async function registerUserAsTeacher(credentials = new Credentials()) {
     // either: login with a bot account that has the right to change usergroups (safety issue?),
     // or give every newly created user the possibility to change usergroups (doesn't seem like a good idea)
     await wikiAdapter.login(credentials);
-    const token = await wikiAdapter.getToken();
+    const token = await wikiAdapter.getEditToken();
     await wikiAdapter.request({
         action: userRightsAction,
         user: credentials.username,

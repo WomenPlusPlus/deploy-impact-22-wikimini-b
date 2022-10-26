@@ -1,14 +1,23 @@
 
 <div>
     <form>
-        <p>Username</p>
-        <p>Email Address</p>
-        <p>Password</p>
-        <p>Confirm Password</p>
-        <button>Not a Robot</button>
+        <label for="user-name">User Name</label>
+        <input type="text" id="user-name"><br><br>
+
+        <label for="email">Email</label>
+        <input type="text" id="email"><br><br>
+
+        <label for="password">Password</label>
+        <input type="text" id="password"><br><br>
+        
+        <label for="confirm-password">Confirm Password</label>
+        <input type="text" id="confirm-password"><br><br>
+        <p></p>Not a Robot<p>
     </form>
     <div> 
-        <div>Already have an account</div>
-        <div>Next</div>
+        <button (click)="signupShared.setSignupStatus(
+            (signupShared.signupStatus == signupShared.SignupStatusEnum.SIGNUP_FORM_TEACHER) ? 
+                signupShared.SignupStatusEnum.SIGNUP_EMAIL_CONFIRMATION : signupShared.SignupStatusEnum.SIGNUP_SUCCESS_STUDENT
+            )">Next</button>
     </div>
 </div>

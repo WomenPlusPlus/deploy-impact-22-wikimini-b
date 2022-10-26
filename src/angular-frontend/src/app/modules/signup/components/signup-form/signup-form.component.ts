@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SignupSharedService } from '../../signup-shared.service';
 
 @Component({
   selector: 'app-signup-form',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SignupFormComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public signupShared: SignupSharedService
+  ) { }
 
   ngOnInit(): void {
   }

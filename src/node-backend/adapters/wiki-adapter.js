@@ -7,6 +7,8 @@ const wiki = await mwn.init({
     apiUrl: apiUrl,
     username: credentials.username,
     password: credentials.password
+}).catch(e => {
+    console.error("Problem connecting to MediaWiki API: " + e);
 });
 
 export async function request(params) {

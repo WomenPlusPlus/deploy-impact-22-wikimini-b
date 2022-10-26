@@ -1,6 +1,6 @@
-const express = require("express");
-const router = express.Router();
-const pool = require("../maria-helper/database");
+import express from "express";
+export const router = express.Router();
+import * as pool from "../adapters/database-adapter.js";
 // const bcrypt = require("bcrypt");
 
 /*
@@ -48,5 +48,3 @@ router.post("/getUser", async function (req, res) {
 //     res.status(400).send(error.message);
 //   }
 // });
-
-module.exports = router;

@@ -1,1 +1,2 @@
 /src/node-backend/node_modules
+/src/node-backend/adapters/connection-data.js

@@ -1,16 +1,19 @@
-// init API connection
-const {mwn} = require("mwn");
-const apiUrl = "http://localhost/mediawiki/api.php";
-const wiki = new mwn({
-    apiUrl: apiUrl
-});
+import {mwn} from "mwn";
 
-// TODO we could have all calls to the wiki in here, and return a readable callback/error object we define in api-models
+const apiUrl = "http://localhost/mediawiki/api.php";
+
+const wiki = await mwn.init({
+    apiUrl: apiUrl,
+    username: "wikiuser",
+    password: "yourpassword"
+}).catch(e => {
+    console.error("Problem connecting to MediaWiki API: " + e);
+});
 
 export async function request(params) {
     // add this or not? --> for error handling task
-    params.errorformat = 'json';
-    params.errorsuselocal = true;
+    // params.errorformat = 'raw';
+    // params.errorsuselocal = true;
     return wiki.request(params);
 }
 
@@ -19,9 +22,23 @@ export function overwriteToken(token) {
 }
 
 export async function login(credentials) {
-    return wiki.login(credentials.username, credentials.password);
+    return wiki.login(credentials);
 }
 
-export async function getToken() {
+export async function getEditToken() {
     return wiki.getCsrfToken();
+}
+
+export async function getAccountCreationToken() {
+    return getTokenOfType("createaccount");
+}
+
+export async function getTokenOfType(type) {
+    const tokenResponse = await wiki.request({
+        action: "query",
+        meta: "tokens",
+        type: type
+    });
+    const token = tokenResponse.query.tokens[type + "token"];
+    return token;
 }

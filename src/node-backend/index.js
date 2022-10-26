@@ -1,4 +1,4 @@
-const express = require("express");
+import express from "express";
 const app = express();
 const port = 3000;
 
@@ -20,8 +20,11 @@ app.get("/", (request, response) => {
     );
 });
 
-const userRouter = require("./routes/users");
-app.use("/user", userRouter);
+import * as users from "./routes/users.js";
+app.use("/user", users.router);
+
+import * as accounts from "./routes/signup-route.js";
+app.use("/accounts", accounts.router);
 
 /**Start listening */
 app.listen(port, () => {

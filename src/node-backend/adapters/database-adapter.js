@@ -4,7 +4,7 @@ export const pool = mariadb.createPool({
   host: 3306,
   user: "wikiuser",
   // add your password here
-  password: "w1k1hack",
+  password: "yourpassword",
   database: "factorydb",
   connectionLimit: 5,
 });

@@ -1,10 +1,10 @@
-const mariadb = require("mariadb");
+import mariadb from "mariadb";
 
-const pool = mariadb.createPool({
+export const pool = mariadb.createPool({
   host: 3306,
-  user: "root",
+  user: "wikiuser",
   // add your password here
-  password: "",
+  password: "w1k1hack",
   database: "factorydb",
   connectionLimit: 5,
 });
@@ -21,10 +21,7 @@ pool.getConnection((err, connection) => {
     if (err.code === "ECONNREFUSED") {
       console.error("Database connection was refused");
     }
+    console.error("Unknown error while initialising database connection: " + err)
   }
   if (connection) connection.release();
-
-  return;
 });
-
-module.exports = pool;

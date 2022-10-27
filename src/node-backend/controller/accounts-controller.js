@@ -61,7 +61,7 @@ export const doStudentLogin = async (req, res) => {
 }
 
 async function login(credentials = new Credentials()) {
-    const token = wikiAdapter.getTokenOfType("login");
+    const token = await wikiAdapter.getTokenOfType("login");
     const loginResult = await wikiAdapter.request({
         action: loginAction,
         username: credentials.username,

@@ -26,6 +26,7 @@ pool.getConnection((err, connection) => {
   if (connection) connection.release();
 });
 
+// add a list of student codes to the db, with teacher and class given
 export async function addStudentCodes(teacherUsername, className, studentCodes) {
   try {
     // queries to be tested
@@ -49,13 +50,15 @@ export async function addStudentCodes(teacherUsername, className, studentCodes) 
   }
 }
 
+// pass student code and verify that it exists, hasn't expired yet and give back the teacher username (and email?) and classroom
+// could be improved to give back more detail: expired/not found
 export async function verifyCode(studentCode) {
   if (studentCode.length !== 6) {
     throw Error("Student code has to be 6 characters long");
   }
   try {
-    const checkCodeQuery = "SELECT teachers.name, classes.name FROM teachers, classes, studentcodes " +
-        "WHERE teachers.id=studentcodes.teacherID and classes.id=studentcodes.classID and studentcodes.studentcode=?";
+    const checkCodeQuery = "SELECT teachers.name, classes.name, studentcodes.generatedOn FROM teachers, classes, studentcodes " +
+        "WHERE teachers.id=studentcodes.teacherID and classes.id=studentcodes.classID and DAYS((NOW()-studentcodes.generatedOn))<=7 and studentcodes.studentcode=?";
     const queryResult = await pool.query(checkCodeQuery, studentCode);
     return queryResult.values;
   } catch (error) {

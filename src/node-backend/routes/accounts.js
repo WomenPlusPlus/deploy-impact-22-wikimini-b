@@ -1,5 +1,5 @@
 import express from "express";
-import * as signupController from "../controller/signup-controller.js";
+import * as signupController from "../controller/accounts-controller.js";
 export const router = express.Router();
 
 // to test: use postman, select Body -> raw type, json, format: "username":"exampleUser, "password":"examplePassword"

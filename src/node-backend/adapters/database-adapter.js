@@ -25,3 +25,22 @@ pool.getConnection((err, connection) => {
   }
   if (connection) connection.release();
 });
+
+export async function addStudentCodes(teacherUsername, className, studentCodes) {
+  try {
+    // queries to be tested
+    const getTeacherAndClassQuery = "SELECT teachers.id, classes.id FROM teachers, classes " +
+        "WHERE classes.teacherID=teacher.ID and teachers.name=" + teacherUsername + " and classes.name=" + className;
+    const rows = await pool.query(getTeacherAndClassQuery);
+    const {teacherID, classID} = rows.values;
+    const insertStudentCodeQuery = "INSERT INTO `studentcodes`(`teacherID`,`classID`,`studentCode`) VALUES (";
+    let values = "";
+    studentCodes.forEach(code => {
+      let row = "(" + teacherID + ", " + classID + ", " + code + "), ";
+      values += row;
+    });
+    values.substring(0, values.length-2); // remove last comma
+    values += ")"; //close bracket
+
+  }
+}

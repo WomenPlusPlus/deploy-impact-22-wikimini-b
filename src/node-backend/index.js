@@ -1,3 +1,6 @@
+import * as users from "./routes/users.js";
+import * as accounts from "./routes/signup-route.js";
+
 import express from "express";
 const app = express();
 const port = 3000;
@@ -20,13 +23,10 @@ app.get("/", (request, response) => {
     );
 });
 
-import * as users from "./routes/users.js";
 app.use("/user", users.router);
-
-import * as accounts from "./routes/signup-route.js";
 app.use("/accounts", accounts.router);
 
 /**Start listening */
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`Listening on port ${port}`);
 });

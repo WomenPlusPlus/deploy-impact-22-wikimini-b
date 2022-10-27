@@ -31,9 +31,9 @@ export async function addStudentCodes(teacherUsername, className, studentCodes) 
     // queries to be tested
     const getTeacherAndClassQuery = "SELECT teachers.id, classes.id FROM teachers, classes " +
         "WHERE classes.teacherID=teacher.ID and teachers.name=" + teacherUsername + " and classes.name=" + className;
-    const rows = await pool.query(getTeacherAndClassQuery);
-    const {teacherID, classID} = rows.values;
-    const insertStudentCodeQuery = "INSERT INTO `studentcodes`(`teacherID`,`classID`,`studentCode`) VALUES (";
+    const ids = await pool.query(getTeacherAndClassQuery);
+    const {teacherID, classID} = ids.values;
+    let insertStudentCodeQuery = "INSERT INTO `studentcodes`(`teacherID`,`classID`,`studentCode`) VALUES (";
     let values = "";
     studentCodes.forEach(code => {
       let row = "(" + teacherID + ", " + classID + ", " + code + "), ";
@@ -41,6 +41,25 @@ export async function addStudentCodes(teacherUsername, className, studentCodes) 
     });
     values.substring(0, values.length-2); // remove last comma
     values += ")"; //close bracket
+    insertStudentCodeQuery += values;
+    return pool.execute(insertStudentCodeQuery);
+  } catch (error) {
+    console.error("Error while storing student codes: " + error);
+    return error;
+  }
+}
 
+export async function verifyCode(studentCode) {
+  if (studentCode.length !== 6) {
+    throw Error("Student code has to be 6 characters long");
+  }
+  try {
+    const checkCodeQuery = "SELECT teachers.name, classes.name FROM teachers, classes, studentcodes " +
+        "WHERE teachers.id=studentcodes.teacherID and classes.id=studentcodes.classID and studentcodes.studentcode=?";
+    const queryResult = await pool.query(checkCodeQuery, studentCode);
+    return queryResult.values;
+  } catch (error) {
+    console.error("Error while checking student code: " + error);
+    return error;
   }
 }

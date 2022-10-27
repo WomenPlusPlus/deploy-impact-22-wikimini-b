@@ -26,6 +26,9 @@ app.use("/user", users.router);
 import * as accounts from "./routes/accounts.js";
 app.use("/accounts", accounts.router);
 
+import * as classrooms from "./routes/classrooms.js";
+app.use("classrooms", classrooms.router);
+
 /**Start listening */
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

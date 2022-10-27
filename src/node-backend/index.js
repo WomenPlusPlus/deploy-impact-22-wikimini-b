@@ -1,5 +1,6 @@
 import * as users from "./routes/users.js";
-import * as accounts from "./routes/signup-route.js";
+import * as accounts from "./routes/accounts.js";
+
 
 import express from "express";
 const app = express();

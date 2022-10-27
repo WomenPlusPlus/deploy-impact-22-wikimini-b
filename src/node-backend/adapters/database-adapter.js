@@ -1,11 +1,12 @@
 import mariadb from "mariadb";
+import * as dotenv from 'dotenv'
+dotenv.config()
 
 export const pool = mariadb.createPool({
-  host: 3306,
-  user: "wikiuser",
-  // add your password here
-  password: "yourpassword",
-  database: "factorydb",
+  host: process.env.HOST,
+  user: process.env.MARIA_USER,
+  password: process.env.MARIA_PASS,
+  database: process.env.MARIA_DATABASE,
   connectionLimit: 5,
 });
 

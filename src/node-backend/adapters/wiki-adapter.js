@@ -1,11 +1,11 @@
 import {mwn} from "mwn";
-
-const apiUrl = "http://localhost/mediawiki/api.php";
+import * as dotenv from 'dotenv'
+dotenv.config()
 
 const wiki = await mwn.init({
-    apiUrl: apiUrl,
-    username: "wikiuser",
-    password: "yourpassword"
+    apiUrl: process.env.API_URL,
+    username: process.env.WIKI_USER,
+    password: process.env.WIKI_PASS
 }).catch(e => {
     console.error("Problem connecting to MediaWiki API: " + e);
 });

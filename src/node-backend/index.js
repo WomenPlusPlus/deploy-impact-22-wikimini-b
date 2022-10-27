@@ -23,7 +23,7 @@ app.get("/", (request, response) => {
 import * as users from "./routes/users.js";
 app.use("/user", users.router);
 
-import * as accounts from "./routes/signup-route.js";
+import * as accounts from "./routes/accounts.js";
 app.use("/accounts", accounts.router);
 
 /**Start listening */

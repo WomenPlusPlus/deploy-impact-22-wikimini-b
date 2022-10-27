@@ -1,25 +1,26 @@
 import * as wikiAdapter from "../adapters/wiki-adapter.js";
 import {Credentials} from "../models/account-models.js";
-import {getAccountCreationToken} from "../adapters/wiki-adapter.js";
 
+const returnUrl = "http://localhost/mediawiki";
 const teacherUserGroup = "teacher";
 const userRightsAction = "userrights";
 const validatePasswordAction = "validatepassword";
 const noSuchUserCode = "nosuchuser";
 const userExistsCode = "userexists";
 const createAccountAction = "createaccount";
+const loginAction = "clientlogin";
 
 export const doTeacherSignUp = async (req, res) => {
     try {
         const {username, password, email} = req.body;
         const credentials = new Credentials(username, password, email);
-        const teacherSignUpResult = await createTeacherAccount(credentials);
+        const teacherSignUpResult = await createNewAccount(credentials);
         res.status(200).json(teacherSignUpResult);
     } catch (error) {
         res.status(405).json({ message: error.message });
     }
-}
 
+}
 export const confirmTeacherAccount = async (req, res) => {
     try {
         const {emailConfToken, username, password, email, chosenName} = req.body;
@@ -31,9 +32,53 @@ export const confirmTeacherAccount = async (req, res) => {
     } catch (error) {
         res.status(406).json({message: error.message });
     }
+
+}
+export const doStudentSignUp = async (req, res) => {
+    try {
+        const {username, password, code} = req.body;
+        // verify student code
+        // if valid, register student to classroom and teacher
+        // get teacher email
+        const credentials = new Credentials(username, password, "email");
+        const studentSignUpResult = await createNewAccount(credentials);
+        res.status(200).json(studentSignUpResult);
+    } catch (error) {
+        res.status(407).json({ message: error.message });
+    }
+
 }
 
-async function createTeacherAccount(credentials = new Credentials()) {
+export const doStudentLogin = async (req, res) => {
+    try {
+        const {username, password} = req.body;
+        const credentials = new Credentials(username, password);
+        const loginResult = await login(credentials);
+        res.status(200).json(loginResult);
+    } catch (error) {
+        res.status(408).json({ message: error.message });
+    }
+}
+
+async function login(credentials = new Credentials()) {
+    const token = await wikiAdapter.getTokenOfType("login");
+    const loginResult = await wikiAdapter.request({
+        action: loginAction,
+        username: credentials.username,
+        password: credentials.password,
+        logintoken: token,
+        loginreturnurl: returnUrl,
+    }).catch((e) => {
+        if (e.code === noSuchUserCode) {
+            throw Error("No such user exists, can't login");
+        } else {
+            throw Error("Error while trying to log in: " + e);
+        }
+    });
+    return loginResult;
+}
+
+async function createNewAccount(credentials = new Credentials()) {
     const username = credentials.username;
     const password = credentials.password;
     const email = credentials.email;
@@ -57,11 +102,11 @@ async function createTeacherAccount(credentials = new Credentials()) {
         retype: password,
         email: email,
         createtoken: token,
-        createreturnurl: "http://localhost/mediawiki",
-        reason: "Teacher account creation"
+        createreturnurl: returnUrl,
+        reason: "New account creation through Wikimini"
     }).catch((e) => {
         if (e.code === userExistsCode) {
-            throw Error("User does already exist, can't register as teacher");
+            throw Error("User does already exist, can't register");
         } else {
             throw Error("Error in creating new user: " + e);
         }

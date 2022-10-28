@@ -1,0 +1,74 @@
+.main-content {
+  align-items: center;
+  background-color: #24a79d;
+  border: 1px none;
+  display: flex;
+  flex-direction: column;
+  height: 100vh; 
+  padding: 57px 55px;
+  width: auto;
+
+  }
+
+
+.manrope-bold-white-40px{
+     font-family: 'Manrope', sans-serif; 
+     font-size: 40px;
+     color: white;
+     font-weight: 700;
+     padding-top: 600px;
+}
+
+.flex-row-item { 
+    height: 40px;
+    width: 40px;
+    background-color: transparent;
+    border-color: transparent;
+    background-size: contain;
+  }
+.nav-buttons{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 15vh;
+    
+    
+
+  }
+
+.Mplus1-bold-white-15px {
+    font-family: 'M PLUS 1', sans-serif;
+    font-size: 15px;
+    color: white;
+    font-weight: 700;
+    padding-top: 20px;
+}
+
+.haveAccountLoginButton{
+    width: 120vh;
+    display: flex;
+    justify-content: start;
+    align-content: center;
+    font-family: 'M PLUS 1', sans-serif;
+    color:white;
+    
+}
+.logInButton{
+    background: none!important;
+    border: none;
+    padding: 0!important;
+    font-family: 'M PLUS 1', sans-serif;
+    color: #fcb112;
+    font-size: 15px;
+    cursor: pointer;
+    margin-left: 4px;
+    margin-top: 21px;
+    position:relative; 
+    line-height: 0px; 
+    }
+
+.logInText{
+    text-align: end;
+    text-justify: bottom;
+
+}

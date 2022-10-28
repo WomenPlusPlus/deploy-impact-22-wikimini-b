@@ -1,3 +1,25 @@
-<button (click)="signupShared.setSignupStatus(signupShared.SignupStatusEnum.SIGNUP_FORM_TEACHER)">Teacher</button>
 
-<button (click)="signupShared.setSignupStatus(signupShared.SignupStatusEnum.SIGNUP_CODE_STUDENT)">Student</button>
+<div class="flex-row">
+    <div class="left">
+    
+        <div class="glasses">
+            <img  src="../../../../../assets/signup-choice/Illustration-glasses.png" alt="Illustration glasses"/> 
+        </div>
+         <div class="teacher">
+            <button  (click)="signupShared.setSignupStatus(signupShared.SignupStatusEnum.SIGNUP_FORM_TEACHER)"> I'm a Teacher</button>
+        </div>
+        <div class="books">
+            <img  src="../../../../../assets/signup-choice/noto-v1_books.png"/>
+        </div>
+    </div>
+    <div class="right">
+
+        
+        <div class="hat" >
+            <img  src="../../../../../assets/signup-choice/Illustratio-student.png"  alt="Illustratio-student"/>  
+        </div>
+        <div class="student">
+            <button  (click)="signupShared.setSignupStatus(signupShared.SignupStatusEnum.SIGNUP_CODE_STUDENT)">I'm a Student</button> 
+        </div>
+    </div>
+</div> 

@@ -46,7 +46,6 @@ export const doStudentSignUp = async (req, res) => {
     } catch (error) {
         res.status(407).json({ message: error.message });
     }
-
 }
 
 export const doStudentLogin = async (req, res) => {

@@ -13,11 +13,7 @@ app.use(express.urlencoded({ extended: false }));
  */
 
 app.get("/", (request, response) => {
-  response
-    .status(200)
-    .send(
-      "Home"
-    );
+  response.status(200).send({success: true, message: "home"});
 });
 
 import * as users from "./routes/users.js";

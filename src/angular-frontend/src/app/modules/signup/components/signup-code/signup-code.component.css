@@ -1,0 +1,63 @@
+:is(codebox){
+
+    width:100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+
+}
+:is(input){
+
+    
+    background-color: white;
+    border: 2px solid;
+    border-color: black;
+    border-radius: 20px;
+    box-shadow: 0px 4px 4px 
+    #00000040;
+    height: 176px;
+    width: 176px;
+    font-size: 100px; 
+    text-align: center;
+    margin: 23px; 
+    ;
+}
+
+button {
+
+    align-items: flex-start;
+    align-self: flex-end;
+    background-color: #FCB112;
+    border: 2px solid;
+    border-color: eerie-black;
+    border-radius: 16px;
+    box-shadow: -5px 6px 0px -1px 
+    #000000;
+    display: flex;
+    gap: 6px;
+    height: 56px;
+    overflow: hidden;
+    padding: 13px 20px;
+    width: 116px;
+    letter-spacing: 0;
+    line-height: 25.2px;
+    min-height: 26px;
+    min-width: 45px;
+    white-space: nowrap;
+    font-family: 'M PLUS 1', serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 25px;
+        
+  }
+  
+  .buttonWraper{
+    display:flex;
+    justify-content: end;
+
+  }
+
+    
+

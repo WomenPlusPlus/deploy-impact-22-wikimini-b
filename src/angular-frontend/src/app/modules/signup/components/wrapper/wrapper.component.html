@@ -1,6 +1,10 @@
-<div class="main-content" id="signupChoiseWrapper">
+
+
+<div class="main-content" >
 
 <div class=" nav-buttons" >
+
+  
 
   <button class="flex-row-item"(click)="signupShared.getPreviousStatus()">
     <img class="flex-row-item "src="../../../../../assets/wrapper assets/chevron-left-1@2x.png" alt="chevron-left" /> 
@@ -12,9 +16,7 @@
 
 </div>
 
-<div>
-  <span class="manrope-bold-white-40px">Create an account</span></div>
-<div >
+
   <app-signup-choice *ngIf="signupShared.signupStatus === signupShared.SignupStatusEnum.SIGNUP_CHOICE"></app-signup-choice>
   <app-signup-code *ngIf="signupShared.signupStatus === signupShared.SignupStatusEnum.SIGNUP_CODE_STUDENT"></app-signup-code>
   <app-signup-form *ngIf="signupShared.signupStatus === signupShared.SignupStatusEnum.SIGNUP_FORM_STUDENT || signupShared.signupStatus === signupShared.SignupStatusEnum.SIGNUP_FORM_TEACHER"></app-signup-form>

@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { HomepageModule } from './modules/homepage/homepage.module';
 import { SignupModule } from './modules/signup/signup.module';
 import { UserpageModule } from './modules/userpage/userpage.module';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { UserpageModule } from './modules/userpage/userpage.module';
     AppRoutingModule,
     HomepageModule,
     UserpageModule,
-    SignupModule
+    SignupModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -27,18 +27,18 @@ pool.getConnection((err, connection) => {
   if (connection) connection.release();
 });
 
-// add a list of student codes to the db, with teacher and class given
-export async function addStudentCodes(teacherUsername, className, studentCodes) {
+// add a list of student codes to the db, with teacher, class and student names given
+export async function addStudentCodes(teacherUsername, className, studentCodes, studentNames) {
   try {
     // queries to be tested
-    const getTeacherAndClassQuery = "SELECT teachers.id, classes.id FROM teachers, classes " +
-        "WHERE classes.teacherID=teacher.ID and teachers.name=" + teacherUsername + " and classes.name=" + className;
+    const getTeacherAndClassQuery = "SELECT teachers.id, classrooms.id FROM teachers, classrooms " +
+        "WHERE classrooms.teacherUsername=teachers.username and teachers.username=" + teacherUsername + " and classrooms.name=" + className;
     const ids = await pool.query(getTeacherAndClassQuery);
-    const {teacherID, classID} = ids.values;
-    let insertStudentCodeQuery = "INSERT INTO `studentcodes`(`teacherID`,`classID`,`studentCode`) VALUES (";
+    const {teacherUsername, classID} = ids.values;
+    let insertStudentCodeQuery = "INSERT INTO `studentcodes`(`teacherUsername`,`classID`,`studentCode`) VALUES (";
     let values = "";
     studentCodes.forEach(code => {
-      let row = "(" + teacherID + ", " + classID + ", " + code + "), ";
+      let row = "(" + teacherUsername + ", " + classID + ", " + code + "), ";
       values += row;
     });
     values.substring(0, values.length-2); // remove last comma
@@ -54,14 +54,15 @@ export async function addStudentCodes(teacherUsername, className, studentCodes) 
 // pass student code and verify that it exists, hasn't expired yet and give back the teacher username (and email?) and classroom
 // could be improved to give back more detail: expired/not found
 export async function verifyCode(studentCode) {
-  if (studentCode.length !== 6) {
-    throw Error("Student code has to be 6 characters long");
+  if (studentCode.length !== 5) {
+    throw Error("Student code has to be 5 characters long");
   }
   try {
-    const checkCodeQuery = "SELECT teachers.name, classes.name, studentcodes.generatedOn FROM teachers, classes, studentcodes " +
-        "WHERE teachers.id=studentcodes.teacherID and classes.id=studentcodes.classID and DAYS((NOW()-studentcodes.generatedOn))<=7 and studentcodes.studentcode=?";
+    const checkCodeQuery = "SELECT teachers.username, classrooms.name, classroomCodes.studentFullName, classroomCodes.used FROM teachers, classrooms, classroomCodes " +
+        "WHERE teachers.username=classroomCodes.teacherUsername and classrooms.id=classroomCodes.classID and classroomCodes.studentJoinCode=?";
     const queryResult = await pool.query(checkCodeQuery, studentCode);
-    return queryResult.values;
+    const valid = (queryResult.length === 1) && (queryResult[0]["used"] === false); // is valid if there is only one corrsponding code and if it hasn't been used yet
+    return {"valid": valid, "result": queryResult}; // is that good?
   } catch (error) {
     console.error("Error while checking student code: " + error);
     return error;

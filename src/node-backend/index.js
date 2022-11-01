@@ -29,6 +29,31 @@ app.use("/accounts", accounts.router);
 import * as classrooms from "./routes/classrooms.js";
 app.use("/classrooms", classrooms.router);
 
+// import mailer from "nodemailer";
+//
+// let mailTransporter = mailer.createTransport({
+//   service: 'gmail',
+//   auth: {
+//     user: 'thewikifactory@gmail.com',
+//     pass: 'rgegknltijasdrob'
+//   }
+// });
+//
+// let mailDetails = {
+//   from: 'thewikifactory@gmail.com',
+//   to: 'luciana.kolbeck@ik.me',
+//   subject: 'Test mail',
+//   text: 'Node.js testing mail for GeeksforGeeks'
+// };
+//
+// mailTransporter.sendMail(mailDetails, function(err, data) {
+//   if(err) {
+//     console.log('Error Occurs');
+//   } else {
+//     console.log('Email sent successfully');
+//   }
+// });
+
 /**Start listening */
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);

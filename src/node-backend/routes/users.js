@@ -10,8 +10,8 @@ body: {"id": <user id>} (setup on HeidiSQL)
 */
 router.post("/getUser", async function (req, res) {
   try {
-    const sqlQuery = "SELECT user_name FROM user WHERE user_id=?";
-    const rows = await pool.pool.query(sqlQuery, req.body.id);
+    const sqlQuery = "SELECT * FROM students";
+    const rows = await pool.pool.query(sqlQuery);
     res.status(200).json(rows);
   } catch (error) {
     res.status(400).send(error.message);

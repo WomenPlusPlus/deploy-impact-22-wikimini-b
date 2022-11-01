@@ -7,20 +7,15 @@ const port = 3000;
  */
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
+app.use(cors());
 /**
  * Routes
  */
 
 app.get("/", (request, response) => {
-  response
-    .status(200)
-    .send(
-      "Home"
-    );
+  response.status(200).send({success: true, message: "home"});
 });
 
-import * as users from "./routes/users.js";
 app.use("/user", users.router);
 
 import * as accounts from "./routes/accounts.js";

@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 const app = express();
 const port = 3000;
 
@@ -16,6 +17,7 @@ app.get("/", (request, response) => {
   response.status(200).send({success: true, message: "home"});
 });
 
+import * as users from "./routes/users.js";
 app.use("/user", users.router);
 
 import * as accounts from "./routes/accounts.js";

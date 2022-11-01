@@ -92,36 +92,6 @@ async function login(credentials = new Credentials()) {
 }
 
 async function createNewAccount(credentials = new Credentials()) {
-export const doStudentLogin = async (req, res) => {
-    try {
-        const {username, password} = req.body;
-        const credentials = new Credentials(username, password);
-        const loginResult = await login(credentials);
-        res.status(200).json(loginResult);
-    } catch (error) {
-        res.status(408).json({ message: error.message });
-    }
-}
-
-async function login(credentials = new Credentials()) {
-    const token = await wikiAdapter.getTokenOfType("login");
-    const loginResult = await wikiAdapter.request({
-        action: loginAction,
-        username: credentials.username,
-        password: credentials.password,
-        logintoken: token,
-        loginreturnurl: returnUrl,
-    }).catch((e) => {
-        if (e.code === noSuchUserCode) {
-            throw Error("No such user exists, can't login");
-        } else {
-            throw Error("Error while trying to log in: " + e);
-        }
-    });
-    return loginResult;
-}
-
-async function createNewAccount(credentials = new Credentials()) {
     const username = credentials.username;
     const password = credentials.password;
     const email = credentials.email;

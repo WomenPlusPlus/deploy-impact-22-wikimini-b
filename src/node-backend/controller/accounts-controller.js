@@ -74,7 +74,7 @@ async function login(credentials = new Credentials()) {
             throw Error("Error while trying to log in: " + e);
         }
     });
-    loginResult["token"] = wikiAdapter.getEditToken();
+    loginResult[loginAction]["token"] = await wikiAdapter.getEditToken();
     return loginResult;
 }
 

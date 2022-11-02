@@ -6,10 +6,10 @@ export const router = express.Router();
 
 // teacher sign up: needs {username, password, email}
 router.post('/teacherSignup', signupController.doTeacherSignUp);
-router.post('/teacherEmailConfirmed', signupController.confirmTeacherAccount);
+// router.post('/teacherEmailConfirmed', signupController.confirmTeacherAccount);
 
-// students sign up:
+// students sign up: needs {username, password, code}
 router.post('/studentSignup', signupController.doStudentSignUp);
 
-// students log in
+// students log in: needs {username, password}
 router.post('/studentLogin', signupController.doStudentLogin);

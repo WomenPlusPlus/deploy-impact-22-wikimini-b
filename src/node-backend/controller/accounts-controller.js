@@ -1,4 +1,5 @@
 import * as wikiAdapter from "../adapters/wiki-adapter.js";
+import * as dbAdapter from "../adapters/database-adapter.js";
 import {Credentials} from "../models/account-models.js";
 
 const returnUrl = "http://localhost/mediawiki";
@@ -38,9 +39,22 @@ export const doStudentSignUp = async (req, res) => {
     try {
         const {username, password, code} = req.body;
         // verify student code
+        const studentInfos = await dbAdapter.verifyCode(code);
         // if valid, register student to classroom and teacher
+        if (studentInfos.valid) {
+            // invalidate code
+            // dbAdapter.markCodeAsUsed(code);
+            // add student to our db
+            // dbAdapter.addStudent(username, studentInfos.result["assignedName"]);
+            // register student to classroom
+            // dbAdapter.enrollStudentInClass(username, className);
+        } else {
+            throw Error("The signup code is not valid");
+        }
         // get teacher email
-        const credentials = new Credentials(username, password, "email");
+        // const email = dbAdapter.getTeacherEmailForClass(className);
+        let email = "thewikifactory@gmail.com";
+        const credentials = new Credentials(username, password, email);
         const studentSignUpResult = await createNewAccount(credentials);
         res.status(200).json(studentSignUpResult);
     } catch (error) {
@@ -97,6 +111,7 @@ async function createNewAccount(credentials = new Credentials()) {
     const createAccountResult = await wikiAdapter.request({
         action: createAccountAction,
         username: username,
+        // mailpassword: true,
         password: password,
         retype: password,
         email: email,
@@ -110,9 +125,7 @@ async function createNewAccount(credentials = new Credentials()) {
             throw Error("Error in creating new user: " + e);
         }
     });
-
     return createAccountResult;
-
 }
 
 async function confirmEmail(emailConfToken, credentials = new Credentials(),

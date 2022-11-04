@@ -37,6 +37,23 @@ export async function verifyCode(studentCode) {
     return {"valid": valid, "result": queryResult};
   } catch (error) {
     console.error("Error while checking student code: " + error);
-    return error;
+    throw error;
+  }
+}
+
+export async function getTeacherEmail(teacherUsername) {
+  try {
+    const teacherEmailQuery = "SELECT teachers.email FROM teachers WHERE teachers.username=?";
+    const queryResult = await pool.query(teacherEmailQuery, teacherUsername);
+    return queryResult;
+  } catch (error) {
+    console.error("Error while trying to retrieve teachers email: " + error);
+    throw error;
+  }
+}
+
+export async function registerTeacherAuthCode(username, authCode) {
+  try {
+    const teacherAuthCodeQuery = "INSERT INTO"
   }
 }

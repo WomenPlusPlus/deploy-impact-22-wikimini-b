@@ -1,6 +1,8 @@
 import * as wikiAdapter from "../adapters/wiki-adapter.js";
 import * as dbAdapter from "../adapters/database-adapter.js";
+import * as emailAdapter from "../adapters/email-adapter.js";
 import {Credentials} from "../models/account-models.js";
+import {registerTeacherAuthCode} from "../adapters/database-adapter.js";
 
 const returnUrl = "http://localhost/mediawiki";
 const teacherUserGroup = "teacher";
@@ -16,7 +18,13 @@ export const doTeacherSignUp = async (req, res) => {
         const {username, password, email} = req.body;
         const credentials = new Credentials(username, password, email);
         const teacherSignUpResult = await createNewAccount(credentials);
-        res.status(200).json(teacherSignUpResult);
+        const registerAsTeacherResult = await registerUserAsTeacher(credentials);
+        const emailSent = await sendTeacherConfirmationMail(username, email);
+        if (teacherSignUpResult[createAccountAction]["status"] === "PASS" && registerAsTeacherResult && emailSent) {
+            res.status(200).json(teacherSignUpResult);
+        } else {
+            res.status(405).json(teacherSignUpResult[createAccountAction]);
+        }
     } catch (error) {
         res.status(405).json({ message: error.message });
     }
@@ -24,16 +32,12 @@ export const doTeacherSignUp = async (req, res) => {
 }
 export const confirmTeacherAccount = async (req, res) => {
     try {
-        const {emailConfToken, username, password, email, chosenName} = req.body;
-        const credentials = new Credentials(username, password, email);
-        const confirmationResult = await confirmEmail(emailConfToken, credentials, chosenName);
-        const registerAsTeacherResult = await registerUserAsTeacher(credentials);
-        // join results
+        const {username, authCode} = req.body;
+        const confirmationResult = await confirmEmail(username, authCode);
         res.status(200).json(confirmationResult);
     } catch (error) {
         res.status(406).json({message: error.message });
     }
-
 }
 export const doStudentSignUp = async (req, res) => {
     try {
@@ -104,7 +108,7 @@ async function createNewAccount(credentials = new Credentials()) {
         email: email,
     }).catch(e => {
         if (e.code === userExistsCode) {
-            throw Error("User already exists");
+            throw Error("User does already exist, can't register");
         } else {
             throw Error("Error while validating signup data" + e);
         }
@@ -128,29 +132,23 @@ async function createNewAccount(credentials = new Credentials()) {
             throw Error("Error in creating new user: " + e);
         }
     });
-    // check if PASS and otherwise throw error
     return createAccountResult;
 }
 
-async function confirmEmail(emailConfToken, credentials = new Credentials(),
-                                     realName = "") {
-    // not tested yet, maybe we need to set the correct token again
-    wikiAdapter.overwriteToken(emailConfToken);
-    await wikiAdapter.login(credentials);
-    const token = await wikiAdapter.getEditToken();
+async function confirmEmail(username, authCode) {
 
-    await wikiAdapter.request({
-        action: "useroptions",
-        optionname: "realname",
-        optionvalue: realName,
-        token: token
-    }).catch(e => {
-        if (e.code === noSuchUserCode) {
-            throw Error("No such user exists, account cannot be completed");
-        } else {
-            throw Error("Error while setting name " + e);
-        }
-    });
+}
+
+async function sendTeacherConfirmationMail(username, email) {
+    const authCode = Math.floor(Math.random() * 100000);
+    const authCodeRegistered = await dbAdapter.registerTeacherAuthCode(authCode);
+    if (!authCodeRegistered) {
+        throw Error("Problem while saving auth code to database");
+    }
+    const subject = "Confirm your Wikimini account";
+    const text = "Hello " + username + ", \nPlease confirm the account you just created on Wikimini by clicking on the following link: \n\n"
+        + process.env.WEB_URL + "&authCode=" + authCode;
+    return emailAdapter.sendTextEmail(email, subject, text);
 }
 
 async function registerUserAsTeacher(credentials = new Credentials()) {
@@ -166,9 +164,9 @@ async function registerUserAsTeacher(credentials = new Credentials()) {
         token: token
     }).then(response => {
         if (response.userrights.added[0] === teacherUserGroup) {
-            return "Successful"; // should be useful for frontend
+            return true; // should be useful for frontend
         } else {
-            throw Error(response.userrights); // should have a nicer format
+            throw Error("Error while trying to register the account as a teacher's account: " + response.userrights); // should have a nicer format
         }
     }).catch(e => {
         throw Error("Error while trying to register the account as a teacher's account: " + e);

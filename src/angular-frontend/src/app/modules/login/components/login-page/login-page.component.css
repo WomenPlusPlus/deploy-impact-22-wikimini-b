@@ -1,4 +1,5 @@
 .wrapper {
+    height: 100vh;
     background-color: #24a79d;
 }
 
@@ -9,6 +10,48 @@
 }
 
 .footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding-top: 5em;
+}
+
+.login-panel {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.top {
+    padding-top: 5em;
+    display: flex;
+    width: 50vw;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.form-panel {
+    width: 75vw;
+    height: 55vh;
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    border: 2px solid black;
+    border-radius: 15px;
+    padding: 1em;
+    justify-content: space-between;
+}
+
+.form-panel > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+}
+
+.forgot-password {
     display: flex;
     flex-direction: row;
 }

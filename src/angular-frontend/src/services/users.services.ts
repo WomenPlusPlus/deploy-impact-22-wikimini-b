@@ -9,15 +9,26 @@ import { map } from 'rxjs/operators';
 })
 export class UsersServices {
   constructor(private http: HttpClient) {}
-  testCon(): Observable<any> {
-    return this.http.get<any>(`${environment.webApi}`);
+
+  teacherLogin(username: string, password: string): Observable<any> {
+    return this.http
+      .post<{ sucess: boolean; res: any }>(
+        `${environment.webApi}accounts/teacherLogin`,
+        { username, password }
+      )
+      .pipe(map((res) => res.res));
   }
 
-  login():  Observable<any> {
-    return this.http.get<any>(`${environment.webApi}`);
+  teacherSignUp(
+    username: string,
+    password: string,
+    email: string
+  ): Observable<any> {
+    return this.http
+      .post<{ sucess: boolean; res: any }>(
+        `${environment.webApi}accounts/teacherSignup`,
+        { username, password, email }
+      )
+      .pipe(map((res) => res.res));
   }
-
-  // teacherSignUp(username: string): Observable<any> {
-  //   return this.http.post<any>(`${environment.webApi}user/signup`, { username });
-  // }
 }

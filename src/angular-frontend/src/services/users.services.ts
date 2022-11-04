@@ -10,14 +10,14 @@ import { map } from 'rxjs/operators';
 export class UsersServices {
   constructor(private http: HttpClient) {}
 
-  teacherLogin(username: string, password: string): Observable<any> {
-    return this.http
-      .post<{ sucess: boolean; res: any }>(
-        `${environment.webApi}accounts/teacherLogin`,
-        { username, password }
-      )
-      .pipe(map((res) => res.res));
-  }
+  // teacherLogin(username: string, password: string): Observable<any> {
+  //   return this.http
+  //     .post<{ sucess: boolean; res: any }>(
+  //       `${environment.webApi}accounts/teacherLogin`,
+  //       { username, password }
+  //     )
+  //     .pipe(map((res) => res.res));
+  // }
 
   teacherSignUp(
     username: string,
@@ -30,5 +30,17 @@ export class UsersServices {
         { username, password, email }
       )
       .pipe(map((res) => res.res));
+  }
+
+  teacherlogin(
+    username: string,
+    password: string
+  ): Observable<any> {
+    return this.http
+      .post<{ sucess: boolean; res: any }>(
+        `${environment.webApi}accounts/teacherLogin`,
+        { username, password }
+      )
+      .pipe(map((res: any) => res.res));
   }
 }

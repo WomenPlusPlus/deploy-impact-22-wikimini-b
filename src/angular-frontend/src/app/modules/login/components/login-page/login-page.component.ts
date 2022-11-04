@@ -13,7 +13,7 @@ export class LoginPageComponent implements OnInit {
   ngOnInit(): void {}
 
   teacherLogin(username: string, password: string) {
-    this.usersServices.teacherLogin(username, password).subscribe((res) => {
+    this.usersServices.teacherlogin(username, password).subscribe((res) => {
       this.authToken = res;
       console.log(res);
     });

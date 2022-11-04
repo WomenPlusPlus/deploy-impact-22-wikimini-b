@@ -9,7 +9,9 @@ export class SignupSharedService {
   public SignupStatusEnum = SignupStatus;
   public signupStatus = SignupStatus.SIGNUP_CHOICE;
 
-  constructor() { }
+  constructor() {
+    console.log('hello')
+  }
 
   setSignupStatus(status: any){
     this.signupStatus = status;

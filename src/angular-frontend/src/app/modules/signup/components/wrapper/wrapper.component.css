@@ -1,3 +1,8 @@
+body {
+  max-width: 100vw;
+  max-height: 100vh;
+}
+
 .main-content {
   align-content: center;
   align-items: center;
@@ -27,10 +32,10 @@
   width: 100%;
   display:flex;
   justify-content: space-between;
-  padding-bottom: 15vh; 
-  padding-top:50px ;
-  padding-inline: 25px;
-  padding-right: 50px; ;
+  /* padding-bottom: 15vh;  */
+  /* padding-top:50px ; */
+  /* padding-inline: 25px; */
+  /* padding-right: 50px; ; */
   }
 
 .Mplus1-bold-white-15px {
@@ -44,10 +49,7 @@
 }
 
 .haveAccountLoginButton{
-  
-  width: 100%;
   display: flex;
-  background-color: #24a79d;
   justify-content: flex-start;
   align-content: center;
   font-family: 'M PLUS 1', sans-serif;

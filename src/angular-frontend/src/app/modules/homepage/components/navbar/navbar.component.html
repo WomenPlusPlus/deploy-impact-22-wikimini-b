@@ -1,0 +1,21 @@
+<nav class="nav nav-3">
+    <a class="nav-logo" href="#">Logo</a>
+    <ul class="nav-list">
+      <li>
+        <a href="#">Encyclopedia</a>
+      </li>
+      <li>
+        <a href="#">My classroom</a>
+      </li>
+      <li>
+        <a href="#">For parents</a>
+      </li>
+      <li>
+        <a href="#">For teachers</a>
+      </li>
+    </ul>
+    <div class="userButtons">
+      <button [routerLink]="['/login']" routerLinkActive="router-link-active"  class="nav-btn button-shadow">Login</button>
+      <button [routerLink]="['/signup']" class="nav-btn button-shadow">Sign Up</button>
+    </div>
+</nav>

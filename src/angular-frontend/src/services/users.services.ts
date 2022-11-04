@@ -13,6 +13,10 @@ export class UsersServices {
     return this.http.get<any>(`${environment.webApi}`);
   }
 
+  login():  Observable<any> {
+    return this.http.get<any>(`${environment.webApi}`);
+  }
+
   // teacherSignUp(username: string): Observable<any> {
   //   return this.http.post<any>(`${environment.webApi}user/signup`, { username });
   // }

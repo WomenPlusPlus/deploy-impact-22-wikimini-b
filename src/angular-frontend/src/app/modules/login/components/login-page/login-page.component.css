@@ -1,0 +1,14 @@
+.wrapper {
+    background-color: #24a79d;
+}
+
+.nav-buttons {
+    padding: 1em;
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer {
+    display: flex;
+    flex-direction: row;
+}

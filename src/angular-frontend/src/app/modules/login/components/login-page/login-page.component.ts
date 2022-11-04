@@ -4,19 +4,18 @@ import { UsersServices } from 'src/services/users.services';
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.css']
+  styleUrls: ['./login-page.component.css'],
 })
 export class LoginPageComponent implements OnInit {
+  authToken: string = '';
+  constructor(public usersServices: UsersServices) {}
 
-  constructor(
-    public uServ: UsersServices
-  ) { }
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
+  teacherLogin(username: string, password: string) {
+    this.usersServices.teacherLogin(username, password).subscribe((res) => {
+      this.authToken = res;
+      console.log(res);
+    });
   }
-
-  logIn(){
-    this.uServ.login();
-  }
-
 }

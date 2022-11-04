@@ -8,17 +8,10 @@ import { SignupSharedService } from '../../signup-shared.service';
   styleUrls: ['./wrapper.component.css', '../../shared/signup-styles.css'],
 })
 export class WrapperComponent implements OnInit {
-  constructor(public signupShared: SignupSharedService, public usersServices: UsersServices) {}
+  constructor(
+    public signupShared: SignupSharedService,
+    public usersServices: UsersServices
+  ) {}
 
-  ngOnInit(): void {
-    // this.testConnection();
-  }
-
-  testConnection(): void {
-    
-    this.usersServices.testCon().subscribe((res: any) => {
-      console.log(res);      
-    });
-  }
-
+  ngOnInit(): void {}
 }

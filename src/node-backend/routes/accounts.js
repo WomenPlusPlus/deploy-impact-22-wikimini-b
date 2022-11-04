@@ -8,6 +8,9 @@ export const router = express.Router();
 router.post('/teacherSignup', signupController.doTeacherSignUp);
 // router.post('/teacherEmailConfirmed', signupController.confirmTeacherAccount);
 
+// teacher sign up: needs {username, password, email}
+router.post('/teacherLogin', signupController.doStudentLogin);
+
 // students sign up: needs {username, password, code}
 router.post('/studentSignup', signupController.doStudentSignUp);
 

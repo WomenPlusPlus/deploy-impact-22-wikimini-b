@@ -26,7 +26,7 @@ export async function login(credentials) {
 }
 
 export async function getEditToken() {
-    return wiki.getCsrfToken();
+    return getTokenOfType("csrf");
 }
 
 export async function getAccountCreationToken() {

@@ -104,6 +104,8 @@ async function createNewAccount(credentials = new Credentials()) {
     }).catch(e => {
         if (e.code === userExistsCode) {
             throw Error("User already exists");
+        } else {
+            throw Error("Error while validating signup data" + e);
         }
     });
 
@@ -125,6 +127,7 @@ async function createNewAccount(credentials = new Credentials()) {
             throw Error("Error in creating new user: " + e);
         }
     });
+    // check if PASS and otherwise throw error
     return createAccountResult;
 }
 

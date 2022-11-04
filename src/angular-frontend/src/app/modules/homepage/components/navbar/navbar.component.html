@@ -19,3 +19,8 @@
       <button [routerLink]="['/signup']" class="nav-btn button-shadow">Sign Up</button>
     </div>
 </nav>
+<div class="index">
+  <button *ngFor="let letter of lettersArr">
+    {{letter}}
+  </button>
+</div>

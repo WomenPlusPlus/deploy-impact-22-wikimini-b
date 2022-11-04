@@ -75,6 +75,24 @@ export const doStudentLogin = async (req, res) => {
   }
 };
 
+export const doTeacherLogin = async (req, res) => {
+    try {
+        const {user, password} = req.body;
+        let username = "";
+        if (user.contains("@")) {
+            // is an email, need to find the username
+
+        } else {
+            username = user;
+        }
+        const credentials = new Credentials(username, password);
+        const loginResult = await login(credentials);
+        res.status(200).json(loginResult);
+    } catch (error) {
+        res.status(408).json({ message: error.message });
+    }
+}
+
 async function login(credentials = new Credentials()) {
   const token = await wikiAdapter.getTokenOfType("login");
   const loginResult = await wikiAdapter
@@ -101,17 +119,17 @@ async function createNewAccount(credentials = new Credentials()) {
   const password = credentials.password;
   const email = credentials.email;
 
-  await wikiAdapter
-    .request({
-      action: validatePasswordAction,
-      password: password,
-      user: username,
-      email: email,
-    })
-    .catch((e) => {
-      if (e.code === userExistsCode) {
-        throw Error("User already exists");
-      }
+    await wikiAdapter.request({
+        action: validatePasswordAction,
+        password: password,
+        user: username,
+        email: email,
+    }).catch(e => {
+        if (e.code === userExistsCode) {
+            throw Error("User already exists");
+        } else {
+            throw Error("Error while validating signup data" + e);
+        }
     });
 
   const token = await wikiAdapter.getAccountCreationToken();
@@ -134,7 +152,8 @@ async function createNewAccount(credentials = new Credentials()) {
         throw Error("Error in creating new user: " + e);
       }
     });
-  return createAccountResult;
+    // check if PASS and otherwise throw error
+    return createAccountResult;
 }
 
 async function confirmEmail(

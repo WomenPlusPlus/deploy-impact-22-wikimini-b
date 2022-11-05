@@ -1,17 +1,39 @@
+export async function addArticleUrlToHwTask(articleTitle, articleUrl) {
 
+}
+
+export async function getArticleUrlForHwTask(hwTaskId) {
+
+}
+
+export async function getGradedHwForStudent(username) {
+
+}
+
+export async function getDoneHwForStudent(username) {
+
+}
+
+export async function getLateHwForStudent(username) {
+
+}
+
+export async function getCurrentHwForStudent(username) {
+
+}
 
 // return homework tasks assgined by the teacher of the class with startdate <= today and not marked as done
-export async function getCurrentHwByTeacher(classId) {
+export async function getCurrentHwByClass(classId) {
 
 }
 
 // return homework assigned by teacher of class with startdate > today
-export async function getPlannedHwByTeacher(classId) {
+export async function getPlannedHwByClass(classId) {
 
 }
 
 // return homework assgined by the teacher of the class with startdate <= today and marked as done
-export async function getPastHwByTeacher(classId) {
+export async function getPastHwByClass(classId) {
 
 }
 

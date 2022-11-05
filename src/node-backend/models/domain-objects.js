@@ -37,4 +37,7 @@ export function HwTask(title = "New Homework",
     this.doneDate = false;
     this.gradedDate = false;
     this.status = Status.Assigned;
+    this.hasArticleUrl = false;
+    this.articleUrl = false;
+    this.articleTitle = "No article selected";
 }

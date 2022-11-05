@@ -5,20 +5,13 @@ import { SignupSharedService } from '../../signup-shared.service';
 @Component({
   selector: 'app-wrapper',
   templateUrl: './wrapper.component.html',
-  styleUrls: ['./wrapper.component.css'],
+  styleUrls: ['./wrapper.component.css', '../../shared/signup-styles.css'],
 })
 export class WrapperComponent implements OnInit {
-  constructor(public signupShared: SignupSharedService, public usersServices: UsersServices) {}
+  constructor(
+    public signupShared: SignupSharedService,
+    public usersServices: UsersServices
+  ) {}
 
-  ngOnInit(): void {
-    this.testConnection();
-  }
-
-  testConnection(): void {
-    
-    this.usersServices.testCon().subscribe((res: any) => {
-      console.log(res);      
-    });
-  }
-
+  ngOnInit(): void {}
 }

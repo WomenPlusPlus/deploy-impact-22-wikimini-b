@@ -1,1 +1,69 @@
 /* You can add global styles to this file, and also import other style files */
+
+body {
+  border: none !important;
+  margin: 0px !important;
+  padding: 0 !important;
+}
+
+.button-shadow {
+  align-items: flex-start;
+  align-self: flex-end;
+  background-color: #fcb112 !important;
+  border: 2px solid !important;
+  border-color: eerie-black !important;
+  border-radius: 16px !important;
+  box-shadow: -5px 6px 0px -1px #000000 !important;
+  display: flex;
+  gap: 6px !important;
+  height: 56px !important;
+  overflow: hidden;
+  padding: 13px 20px;
+  width: 116px;
+  letter-spacing: 0;
+  line-height: 25.2px;
+  min-height: 26px;
+  min-width: 45px;
+  white-space: nowrap !important;
+  font-family: "M PLUS 1", serif !important;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 25px;
+}
+
+.button-shadow-wrapper {
+  display: flex;
+  justify-content: end;
+}
+
+.haveAccountLoginButton {
+  /* width: 100%; */
+  display: flex;
+  /* background-color: #24a79d; */
+  justify-content: flex-start;
+  align-content: center;
+  font-family: "M PLUS 1", sans-serif;
+  color: white;
+  padding-left: 10%;
+  width: auto;
+  align-items: baseline;
+}
+
+.logInButton {
+  background: none !important;
+  border: none;
+  padding: 0 !important;
+  font-family: "M PLUS 1", sans-serif;
+  color: #fcb112;
+  font-size: 15px;
+  cursor: pointer;
+  margin-left: 4px;
+  margin-top: 21px;
+  line-height: 0px;
+}
+
+.logInText {
+  text-align: end;
+  text-justify: bottom;
+}

@@ -1,15 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomepageComponent } from './components/homepage/homepage.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import {RouterModule} from '@angular/router';
 
 
 
 @NgModule({
   declarations: [
-    HomepageComponent
+    HomepageComponent,
+    NavbarComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule
   ],
   exports: [
     HomepageComponent

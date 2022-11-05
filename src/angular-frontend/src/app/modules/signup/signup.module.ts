@@ -7,6 +7,7 @@ import { SignupSuccessComponent } from './components/signup-success/signup-succe
 import { SignupEmailConfirmationComponent } from './components/signup-email-confirmation/signup-email-confirmation.component';
 import { SignupPitchComponent } from './components/signup-pitch/signup-pitch.component';
 import { SignupCodeComponent } from './components/signup-code/signup-code.component';
+import {RouterModule} from '@angular/router';
 
 
 
@@ -21,7 +22,8 @@ import { SignupCodeComponent } from './components/signup-code/signup-code.compon
     SignupCodeComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule
   ],
   exports: [
     WrapperComponent,

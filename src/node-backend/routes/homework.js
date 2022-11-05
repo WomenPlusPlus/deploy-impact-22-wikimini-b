@@ -1,5 +1,6 @@
 import express from "express";
 import * as hwController from "../controller/homework-controller.js";
+import {HwTask} from "../models/domain-objects.js";
 export const router = express.Router();
 
 // complete path: /homework/...

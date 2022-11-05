@@ -15,7 +15,7 @@ export async function getPastHwByTeacher(classId) {
 
 }
 
-// add new homework task
+// add new homework task for all students in the class
 export async function addNewHwTask(classId, newHwTask) {
 
 }

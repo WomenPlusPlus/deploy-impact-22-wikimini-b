@@ -1,6 +1,6 @@
 import * as wikiAdapter from "../adapters/wiki-adapter.js";
 import * as dbAdapter from "../adapters/database-adapter.js";
-import {Credentials} from "../models/account-models.js";
+import {Credentials} from "../models/domain-objects.js";
 
 const returnUrl = "http://localhost/mediawiki";
 const teacherUserGroup = "teacher";

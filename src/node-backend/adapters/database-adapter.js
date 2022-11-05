@@ -53,7 +53,7 @@ export async function getTeacherEmail(teacherUsername) {
 }
 
 export async function registerTeacherAuthCode(username, authCode) {
-  try {
-    const teacherAuthCodeQuery = "INSERT INTO"
-  }
+  // try {
+  //   // const teacherAuthCodeQuery = "INSERT INTO"
+  // }
 }

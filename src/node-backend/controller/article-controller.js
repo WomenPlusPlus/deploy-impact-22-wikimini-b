@@ -1,3 +1,19 @@
-export async function searchArticles(searchTerm) {
+export async function approveArticle(articleTitle) {
     
+}
+
+export async function createArticle(articleTitle) {
+    
+}
+
+export async function lockArticle(articleTitle) {
+    
+}
+
+export async function getHtmlArticle(articleTitle) {
+    
+}
+
+export async function searchArticles(searchTerm) {
+
 }

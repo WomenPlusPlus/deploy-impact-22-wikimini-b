@@ -2,7 +2,6 @@ import * as wikiAdapter from "../adapters/wiki-adapter.js";
 import * as dbAdapter from "../adapters/database-adapter.js";
 import * as emailAdapter from "../adapters/email-adapter.js";
 import {Credentials} from "../models/account-models.js";
-import {registerTeacherAuthCode} from "../adapters/database-adapter.js";
 
 const returnUrl = "http://localhost/mediawiki";
 const teacherUserGroup = "teacher";
@@ -17,10 +16,10 @@ export const doTeacherSignUp = async (req, res) => {
     try {
         const {username, password, email} = req.body;
         const credentials = new Credentials(username, password, email);
+        await dbAdapter.registerTeacher(username, email);
         const teacherSignUpResult = await createNewAccount(credentials);
-        const registerAsTeacherResult = await registerUserAsTeacher(credentials);
         const emailSent = await sendTeacherConfirmationMail(username, email);
-        if (teacherSignUpResult[createAccountAction]["status"] === "PASS" && registerAsTeacherResult && emailSent) {
+        if (teacherSignUpResult[createAccountAction]["status"] === "PASS" && emailSent) {
             res.status(200).json(teacherSignUpResult);
         } else {
             res.status(405).json(teacherSignUpResult[createAccountAction]);
@@ -33,8 +32,14 @@ export const doTeacherSignUp = async (req, res) => {
 export const confirmTeacherAccount = async (req, res) => {
     try {
         const {username, authCode} = req.body;
-        const confirmationResult = await confirmEmail(username, authCode);
-        res.status(200).json(confirmationResult);
+        const savedCode = await dbAdapter.getTeacherAuthCode(username);
+        if (savedCode === authCode) {
+            await dbAdapter.registerTeacherAsVerified(username);
+            await registerUserAsTeacher(username);
+            res.status(200).json("VALID");
+        } else {
+            throw Error("Email for user " + username + "could not be confirmed");
+        }
     } catch (error) {
         res.status(406).json({message: error.message });
     }
@@ -115,10 +120,9 @@ async function createNewAccount(credentials = new Credentials()) {
     });
 
     const token = await wikiAdapter.getAccountCreationToken();
-    const createAccountResult = await wikiAdapter.request({
+    return wikiAdapter.request({
         action: createAccountAction,
         username: username,
-        // mailpassword: true,
         password: password,
         retype: password,
         email: email,
@@ -132,39 +136,32 @@ async function createNewAccount(credentials = new Credentials()) {
             throw Error("Error in creating new user: " + e);
         }
     });
-    return createAccountResult;
-}
-
-async function confirmEmail(username, authCode) {
-
 }
 
 export async function sendTeacherConfirmationMail(username, email) {
     const authCode = Math.floor(Math.random() * 100000);
-    // const authCodeRegistered = await dbAdapter.registerTeacherAuthCode(authCode);
-    // if (!authCodeRegistered) {
-    //     throw Error("Problem while saving auth code to database");
-    // }
+    const authCodeRegistered = await dbAdapter.registerTeacherAuthCode(username, authCode);
+    if (!authCodeRegistered) {
+        throw Error("Problem while saving auth code to database");
+    }
     const subject = "Confirm your Wikimini account";
     const text = "Hello " + username + ", \nPlease confirm the account you just created on Wikimini by clicking on the following link: \n\n"
         + process.env.WEB_URL + "&username=" + username + "&authCode=" + authCode;
     return emailAdapter.sendEmail(email, subject, text);
 }
 
-async function registerUserAsTeacher(credentials = new Credentials()) {
-    // either: login with a bot account that has the right to change usergroups (safety issue?),
-    // or give every newly created user the possibility to change usergroups (doesn't seem like a good idea)
-    await wikiAdapter.login(credentials);
-    const token = await wikiAdapter.getEditToken();
+async function registerUserAsTeacher(username) {
+    // login with a bot account that has the right to change usergroups (safety issue?),
+    const token = await wikiAdapter.getLocalEditToken();
     await wikiAdapter.request({
         action: userRightsAction,
-        user: credentials.username,
+        user: username,
         add: teacherUserGroup,
         reason: "New teacher's account creation",
         token: token
     }).then(response => {
         if (response.userrights.added[0] === teacherUserGroup) {
-            return true; // should be useful for frontend
+            return true;
         } else {
             throw Error("Error while trying to register the account as a teacher's account: " + response.userrights); // should have a nicer format
         }

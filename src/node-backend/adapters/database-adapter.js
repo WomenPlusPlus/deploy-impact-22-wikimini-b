@@ -44,16 +44,54 @@ export async function verifyCode(studentCode) {
 export async function getTeacherEmail(teacherUsername) {
   try {
     const teacherEmailQuery = "SELECT teachers.email FROM teachers WHERE teachers.username=?";
-    const queryResult = await pool.query(teacherEmailQuery, teacherUsername);
-    return queryResult;
+    return pool.query(teacherEmailQuery, teacherUsername);
   } catch (error) {
     console.error("Error while trying to retrieve teachers email: " + error);
     throw error;
   }
 }
 
+export async function registerTeacher(username, email) {
+  try {
+    const insertTeacherQuery = "INSERT INTO `teachers`(`username`, `email`) VALUES ('" + username + "','" + email + "')";
+    return pool.query(insertTeacherQuery);
+  } catch (error) {
+    console.error("Error while trying to register teacher in database: " + error);
+    throw error;
+  }
+}
+
 export async function registerTeacherAuthCode(username, authCode) {
-  // try {
-  //   // const teacherAuthCodeQuery = "INSERT INTO"
-  // }
+  try {
+    const insertAuthCodeQuery = "INSERT INTO `teacherAuth`(`username`, `authCode`) VALUES ('" + username + "','" + authCode + "')";
+    return pool.query(insertAuthCodeQuery);
+  } catch (error) {
+    console.error("Error while trying to store teacher authentication code: " + error);
+    throw error;
+  }
+}
+
+export async function registerTeacherAsVerified(username) {
+  try {
+    const updateTeacherQuery = "UPDATE `teachers` SET `isVerified`=1 WHERE `username`=?";
+    return pool.query(updateTeacherQuery, username);
+  } catch (error) {
+    console.error("Error while trying to register teacher as verified in db: " + error);
+    throw error;
+  }
+}
+
+export async function getTeacherAuthCode(username) {
+  try {
+    const teacherAuthQuery = "SELECT `authCode` FROM `teacherAuth` WHERE `teacherAuth`.`username`=?";
+    const result = await pool.query(teacherAuthQuery, username);
+    if (result.length === 1) {
+      return result[0]["authCode"];
+    } else {
+      throw Error("Error while trying to verify authentication code");
+    }
+  } catch (error) {
+    console.error("Error while trying to retrieve authentication code: " + error);
+    throw error;
+  }
 }

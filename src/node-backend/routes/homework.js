@@ -6,6 +6,7 @@ export const router = express.Router();
 // complete path: /homework/...
 
 // get current homework for a teacher: needs classId as {classId}
+// returns HwTask list
 router.post('/currentHwByClass', async function (req, res) {
     try {
         const {classId} = req.body;
@@ -17,6 +18,7 @@ router.post('/currentHwByClass', async function (req, res) {
 });
 
 // get planned homework for a teacher: needs classId as {classId}
+// returns HwTask list
 router.post('/plannedHwByClass', async function (req, res) {
     try {
         const {classId} = req.body;
@@ -28,6 +30,7 @@ router.post('/plannedHwByClass', async function (req, res) {
 });
 
 // get past homework for a teacher: needs classId as {classId}
+// returns HwTask list
 router.post('/pastHwByClass', async function (req, res) {
     try {
         const {classId} = req.body;
@@ -39,6 +42,7 @@ router.post('/pastHwByClass', async function (req, res) {
 });
 
 // get current homework for a student: needs student username as {username}
+// returns HwTask object
 router.post('/currentHwForStudent', async function (req, res) {
     try {
         const {username} = req.body;
@@ -50,6 +54,7 @@ router.post('/currentHwForStudent', async function (req, res) {
 });
 
 // get overdue homework for a student: needs student username as {username}
+// returns HwTask object
 router.post('/lateHwForStudent', async function (req, res) {
     try {
         const {username} = req.body;
@@ -61,6 +66,7 @@ router.post('/lateHwForStudent', async function (req, res) {
 });
 
 // get done homework for student: needs student username as {username}
+// returns HwTask object
 router.post('/doneHwForStudent', async function (req, res) {
     try {
         const {username} = req.body;

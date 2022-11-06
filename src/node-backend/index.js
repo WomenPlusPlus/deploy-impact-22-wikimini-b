@@ -28,7 +28,7 @@ app.use("/user", users.router);
 app.use("/accounts", accounts.router);
 app.use("/classrooms", classrooms.router);
 app.use("/homework", homework.router);
-app.use("articles", articles.router);
+app.use("/articles", articles.router);
 
 /**Start listening */
 app.listen(port, () => {

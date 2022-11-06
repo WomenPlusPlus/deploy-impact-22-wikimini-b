@@ -27,7 +27,7 @@ router.post('/getArticle', async function (req, res) {
     }
 });
 
-// lock article (needed?, how to implement?)
+// lock article for editing (how to implement?)
 router.post('/lockArticle', async function (req, res) {
     try {
         const {articleTitle} = req.body;

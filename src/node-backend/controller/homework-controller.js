@@ -1,10 +1,25 @@
 import {TeacherHwList} from "../models/domain-objects.js";
 
-export async function addArticleUrlToHwTask(articleTitle, articleUrl) {
+export async function gradeHwTask(taskId, gradings) {
 
 }
 
-export async function getArticleUrlForHwTask(hwTaskId) {
+
+export async function updateHwTaskStatus(taskId, newStatus, datetime) {
+
+}
+
+
+export async function editHwTask(taskId, taskWithUpdates) {
+
+}
+
+
+export async function updateArticleTitleForHwTask(articleTitle, articleUrl) {
+
+}
+
+export async function getHwTask(hwTaskId) {
 
 }
 
@@ -20,7 +35,7 @@ export async function getLateHwForStudent(username) {
 
 }
 
-export async function getCurrentHwForStudent(username) {
+export async function getHwForStudent(username) {
 
 }
 
@@ -33,11 +48,11 @@ export async function getHwByClass(classId) {
 }
 
 // add new homework task for all students in the class
-export async function addNewHwTask(classId, newHwTask) {
+export async function addNewHwTaskForClass(classId, newHwTask) {
 
 }
 
 // add new grading category
-export async function addGradingCategory(topic, newGradingCategory) {
+export async function addGradingCategory(newGradingCategory) {
 
 }

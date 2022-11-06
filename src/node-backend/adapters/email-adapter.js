@@ -8,12 +8,16 @@ const mailTransporter = mailer.createTransport({
   }
 });
 
-export async function sendTextEmail(receiverEmail, subject, textContent) {
+// const html1 = '<body style="background-color:#9cfd99"><p style="color:#000000;">';
+// const html2 = '</p></body>';
+
+export async function sendEmail(receiverEmail, subject, textContent) {
     let mailDetails = {
         from: process.env.EMAIL_USER,
         to: receiverEmail,
         subject: subject,
-        text: textContent
+        text: textContent,
+        // html: textContent
     };
     mailTransporter.sendMail(mailDetails, function(err, data) {
         if(err) {
@@ -25,6 +29,7 @@ export async function sendTextEmail(receiverEmail, subject, textContent) {
         }
     });
 }
+
 
 
 

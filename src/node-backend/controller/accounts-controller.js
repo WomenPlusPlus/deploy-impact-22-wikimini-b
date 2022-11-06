@@ -139,16 +139,16 @@ async function confirmEmail(username, authCode) {
 
 }
 
-async function sendTeacherConfirmationMail(username, email) {
+export async function sendTeacherConfirmationMail(username, email) {
     const authCode = Math.floor(Math.random() * 100000);
-    const authCodeRegistered = await dbAdapter.registerTeacherAuthCode(authCode);
-    if (!authCodeRegistered) {
-        throw Error("Problem while saving auth code to database");
-    }
+    // const authCodeRegistered = await dbAdapter.registerTeacherAuthCode(authCode);
+    // if (!authCodeRegistered) {
+    //     throw Error("Problem while saving auth code to database");
+    // }
     const subject = "Confirm your Wikimini account";
     const text = "Hello " + username + ", \nPlease confirm the account you just created on Wikimini by clicking on the following link: \n\n"
-        + process.env.WEB_URL + "&authCode=" + authCode;
-    return emailAdapter.sendTextEmail(email, subject, text);
+        + process.env.WEB_URL + "&username=" + username + "&authCode=" + authCode;
+    return emailAdapter.sendEmail(email, subject, text);
 }
 
 async function registerUserAsTeacher(credentials = new Credentials()) {

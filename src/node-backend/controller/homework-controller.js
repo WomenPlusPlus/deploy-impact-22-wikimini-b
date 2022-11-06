@@ -1,3 +1,5 @@
+import {TeacherHwList} from "../models/domain-objects.js";
+
 export async function addArticleUrlToHwTask(articleTitle, articleUrl) {
 
 }
@@ -22,19 +24,12 @@ export async function getCurrentHwForStudent(username) {
 
 }
 
-// return homework tasks assgined by the teacher of the class with startdate <= today and not marked as done
-export async function getCurrentHwByClass(classId) {
-
-}
-
-// return homework assigned by teacher of class with startdate > today
-export async function getPlannedHwByClass(classId) {
-
-}
-
-// return homework assgined by the teacher of the class with startdate <= today and marked as done
-export async function getPastHwByClass(classId) {
-
+// returns three lists inside the TeacherHwList() object
+export async function getHwByClass(classId) {
+    // return homework tasks assgined by the teacher of the class with startdate <= today and not marked as done
+    // return homework assigned by teacher of class with startdate > today
+    // return homework assgined by the teacher of the class with startdate <= today and marked as done
+    return new TeacherHwList();
 }
 
 // add new homework task for all students in the class

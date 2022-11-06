@@ -22,6 +22,12 @@ export const Topic = {
     Subject: "Subject understanding"
 }
 
+export function TeacherHwList(currentHw, plannedHw, pastHw) {
+    this.current = currentHw;
+    this.planned = plannedHw;
+    this.past = pastHw;
+}
+
 //extend if necessary
 export function HwTask(title = "New Homework",
                        description = "New homework description", teacher, student,

@@ -6,38 +6,14 @@ export const router = express.Router();
 // complete path: /homework/...
 
 // get current homework for a teacher: needs classId as {classId}
-// returns HwTask list
-router.post('/currentHwByClass', async function (req, res) {
+// returns HwTask lists as domain-objects.TeacherHwList {current: [hwTasks], planned: [hwTasks], past: [hwTasks]}
+router.post('/hwByClass', async function (req, res) {
     try {
         const {classId} = req.body;
-        const result = await hwController.getCurrentHwByClass(classId);
+        const result = await hwController.getHwByClass(classId);
         res.status(200).json(result);
     } catch (error) {
         res.status(409).json({ message: error.message });
-    }
-});
-
-// get planned homework for a teacher: needs classId as {classId}
-// returns HwTask list
-router.post('/plannedHwByClass', async function (req, res) {
-    try {
-        const {classId} = req.body;
-        const result = await hwController.getPlannedHwByClass(classId);
-        res.status(200).json(result);
-    } catch (error) {
-        res.status(410).json({ message: error.message });
-    }
-});
-
-// get past homework for a teacher: needs classId as {classId}
-// returns HwTask list
-router.post('/pastHwByClass', async function (req, res) {
-    try {
-        const {classId} = req.body;
-        const result = await hwController.getPastHwByClass(classId);
-        res.status(200).json(result);
-    } catch (error) {
-        res.status(411).json({ message: error.message });
     }
 });
 
@@ -54,7 +30,7 @@ router.post('/currentHwForStudent', async function (req, res) {
 });
 
 // get overdue homework for a student: needs student username as {username}
-// returns HwTask object
+// returns HwTask list
 router.post('/lateHwForStudent', async function (req, res) {
     try {
         const {username} = req.body;
@@ -66,7 +42,7 @@ router.post('/lateHwForStudent', async function (req, res) {
 });
 
 // get done homework for student: needs student username as {username}
-// returns HwTask object
+// returns HwTask list
 router.post('/doneHwForStudent', async function (req, res) {
     try {
         const {username} = req.body;

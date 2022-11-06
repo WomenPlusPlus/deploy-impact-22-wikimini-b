@@ -95,3 +95,18 @@ export async function getTeacherAuthCode(username) {
     throw error;
   }
 }
+
+export async function getTeacherInfo(user) {
+  try {
+    const teacherUsernameQuery = "SELECT `username`, `email`, `isVerified` FROM `teachers` WHERE `teachers`.`username`='" + user + "' OR `teachers`.`email`='" + user + "'";
+    const result = await pool.query(teacherUsernameQuery);
+    if (result.length === 1) {
+      return result[0];
+    } else {
+      throw Error("Error while trying to find teacher with the provided login credentials");
+    }
+  } catch (error) {
+    console.error("Error while trying to retrieve user: " + error);
+    throw error;
+  }
+}

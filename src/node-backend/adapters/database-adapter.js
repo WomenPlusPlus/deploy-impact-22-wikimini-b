@@ -1,23 +1,16 @@
 import {pool} from "./database-connection.js";
 
-// not tested yet, to do when focusing on classroom
-export async function addStudentCodes(teacherUsername, className, studentCodes, studentNames) {
+export async function addStudentCodes(classId, studentInfos) {
   try {
-    // queries to be tested
-    const getTeacherAndClassQuery = "SELECT teachers.id, classrooms.id FROM teachers, classrooms " +
-        "WHERE classrooms.teacherUsername=teachers.username and teachers.username=" + teacherUsername + " and classrooms.name=" + className;
-    const ids = await pool.query(getTeacherAndClassQuery);
-    const {teacherUsername, classID} = ids.values;
-    let insertStudentCodeQuery = "INSERT INTO `studentcodes`(`teacherUsername`,`classID`,`studentCode`) VALUES (";
+    let insertStudentCodeQuery = "INSERT INTO `classroomcodes`(`classID`,`studentJoinCode`,`studentFullName`,`parentEmail`) VALUES ";
     let values = "";
-    studentCodes.forEach(code => {
-      let row = "(" + teacherUsername + ", " + classID + ", " + code + "), ";
+    studentInfos.forEach(student => {
+      let row = "('" + classId + "', '" + student.joinCode + "', '" + student.fullName + "', '" + student.email + "'), ";
       values += row;
     });
-    values.substring(0, values.length-2); // remove last comma
-    values += ")"; //close bracket
+    values  = values.slice(0, -2); // remove last comma
     insertStudentCodeQuery += values;
-    return pool.execute(insertStudentCodeQuery);
+    return pool.query(insertStudentCodeQuery);
   } catch (error) {
     console.error("Error while storing student codes: " + error);
     return error;

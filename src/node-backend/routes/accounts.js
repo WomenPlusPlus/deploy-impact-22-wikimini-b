@@ -15,3 +15,6 @@ router.post('/studentSignup', accountsController.doStudentSignUp);
 
 // students log in: needs {username, password}
 router.post('/studentLogin', accountsController.doStudentLogin);
+
+// teachers log in: needs {username or email, password}
+router.post('/teacherLogin', accountsController.doTeacherLogin);

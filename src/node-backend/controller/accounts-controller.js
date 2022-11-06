@@ -82,6 +82,24 @@ export const doStudentLogin = async (req, res) => {
     }
 }
 
+export const doTeacherLogin = async (req, res) => {
+    try {
+        const {user, password} = req.body;
+        let username = "";
+        if (user.contains("@")) {
+            // is an email, need to find the username
+
+        } else {
+            username = user;
+        }
+        const credentials = new Credentials(username, password);
+        const loginResult = await login(credentials);
+        res.status(200).json(loginResult);
+    } catch (error) {
+        res.status(408).json({ message: error.message });
+    }
+}
+
 async function login(credentials = new Credentials()) {
     const token = await wikiAdapter.getTokenOfType("login");
     const loginResult = await wikiAdapter.request({

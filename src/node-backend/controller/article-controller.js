@@ -1,3 +1,7 @@
+export async function saveArticle(articleTitle) {
+
+}
+
 export async function approveArticle(articleTitle) {
     
 }

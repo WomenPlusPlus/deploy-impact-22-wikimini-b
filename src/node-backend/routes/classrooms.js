@@ -1,5 +1,5 @@
 import express from "express";
-import * as signupController from "../controller/classroom-controller.js";
+
 export const router = express.Router();
 
 
@@ -7,10 +7,10 @@ export const router = express.Router();
 
 // (request class list upload, pass file?, return list of student names (and maybe emails))
 
-// save list of students?
+// save list of students -> a list of student names and mail addresses and a class ID
 
-// send personal codes via email
+// send personal codes via email, pass classId
 
-// download personal code sheet (return file?)
+// download personal code sheet (return file?) -> to be checked, pass classId
 
 //

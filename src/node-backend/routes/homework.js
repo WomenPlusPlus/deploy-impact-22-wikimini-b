@@ -111,6 +111,8 @@ router.post('/addArticleUrlToHwTask', async function (req, res) {
     }
 });
 
+// edit homework task
+
 // add new homework task: needs {classId, title, description, gradingCategories, startDate, dueDate}
 // gradingCategories: {{topic = "Language": {category1, category2,...}}, {topic = "Media": {cat1, cat2}}?
 router.post('/addNewHw', async function (req, res) {

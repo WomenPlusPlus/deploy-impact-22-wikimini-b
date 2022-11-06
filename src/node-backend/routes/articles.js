@@ -5,7 +5,7 @@ export const router = express.Router();
 // complete path: /articles/...
 
 // get article search results for search term, needs max number of results as resultLimit and search term as {searchTerm, resultLimit}
-// format: [{title, articleUrl}, {title, articleUrl}, ...]
+// format: [title1, title2, title3]
 router.post('/searchArticles', async function (req, res) {
     try {
         const {searchTerm} = req.body;
@@ -16,7 +16,7 @@ router.post('/searchArticles', async function (req, res) {
     }
 });
 
-// get article (title or url?)
+// get article (title), return html
 router.post('/getArticle', async function (req, res) {
     try {
         const {articleTitle} = req.body;
@@ -61,7 +61,7 @@ router.post('/createArticle', async function (req, res) {
 });
 
 // approve and publish article
-router.post('approveArticle', async function (req, res) {
+router.post('/approveArticle', async function (req, res) {
     try {
         const {articleTitle} = req.body;
         const result = await articleController.approveArticle(articleTitle);

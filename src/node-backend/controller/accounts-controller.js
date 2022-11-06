@@ -47,22 +47,20 @@ export const confirmTeacherAccount = async (req, res) => {
 export const doStudentSignUp = async (req, res) => {
     try {
         const {username, password, code} = req.body;
-        // verify student code
         const studentInfos = await dbAdapter.verifyCode(code);
         // if valid, register student to classroom and teacher
         if (studentInfos.valid) {
             // invalidate code
-            // dbAdapter.markCodeAsUsed(code);
+            await dbAdapter.markCodeAsUsed(code);
             // add student to our db
-            // dbAdapter.addStudent(username, studentInfos.result["assignedName"]);
+            await dbAdapter.addStudent(username, studentInfos.result["assignedName"]);
             // register student to classroom
-            // dbAdapter.enrollStudentInClass(username, className);
+            await dbAdapter.enrollStudentInClass(username, studentInfos.result["id"]);
         } else {
             throw Error("The signup code is not valid");
         }
         // get teacher email
-        // const email = dbAdapter.getTeacherEmailForClass(className);
-        let email = "thewikifactory@gmail.com";
+        const email = dbAdapter.getTeacherEmailForClass(studentInfos.result["id"]);
         const credentials = new Credentials(username, password, email);
         const studentSignUpResult = await createNewAccount(credentials);
         res.status(200).json(studentSignUpResult);

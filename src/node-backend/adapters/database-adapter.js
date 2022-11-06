@@ -30,7 +30,7 @@ export async function verifyCode(studentCode) {
     throw Error("Student code has to be 5 characters long");
   }
   try {
-    const checkCodeQuery = "SELECT teachers.username, classrooms.name, classroomCodes.studentFullName, classroomCodes.used FROM teachers, classrooms, classroomCodes " +
+    const checkCodeQuery = "SELECT teachers.username, classrooms.id, classroomCodes.studentFullName, classroomCodes.used FROM teachers, classrooms, classroomCodes " +
         "WHERE teachers.username=classroomCodes.teacherUsername and classrooms.id=classroomCodes.classID and classroomCodes.studentJoinCode=?";
     const queryResult = await pool.query(checkCodeQuery, studentCode);
     const valid = (queryResult.length === 1) && (queryResult[0]["used"] === false);
@@ -41,12 +41,42 @@ export async function verifyCode(studentCode) {
   }
 }
 
-export async function getTeacherEmail(teacherUsername) {
+export async function getTeacherEmailForClass(classId) {
   try {
-    const teacherEmailQuery = "SELECT teachers.email FROM teachers WHERE teachers.username=?";
-    return pool.query(teacherEmailQuery, teacherUsername);
+    const teacherEmailQuery = "SELECT teachers.email FROM teachers, classrooms WHERE teachers.username=classrooms.teacherUsername AND classrooms.id=?";
+    return await pool.query(teacherEmailQuery, classId);
   } catch (error) {
-    console.error("Error while trying to retrieve teachers email: " + error);
+    console.error("Error while trying to retrieve teachers email for the given class: " + error);
+    throw error;
+  }
+}
+
+export async function markCodeAsUsed(code) {
+  try {
+    const updateJoinCodeAsUsed = "UPDATE `classroomcodes` SET `codeUsed`=1 WHERE `studentJoinCode`=?";
+    return pool.query(updateJoinCodeAsUsed, code);
+  } catch (error) {
+    console.error("Error while trying to mark student signup code as used: " + error);
+    throw error;
+  }
+}
+
+export async function addStudent(username, fullName) {
+  try {
+    const insertStudentQuery = "INSERT INTO `students`(`username`, `fullName`) VALUES ('" + username + "','" + fullName + "')";
+    return pool.query(insertStudentQuery);
+  } catch (error) {
+    console.error("Error while trying to register student in database: " + error);
+    throw error;
+  }
+}
+
+export async function enrollStudentInClass(username, classId) {
+  try {
+    const enrollStudentQuery = "INSERT INTO `classesEnrolled`(`classId`, `username`) VALUES ('" + classId + "','" + username + "')";
+    return pool.query(enrollStudentQuery);
+  } catch (error) {
+    console.error("Error while trying to enroll student in class: " + error);
     throw error;
   }
 }

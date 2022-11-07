@@ -63,8 +63,8 @@ export async function markCodeAsUsed(code) {
 
 export async function addStudent(username, fullName) {
   try {
-    const insertStudentQuery = "INSERT INTO `students`(`username`, `fullName`) VALUES ('" + username + "','" + fullName + "')";
-    return pool.query(insertStudentQuery);
+    const insertStudentQuery = "INSERT INTO `students`(`username`, `fullName`) VALUES (?,?)";
+    return pool.query(insertStudentQuery, [username, fullName]);
   } catch (error) {
     console.error("Error while trying to register student in database: " + error);
     throw error;
@@ -73,8 +73,8 @@ export async function addStudent(username, fullName) {
 
 export async function enrollStudentInClass(username, classId) {
   try {
-    const enrollStudentQuery = "INSERT INTO `classesEnrolled`(`classId`, `username`) VALUES ('" + classId + "','" + username + "')";
-    return pool.query(enrollStudentQuery);
+    const enrollStudentQuery = "INSERT INTO `classesEnrolled`(`classId`, `username`) VALUES (?,?)";
+    return pool.query(enrollStudentQuery, [classId, username]);
   } catch (error) {
     console.error("Error while trying to enroll student in class: " + error);
     throw error;
@@ -83,8 +83,8 @@ export async function enrollStudentInClass(username, classId) {
 
 export async function registerTeacher(username, email) {
   try {
-    const insertTeacherQuery = "INSERT INTO `teachers`(`username`, `email`) VALUES ('" + username + "','" + email + "')";
-    return pool.query(insertTeacherQuery);
+    const insertTeacherQuery = "INSERT INTO `teachers`(`username`, `email`) VALUES (?,?)";
+    return pool.query(insertTeacherQuery, [username, email]);
   } catch (error) {
     console.error("Error while trying to register teacher in database: " + error);
     throw error;
@@ -93,8 +93,8 @@ export async function registerTeacher(username, email) {
 
 export async function registerTeacherAuthCode(username, authCode) {
   try {
-    const insertAuthCodeQuery = "INSERT INTO `teacherAuth`(`username`, `authCode`) VALUES ('" + username + "','" + authCode + "')";
-    return pool.query(insertAuthCodeQuery);
+    const insertAuthCodeQuery = "INSERT INTO `teacherAuth`(`username`, `authCode`) VALUES (?,?)";
+    return pool.query(insertAuthCodeQuery, [username, authCode]);
   } catch (error) {
     console.error("Error while trying to store teacher authentication code: " + error);
     throw error;
@@ -128,8 +128,8 @@ export async function getTeacherAuthCode(username) {
 
 export async function getTeacherInfo(user) {
   try {
-    const teacherUsernameQuery = "SELECT `username`, `email`, `isVerified` FROM `teachers` WHERE `teachers`.`username`='" + user + "' OR `teachers`.`email`='" + user + "'";
-    const result = await pool.query(teacherUsernameQuery);
+    const teacherUsernameQuery = "SELECT `username`, `email`, `isVerified` FROM `teachers` WHERE `teachers`.`username`=? OR `teachers`.`email`=?";
+    const result = await pool.query(teacherUsernameQuery, [user, user]);
     if (result.length === 1) {
       return result[0];
     } else {

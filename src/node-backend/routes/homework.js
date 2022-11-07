@@ -52,7 +52,7 @@ router.post('/updateArticleTitleForHwTask', async function (req, res) {
 });
 
 // edit homework task (by teacher): {taskId, title, description, gradingCategories, startDate, dueDate}
-router.post('/updateArticleTitleToHwTask', async function (req, res) {
+router.post('/updateHwTask', async function (req, res) {
     try {
         const {taskId, title, description, gradingCategories, startDate, dueDate} = req.body;
         const taskWithUpdates = new HwTask(title, description, gradingCategories, startDate, dueDate);

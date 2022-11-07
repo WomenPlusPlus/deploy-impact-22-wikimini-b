@@ -21,8 +21,10 @@ router.post('/saveStudents', async function (req, res) {
     }
 });
 
+// return list of students and emails (list of JoiningStudent() objects) to frontend, should that include the signup codes?
+
 // send personal codes via email, pass classId
 
-// download personal code sheet (return file?) -> to be checked, pass classId
+// download personal code sheet (return file?) -> to be checked by frontend what we need, pass classId
 
 //

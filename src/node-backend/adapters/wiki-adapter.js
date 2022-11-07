@@ -1,5 +1,6 @@
 import {mwn} from "mwn";
 import * as dotenv from 'dotenv'
+
 dotenv.config()
 
 const wiki = await mwn.init({
@@ -17,16 +18,16 @@ export async function request(params) {
     return wiki.request(params);
 }
 
-export function overwriteToken(token) {
-    wiki.csrfToken = token;
-}
-
 export async function login(credentials) {
     return wiki.login(credentials);
 }
 
 export async function getEditToken() {
     return getTokenOfType("csrf");
+}
+
+export async function getLocalEditToken() {
+    return wiki.getCsrfToken();
 }
 
 export async function getAccountCreationToken() {
@@ -39,6 +40,5 @@ export async function getTokenOfType(type) {
         meta: "tokens",
         type: type
     });
-    const token = tokenResponse.query.tokens[type + "token"];
-    return token;
+    return tokenResponse.query.tokens[type + "token"];
 }

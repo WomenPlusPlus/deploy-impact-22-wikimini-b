@@ -1,7 +1,6 @@
 import * as wikiAdapter from "../adapters/wiki-adapter.js";
 import * as dbAdapter from "../adapters/database-adapter.js";
-import * as emailAdapter from "../adapters/email-adapter.js";
-import {Credentials} from "../models/domain-objects.js";
+import { Credentials } from "../models/account-models.js";
 
 const returnUrl = "http://localhost/mediawiki";
 const teacherUserGroup = "teacher";
@@ -13,72 +12,68 @@ const createAccountAction = "createaccount";
 const loginAction = "clientlogin";
 
 export const doTeacherSignUp = async (req, res) => {
-    try {
-        const {username, password, email} = req.body;
-        const credentials = new Credentials(username, password, email);
-        await dbAdapter.registerTeacher(username, email);
-        const teacherSignUpResult = await createNewAccount(credentials);
-        const emailSent = await sendTeacherConfirmationMail(username, email);
-        if (teacherSignUpResult[createAccountAction]["status"] === "PASS" && emailSent) {
-            res.status(200).json(teacherSignUpResult);
-        } else {
-            res.status(405).json(teacherSignUpResult[createAccountAction]);
-        }
-    } catch (error) {
-        res.status(405).json({ message: error.message });
-    }
-
-}
+  try {
+    const { username, password, email } = req.body;
+    const credentials = new Credentials(username, password, email);
+    const teacherSignUpResult = await createNewAccount(credentials);
+    res.status(200).json({ success: true, res: teacherSignUpResult });
+  } catch (error) {
+    res.status(405).json({ success: false, res: error.message });
+  }
+};
 export const confirmTeacherAccount = async (req, res) => {
-    try {
-        const {username, authCode} = req.body;
-        const savedCode = await dbAdapter.getTeacherAuthCode(username);
-        if (savedCode === authCode) {
-            await dbAdapter.registerTeacherAsVerified(username);
-            await registerUserAsTeacher(username);
-            res.status(200).json("VALID");
-        } else {
-            throw Error("Email for user " + username + "could not be confirmed");
-        }
-    } catch (error) {
-        res.status(406).json({message: error.message });
-    }
-}
+  try {
+    const { emailConfToken, username, password, email, chosenName } = req.body;
+    const credentials = new Credentials(username, password, email);
+    const confirmationResult = await confirmEmail(
+      emailConfToken,
+      credentials,
+      chosenName
+    );
+    const registerAsTeacherResult = await registerUserAsTeacher(credentials);
+    // join results
+    res.status(200).json(confirmationResult);
+  } catch (error) {
+    res.status(406).json({ message: error.message });
+  }
+};
 export const doStudentSignUp = async (req, res) => {
-    try {
-        const {username, password, code} = req.body;
-        const studentInfos = await dbAdapter.verifyCode(code);
-        // if valid, register student to classroom and teacher
-        if (studentInfos.valid) {
-            // invalidate code
-            await dbAdapter.markCodeAsUsed(code);
-            // add student to our db
-            await dbAdapter.addStudent(username, studentInfos.result["assignedName"]);
-            // register student to classroom
-            await dbAdapter.enrollStudentInClass(username, studentInfos.result["id"]);
-        } else {
-            throw Error("The signup code is not valid");
-        }
-        // get teacher email
-        const email = dbAdapter.getTeacherEmailForClass(studentInfos.result["id"]);
-        const credentials = new Credentials(username, password, email);
-        const studentSignUpResult = await createNewAccount(credentials);
-        res.status(200).json(studentSignUpResult);
-    } catch (error) {
-        res.status(407).json({ message: error.message });
+  try {
+    const { username, password, code } = req.body;
+    // verify student code
+    const studentInfos = await dbAdapter.verifyCode(code);
+    // if valid, register student to classroom and teacher
+    if (studentInfos.valid) {
+      // invalidate code
+      // dbAdapter.markCodeAsUsed(code);
+      // add student to our db
+      // dbAdapter.addStudent(username, studentInfos.result["assignedName"]);
+      // register student to classroom
+      // dbAdapter.enrollStudentInClass(username, className);
+    } else {
+      throw Error("The signup code is not valid");
     }
-}
+    // get teacher email
+    // const email = dbAdapter.getTeacherEmailForClass(className);
+    let email = "thewikifactory@gmail.com";
+    const credentials = new Credentials(username, password, email);
+    const studentSignUpResult = await createNewAccount(credentials);
+    res.status(200).json(studentSignUpResult);
+  } catch (error) {
+    res.status(407).json({ message: error.message });
+  }
+};
 
 export const doStudentLogin = async (req, res) => {
-    try {
-        const {username, password} = req.body;
-        const credentials = new Credentials(username, password);
-        const loginResult = await login(credentials);
-        res.status(200).json(loginResult);
-    } catch (error) {
-        res.status(408).json({ message: error.message });
-    }
-}
+  try {
+    const { username, password } = req.body;
+    const credentials = new Credentials(username, password);
+    const loginResult = await login(credentials);
+    res.status(200).json(loginResult);
+  } catch (error) {
+    res.status(408).json({ message: error.message });
+  }
+};
 
 export const doTeacherLogin = async (req, res) => {
     try {
@@ -96,28 +91,30 @@ export const doTeacherLogin = async (req, res) => {
 }
 
 async function login(credentials = new Credentials()) {
-    const token = await wikiAdapter.getTokenOfType("login");
-    const loginResult = await wikiAdapter.request({
-        action: loginAction,
-        username: credentials.username,
-        password: credentials.password,
-        logintoken: token,
-        loginreturnurl: returnUrl,
-    }).catch((e) => {
-        if (e.code === noSuchUserCode) {
-            throw Error("No such user exists, can't login");
-        } else {
-            throw Error("Error while trying to log in: " + e);
-        }
+  const token = await wikiAdapter.getTokenOfType("login");
+  const loginResult = await wikiAdapter
+    .request({
+      action: loginAction,
+      username: credentials.username,
+      password: credentials.password,
+      logintoken: token,
+      loginreturnurl: returnUrl,
+    })
+    .catch((e) => {
+      if (e.code === noSuchUserCode) {
+        throw Error("No such user exists, can't login");
+      } else {
+        throw Error("Error while trying to log in: " + e);
+      }
     });
     loginResult[loginAction]["token"] = await wikiAdapter.getEditToken();
     return loginResult;
 }
 
 async function createNewAccount(credentials = new Credentials()) {
-    const username = credentials.username;
-    const password = credentials.password;
-    const email = credentials.email;
+  const username = credentials.username;
+  const password = credentials.password;
+  const email = credentials.email;
 
     await wikiAdapter.request({
         action: validatePasswordAction,

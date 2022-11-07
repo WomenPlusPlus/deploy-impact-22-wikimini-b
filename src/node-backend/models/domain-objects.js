@@ -6,6 +6,12 @@ export function Credentials(username = "", password = "", email = "") {
     this.email = email;
 }
 
+export function JoiningStudent(fullName, email = "No email set") {
+    this.fullName = fullName;
+    this.email = email;
+    this.joinCode = false;
+}
+
 export const Status = {
     Created: "Created",
     Assigned: "Assigned",

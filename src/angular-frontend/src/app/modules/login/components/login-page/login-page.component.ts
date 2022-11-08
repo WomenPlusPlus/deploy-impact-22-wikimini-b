@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { UsersServices } from 'src/services/users.services';
 
 @Component({
@@ -7,13 +8,22 @@ import { UsersServices } from 'src/services/users.services';
   styleUrls: ['./login-page.component.css'],
 })
 export class LoginPageComponent implements OnInit {
+
   authToken: string = '';
-  constructor(public usersServices: UsersServices) {}
+  userForm: FormGroup;
+
+  constructor(public usersServices: UsersServices) {
+    this.userForm = new FormGroup({
+      username: new FormControl(),
+      password: new FormControl()
+ }); 
+  }
 
   ngOnInit(): void {}
 
-  teacherLogin(username: string, password: string) {
-    this.usersServices.teacherlogin(username, password).subscribe((res) => {
+  teacherLogin() {
+    console.log(this.userForm.get('username')?.value + " " + this.userForm.get('password')?.value);
+    this.usersServices.teacherlogin(this.userForm.get('username')?.value, this.userForm.get('password')?.value).subscribe((res) => {
       this.authToken = res;
       console.log(res);
     });

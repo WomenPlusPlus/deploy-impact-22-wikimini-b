@@ -1,6 +1,5 @@
 import express from "express";
 import cors from "cors";
-
 import * as accounts from "./routes/accounts.js";
 import * as users from "./routes/users.js";
 import * as classrooms from "./routes/classrooms.js";
@@ -32,5 +31,5 @@ app.use("/articles", articles.router);
 
 /**Start listening */
 app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+    console.log(`Listening on port ${port}`);
 });

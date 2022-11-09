@@ -1,5 +1,3 @@
-// DomainObjects
-
 export function Credentials(username = "", password = "", email = "") {
     this.username = username;
     this.password = password;

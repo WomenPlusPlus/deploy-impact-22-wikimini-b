@@ -1,9 +1,40 @@
-<p>Email Confirmation Sent</p>
-
-<p>Email verification sent!</p>
-<p>We have sent an email to examle@gmail.com to confirm the validity of your email address.</p>
-
-<p>Check your email and tap the link we sent you.</p>
-
-<p>Didn't get a confirmation email? Check spam folder or</p> <button>SEND AGAIN</button>
-
+<div class="signup-panel">
+    <div class="top">
+      <p>OWL</p>
+      <p>Create an account!</p>
+      <p></p>
+    </div>
+    <div class="form-panel">
+      <div>
+        <p>Wikimini</p>
+        <p>Your online classroom to teach medialiteracy, language and any topic to your heart's desire.</p>
+      </div>
+      <div>
+        <!-- [formGroup]="userForm" -->
+        <form >
+          <label>User name</label><br />
+          <input
+            formControlName="username"
+            placeholder="User name"
+          /><br /><br />
+          <div *ngIf="this.signupShared.signupStatus != signupShared.SignupStatusEnum.SIGNUP_FORM_STUDENT">
+            <label>Email</label><br />
+          <input
+            formControlName="email"
+            placeholder="Email"
+          /><br /><br />
+          </div>
+          <label>Password</label><br />
+          <input
+            formControlName="password"
+            placeholder="Password"
+          /><br /><br />
+          <label>Password Confirmation</label><br />
+          <input
+            formControlName="passwordConfirm"
+            placeholder="Password Confirmation"
+          /><br /><br />
+        </form>
+      </div>
+    </div>
+  </div>

@@ -1,4 +1,5 @@
 import * as dbAdapter from "../adapters/database-adapter.js";
+import {getStudentCodes} from "../adapters/database-adapter.js";
 
 export async function downloadStudentCodes(classId) {
 
@@ -11,7 +12,8 @@ export async function sendStudentCodesPerEmail(classId) {
 
 
 export async function getJoiningStudents(classId) {
-
+    const joiningStudents = getStudentCodes(classId);
+    return joiningStudents;
 }
 
 

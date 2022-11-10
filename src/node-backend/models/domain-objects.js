@@ -26,6 +26,13 @@ export const Topic = {
     Subject: "Subject understanding"
 }
 
+export function Achievement(id, title, description, imagePath) {
+    this.id = id;
+    this.title = title;
+    this.description = description;
+    this.imagePath = imagePath;
+}
+
 export function TeacherHwList(currentHw, plannedHw, pastHw) {
     this.current = currentHw;
     this.planned = plannedHw;

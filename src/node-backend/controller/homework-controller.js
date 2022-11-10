@@ -1,5 +1,15 @@
 import {TeacherHwList} from "../models/domain-objects.js";
 
+export async function checkAchievements(username) {
+
+}
+
+
+export async function studentHelpRequest(username, hwTaskId, question) {
+
+}
+
+
 export async function gradeHwTask(taskId, gradings) {
 
 }

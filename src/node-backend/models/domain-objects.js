@@ -26,11 +26,8 @@ export const Topic = {
     Subject: "Subject understanding"
 }
 
-export function Achievement(id, title, description, imagePath) {
-    this.id = id;
-    this.title = title;
-    this.description = description;
-    this.imagePath = imagePath;
+export const Achievement = {
+    FirstArticle: "First Article written!"
 }
 
 export function TeacherHwList(currentHw, plannedHw, pastHw) {

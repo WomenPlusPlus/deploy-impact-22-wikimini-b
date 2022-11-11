@@ -1,7 +1,10 @@
-import {TeacherHwList} from "../models/domain-objects.js";
+import {Achievement, TeacherHwList} from "../models/domain-objects.js";
 
 export async function checkAchievements(username) {
 
+    // if the achievement has been met, return the achievement as a list, otherwise return en empty list
+    // return []; // empty list
+    return [Achievement.FirstArticle];
 }
 
 
@@ -30,18 +33,6 @@ export async function updateArticleTitleForHwTask(articleTitle, articleUrl) {
 }
 
 export async function getHwTask(hwTaskId) {
-
-}
-
-export async function getGradedHwForStudent(username) {
-
-}
-
-export async function getDoneHwForStudent(username) {
-
-}
-
-export async function getLateHwForStudent(username) {
 
 }
 

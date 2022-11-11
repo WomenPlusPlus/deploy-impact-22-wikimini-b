@@ -1,5 +1,4 @@
 import * as dbAdapter from "../adapters/database-adapter.js";
-import {getStudentCodes} from "../adapters/database-adapter.js";
 
 export async function downloadStudentCodes(classId) {
 
@@ -12,13 +11,17 @@ export async function sendStudentCodesPerEmail(classId) {
 
 
 export async function getJoiningStudents(classId) {
-    const joiningStudents = getStudentCodes(classId);
-    return joiningStudents;
+    return dbAdapter.getStudentCodes(classId);
 }
 
 
 export async function createClassroom(username, classname) {
-
+    const queryResult = await dbAdapter.createClassroom(username, classname);
+    if (queryResult['warningStatus'] === 0) {
+        return Number(queryResult['insertId']);
+    } else {
+        throw Error("Error while trying to create new classroom");
+    }
 }
 
 

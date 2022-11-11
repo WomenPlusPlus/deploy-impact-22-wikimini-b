@@ -1,5 +1,16 @@
 import {pool} from "./database-connection.js";
 
+export function createClassroom(username, classname) {
+    try {
+        const newClassroomQuery = "INSERT INTO `classrooms`(`name`,`teacherUsername`) VALUES (?, ?)";
+        return pool.query(newClassroomQuery, [classname, username]);
+    } catch (error) {
+        console.error("Error while storing student codes: " + error);
+        return error;
+    }
+}
+
+
 export async function addStudentCodes(classId, studentInfos) {
     try {
         let insertStudentCodeQuery = "INSERT INTO `classroomcodes`(`classID`,`studentJoinCode`,`studentFullName`,`parentEmail`) VALUES ";

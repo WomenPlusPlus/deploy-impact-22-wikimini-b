@@ -1,0 +1,30 @@
+/* styles that I want to use in Signup module */
+
+.shadow-button {
+
+    align-items: flex-start;
+    align-self: flex-end;
+    background-color: #FCB112;
+    border: 2px solid;
+    border-color: eerie-black;
+    border-radius: 16px;
+    box-shadow: -5px 6px 0px -1px 
+    #000000;
+    display: flex;
+    gap: 6px;
+    height: 56px;
+    overflow: hidden;
+    padding: 13px 20px;
+    width: 116px;
+    letter-spacing: 0;
+    line-height: 25.2px;
+    min-height: 26px;
+    min-width: 45px;
+    white-space: nowrap;
+    font-family: 'M PLUS 1', serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 25px;
+        
+  }

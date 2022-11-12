@@ -1,0 +1,90 @@
+<div class="wrapper">
+  <div class="nav-buttons">
+    <!-- (click)="signupShared.getPreviousStatus()" -->
+    <!-- <button class="flex-row-item">
+      <img
+        class="flex-row-item"
+        src="../../../../../assets/wrapper assets/chevron-left-1@2x.png"
+        alt="chevron-left"
+      />
+    </button> -->
+
+    <button [routerLink]="['/home']" class="flex-row-item">
+      <img
+        class="flex-row-item"
+        src="../.../../../../../../assets/wrapper assets/x.png"
+        alt="x"
+      />
+    </button>
+  </div>
+
+  <div class="login-panel">
+    <div class="top">
+      <p>OWL</p>
+      <p>Welcome back!</p>
+      <p></p>
+    </div>
+    <div class="form-panel">
+      <div>
+        <p>Wikimini</p>
+        <p>We're glad you are back! Log in to join your classroom.</p>
+      </div>
+      <div>
+        <form [formGroup]="userForm">
+          <label for="fname">User name</label><br />
+          <input
+            formControlName="username"
+            placeholder="User name"
+          /><br />
+          <label for="lname">Password</label><br />
+          <input
+            formControlName="password"
+            placeholder="Password"
+          /><br /><br />
+        </form>
+        <div class="forgot-password">
+          <p>icon</p>
+          <p>I FORGOT MY PASSWORD</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="haveAccountLoginButton">
+      <p class="Mplus1-bold-white-15px">Don't have an account?</p>
+      <button class="logInButton">
+        <span class="logInText"> SIGN UP </span>
+      </button>
+    </div>
+    <button
+      class="button-shadow"
+      (click)="teacherLogin()"
+    >
+      Log In
+
+      <svg
+        width="25"
+        height="26"
+        viewBox="0 0 25 26"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M5.20831 13H19.7916"
+          stroke="black"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M12.5 5.70837L19.7917 13L12.5 20.2917"
+          stroke="black"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </button>
+  </div>
+</div>

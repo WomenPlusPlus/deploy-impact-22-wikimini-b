@@ -1,0 +1,54 @@
+.main-content {
+  height: 100vh;
+  background-color: #24a79d;
+}
+
+.flex-row-item {
+  height: 40px;
+  width: 40px;
+  background-color: transparent;
+  border-color: transparent;
+  background-size: contain;
+  align-content: center;
+}
+
+.nav-buttons {
+  padding: 1em;
+  display: flex;
+  justify-content: space-between;
+}
+
+.Mplus1-bold-white-15px {
+  display: flex;
+  font-family: "M PLUS 1", sans-serif;
+  font-size: 15px;
+  color: white;
+  font-weight: 700;
+  padding-top: 20px;
+  z-index: 1;
+}
+
+.logInButton {
+  background: none !important;
+  border: none;
+  padding: 0 !important;
+  font-family: "M PLUS 1", sans-serif;
+  color: #fcb112;
+  font-size: 15px;
+  cursor: pointer;
+  margin-left: 4px;
+  margin-top: 21px;
+  line-height: 0px;
+}
+
+.logInText {
+  text-align: end;
+  text-justify: bottom;
+}
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding-top: 5em;
+}

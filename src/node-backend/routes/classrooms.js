@@ -2,8 +2,9 @@ import express from "express";
 import * as classroomController from "../controller/classroom-controller.js";
 export const router = express.Router();
 
+// get classroom info by: needs { classroomId }
+router.post("/getClassroomById", classroomController.getClassroomById);
 // complete path: /classrooms/...
-
 
 // create classroom with passing teacher name and classname, return classId
 // needs {username, classname}, returns classId

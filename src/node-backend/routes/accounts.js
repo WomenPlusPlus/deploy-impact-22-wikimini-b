@@ -18,3 +18,6 @@ router.post('/studentLogin', accountsController.doStudentLogin);
 
 // teachers log in: needs {username or email, password}
 router.post('/teacherLogin', accountsController.doTeacherLogin);
+
+// share sign up codes: needs {username, email}
+router.post('/shareCodesWithParents', accountsController.shareCodesWithParents);

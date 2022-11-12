@@ -51,17 +51,17 @@ router.post('/updateArticleTitleForHwTask', async function (req, res) {
     }
 });
 
-// edit homework task (by teacher): {taskId, title, description, gradingCategories, startDate, dueDate}
-router.post('/updateHwTask', async function (req, res) {
-    try {
-        const {taskId, title, description, gradingCategories, startDate, dueDate} = req.body;
-        const taskWithUpdates = new HwTask(title, description, gradingCategories, startDate, dueDate);
-        const result = await hwController.editHwTask(taskId, taskWithUpdates);
-        res.status(200).json(result);
-    } catch (error) {
-        res.status(409).json({ message: error.message });
-    }
-});
+// // edit homework task (by teacher): {taskId, title, description, gradingCategories, startDate, dueDate}
+// router.post('/updateHwTask', async function (req, res) {
+//     try {
+//         const {taskId, title, description, gradingCategories, startDate, dueDate} = req.body;
+//         const taskWithUpdates = new HwTask(title, description, gradingCategories, startDate, dueDate);
+//         const result = await hwController.editHwTask(taskId, taskWithUpdates);
+//         res.status(200).json(result);
+//     } catch (error) {
+//         res.status(409).json({ message: error.message });
+//     }
+// });
 
 // homework task status change: {taskId, newStatus, datetime}
 router.post('/changeHwTaskStatus', async function (req, res) {

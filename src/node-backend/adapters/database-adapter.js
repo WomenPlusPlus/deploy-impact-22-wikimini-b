@@ -249,3 +249,19 @@ export async function insertNewHwTasks(createdTasks) {
     return error;
   }
 }
+
+export function getHwTask(hwTaskId) {
+  try {
+    const getHwTaskQuery = "SELECT tasks.id, tasks.title, tasks.description, tasks.type, tasks.assignedToStudent, " +
+        "tasks.assignedByTeacher, day(tasks.startdate) as tasks.startdate, day(tasks.duedate) as tasks.duedate, " +
+        "day(tasks.donedate) as tasks.donedate, day(tasks.gradeddate) as tasks.gradeddate, tasks.status, " +
+        "tasks.concernsArticle, categories.id FROM tasks, categories, taskCategories " +
+        "WHERE tasks.id=taskCategories.taskId AND taskCategories.categoryId=categories.id AND tasks.id = ?;";
+    return pool.query(getHwTaskQuery, hwTaskId);
+  } catch (error) {
+    console.error(
+        "Error while trying to store teacher authentication code: " + error
+    );
+    throw error;
+  }
+}

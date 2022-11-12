@@ -21,7 +21,26 @@ export async function updateArticleTitleForHwTask(articleTitle, articleUrl) {
 }
 
 export async function getHwTask(hwTaskId) {
-
+    const result = await dbAdapter.getHwTask(hwTaskId);
+    const hwType = Object.keys(HwType).find(name => HwType[name] === result[0].type);
+    const doneDate = result[0]['tasks.donedate'] === 'NULL' ? false : result[0]['tasks.donedate'];
+    const gradedDate = result[0]['tasks.gradeddate'] === 'NULL' ? false : result[0]['tasks.gradeddate'];
+    const status = Object.keys(Status).find(name => Status[name] === result[0].status);
+    const article = result[0]['tasks.concernsArticle'] === 'NULL' ? false : result[0]['tasks.concernsArticle'];
+    const gradingCategories = [];
+    for (let i = 0; i < result.length; i++) {
+        gradingCategories[i] = result[i]['categories.id'];
+    }
+    const task = new HwTask(result[0]['tasks.title'], result[0]['tasks.description'],
+        result[0]['tasks.assignedByTeacher'], result[0]['tasks.assignedToStudent'],
+        gradingCategories, result[0]['tasks.startdate'],result[0]['tasks.duedate']);
+    task.id = hwTaskId;
+    task.hwType = hwType;
+    task.doneDate = doneDate;
+    task.gradedDate = gradedDate;
+    task.status = status;
+    task.articleTitle = article;
+    return task;
 }
 
 export async function getHwForStudent(username) {

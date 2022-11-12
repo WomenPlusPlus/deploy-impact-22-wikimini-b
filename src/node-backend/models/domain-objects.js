@@ -10,7 +10,7 @@ export function JoiningStudent(fullName, email = "No email set") {
     this.joinCode = false;
 }
 
-export const Status = {
+export const Status = Object.freeze({
     Created: {id: 1, desc: "Created"},
     Assigned: {id: 2, desc: "Assigned"}, // assigned to a student
     InProgress: {id: 3, desc: "In Progress"}, // student opens the task the first time
@@ -18,17 +18,17 @@ export const Status = {
     StudentDone: {id: 5, desc: "Done"}, // student submits the task
     Grading: {id: 6, desc: "Grading"}, // teacher starts grading
     Finished: {id: 7, desc: "Finished"} // teacher returns graded task
-};
+});
 
-export const Topic = {
+export const Topic = Object.freeze({
     Language: {id: 1, desc: "Language"},
     Media: {id: 2, desc: "Media Literacy"},
     Subject: {id: 5, desc: "Subject understanding"}
-}
+});
 
-export const HwType = {
+export const HwType = Object.freeze({
     Write: {id:1 , desc: "Write an article about..."}
-}
+});
 
 export function TeacherHwList(currentHw, plannedHw, pastHw) {
     this.current = currentHw;

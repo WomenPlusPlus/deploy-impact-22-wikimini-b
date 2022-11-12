@@ -265,3 +265,28 @@ export function getHwTask(hwTaskId) {
     throw error;
   }
 }
+
+export function getGradingCategories() {
+  try {
+    const getCategoriesQuery = "SELECT categories.id as categoryId, categories.category, categories.topic, " +
+        "topics.id as topicId, topics.name, topics.shortname FROM categories, topics WHERE categories.topic=topics.id;";
+    return pool.query(getCategoriesQuery);
+  } catch (error) {
+    console.error(
+        "Error while trying to retrieve grading categories: " + error
+    );
+    throw error;
+  }
+}
+
+export function addGradingCategory(topicId, gradingCategoryName) {
+  try {
+    const insertCategoriesQuery = "INSERT INTO `categories`(`category`, `topic`) VALUES (?,?)";
+    return pool.query(insertCategoriesQuery, [gradingCategoryName, topicId]);
+  } catch (error) {
+    console.error(
+        "Error while trying to add grading category: " + error
+    );
+    throw error;
+  }
+}

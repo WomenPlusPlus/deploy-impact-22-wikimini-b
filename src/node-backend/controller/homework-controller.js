@@ -1,4 +1,4 @@
-import {HwTask, HwType, Status, TeacherHwList} from "../models/domain-objects.js";
+import {GradingCategory, HwTask, HwType, Status, TeacherHwList, Topic} from "../models/domain-objects.js";
 import * as dbAdapter from "../adapters/database-adapter.js";
 
 const dbNull = null;
@@ -67,7 +67,8 @@ export async function addNewHwTaskForClass(classId, newHwTask) {
     const students = await dbAdapter.getStudentsForClass(classId);
     const createdTasks = [];
     for (let i = 0; i < students.length; i++){
-        const task = new HwTask(newHwTask.title, newHwTask.description, newHwTask.assignedByTeacher, students[i].username, newHwTask.gradingCategories,
+        const task = new HwTask(newHwTask.title, newHwTask.description, newHwTask.assignedByTeacher,
+            students[i].username, newHwTask.gradingCategories,
             newHwTask.startDate, newHwTask.dueDate);
         newHwTask.hwType = HwType.Write;
         newHwTask.status = Status.Assigned;
@@ -77,6 +78,23 @@ export async function addNewHwTaskForClass(classId, newHwTask) {
 }
 
 // add new grading category
-export async function addGradingCategory(newGradingCategory) {
+export async function addGradingCategory(topicId, gradingCategoryName) {
+    // const topicId = newGradingCategory.topic.id;
+    // const gradingCategoryName = newGradingCategory.name;
+    const result = await dbAdapter.addGradingCategory(topicId, gradingCategoryName);
+    if (result['warningStatus'] === 0) {
+        return Number(result['insertId']);
+    } else {
+        throw Error("Problem while saving new category");
+    }
+}
 
+export async function getGradingCategories() {
+    const dbCategories = await dbAdapter.getGradingCategories();
+    const categories = [];
+    for (let i = 0; i < dbCategories.length; i++) {
+        const dbCat = dbCategories[i];
+        categories[i] = new GradingCategory(Topic[dbCat['shortname']], dbCat['categoryId'], dbCat['category']);
+    }
+    return categories;
 }

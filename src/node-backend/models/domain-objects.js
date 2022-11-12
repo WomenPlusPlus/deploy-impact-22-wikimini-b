@@ -69,7 +69,8 @@ export function Grading(gradingCategory, grade, comment) {
     this.comment = comment;
 }
 
-export function GradingCategory(topic, category) {
+export function GradingCategory(topic, categoryId, categoryName) {
     this.topic = topic;
-    this.category = category;
+    this.name = categoryName;
+    this.id = categoryId;
 }

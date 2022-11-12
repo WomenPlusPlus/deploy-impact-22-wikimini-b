@@ -1,6 +1,6 @@
 import express from "express";
 import * as hwController from "../controller/homework-controller.js";
-import {GradingCategory, HwTask} from "../models/domain-objects.js";
+import {HwTask} from "../models/domain-objects.js";
 export const router = express.Router();
 
 // complete path: /homework/...
@@ -99,16 +99,24 @@ router.post('/addNewHwForClass', async function (req, res) {
     }
 });
 
-// add grading category: needs topic the category was added to, new category {Topic, newGradingCategory}
+// add grading category: needs topic the category was added to, new category GradingCategory()
 router.post('/addGradingCategory', async function (req, res) {
     try {
-        const {topic, newGradingCategory} = req.body;
-        const newCat = new GradingCategory(topic, newGradingCategory);
-        const result = await hwController.addGradingCategory(newCat);
+        const {topicId, gradingCategoryName} = req.body;
+        const result = await hwController.addGradingCategory(topicId, gradingCategoryName);
         res.status(200).json(result);
     } catch (error) {
         res.status(413).json({ message: error.message });
     }
 });
 
+// get all topics and grading categories, returns list of GradingCategory()
+router.post('/getGradingCategories', async function (req, res) {
+    try {
+        const result = await hwController.getGradingCategories();
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(413).json({ message: error.message });
+    }
+});
 

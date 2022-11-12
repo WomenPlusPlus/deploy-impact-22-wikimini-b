@@ -252,10 +252,10 @@ export async function insertNewHwTasks(createdTasks) {
 
 export function getHwTask(hwTaskId) {
   try {
-    const getHwTaskQuery = "SELECT tasks.id, tasks.title, tasks.description, tasks.type, tasks.assignedToStudent, " +
-        "tasks.assignedByTeacher, day(tasks.startdate) as tasks.startdate, day(tasks.duedate) as tasks.duedate, " +
-        "day(tasks.donedate) as tasks.donedate, day(tasks.gradeddate) as tasks.gradeddate, tasks.status, " +
-        "tasks.concernsArticle, categories.id FROM tasks, categories, taskCategories " +
+    const getHwTaskQuery = "SELECT taskId as 'tasks.id', tasks.title, tasks.description, tasks.type, tasks.assignedToStudent, " +
+        "tasks.assignedByTeacher, date(tasks.startdate) as 'startdate', date(tasks.duedate) as 'duedate', " +
+        "date(tasks.donedate) as 'donedate', date(tasks.gradeddate) as 'gradeddate', tasks.status, " +
+        "tasks.concernsArticle, categories.id as 'categoryId' FROM tasks, categories, taskCategories " +
         "WHERE tasks.id=taskCategories.taskId AND taskCategories.categoryId=categories.id AND tasks.id = ?;";
     return pool.query(getHwTaskQuery, hwTaskId);
   } catch (error) {

@@ -1,6 +1,8 @@
 import {HwTask, HwType, Status, TeacherHwList} from "../models/domain-objects.js";
 import * as dbAdapter from "../adapters/database-adapter.js";
 
+const dbNull = null;
+
 export async function gradeHwTask(taskId, gradings) {
 
 }
@@ -22,19 +24,19 @@ export async function updateArticleTitleForHwTask(articleTitle, articleUrl) {
 
 export async function getHwTask(hwTaskId) {
     const result = await dbAdapter.getHwTask(hwTaskId);
-    const hwType = Object.keys(HwType).find(name => HwType[name] === result[0].type);
-    const doneDate = result[0]['tasks.donedate'] === 'NULL' ? false : result[0]['tasks.donedate'];
-    const gradedDate = result[0]['tasks.gradeddate'] === 'NULL' ? false : result[0]['tasks.gradeddate'];
-    const status = Object.keys(Status).find(name => Status[name] === result[0].status);
-    const article = result[0]['tasks.concernsArticle'] === 'NULL' ? false : result[0]['tasks.concernsArticle'];
+    const hwType = Object.keys(HwType).find(k => HwType[k]['id'] === result[0]['type']);
+    const doneDate = result[0]['donedate'] === dbNull ? false : result[0]['donedate'];
+    const gradedDate = result[0]['gradeddate'] === dbNull ? false : result[0]['gradeddate'];
+    const status = Object.keys(Status).find(k => Status[k]['id'] === result[0]['status']);
+    const article = result[0]['concernsArticle'] === dbNull ? false : result[0]['concernsArticle'];
     const gradingCategories = [];
     for (let i = 0; i < result.length; i++) {
-        gradingCategories[i] = result[i]['categories.id'];
+        gradingCategories[i] = result[i]['categoryId'];
     }
-    const task = new HwTask(result[0]['tasks.title'], result[0]['tasks.description'],
-        result[0]['tasks.assignedByTeacher'], result[0]['tasks.assignedToStudent'],
-        gradingCategories, result[0]['tasks.startdate'],result[0]['tasks.duedate']);
-    task.id = hwTaskId;
+    const task = new HwTask(result[0]['title'], result[0]['description'],
+        result[0]['assignedByTeacher'], result[0]['assignedToStudent'],
+        gradingCategories, result[0]['startdate'],result[0]['duedate']);
+    task.id = result[0]['taskId'];
     task.hwType = hwType;
     task.doneDate = doneDate;
     task.gradedDate = gradedDate;

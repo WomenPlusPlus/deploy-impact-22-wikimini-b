@@ -1,3 +1,7 @@
+export async function getRandomArticles(numberOfRandomArticles) {
+
+}
+
 export async function saveArticle(articleTitle) {
 
 }

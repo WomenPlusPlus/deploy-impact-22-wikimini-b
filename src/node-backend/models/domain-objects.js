@@ -26,6 +26,10 @@ export const Topic = {
     Subject: "Subject understanding"
 }
 
+export const Achievement = {
+    FirstArticle: "First Article written!"
+}
+
 export function TeacherHwList(currentHw, plannedHw, pastHw) {
     this.current = currentHw;
     this.planned = plannedHw;

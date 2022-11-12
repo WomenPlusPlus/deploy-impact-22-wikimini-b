@@ -45,14 +45,15 @@ export async function verifyCode(studentCode) {
   }
 }
 
-export async function getTeacherEmailForClass(classId) {
+export async function getTeacherForClass(classId) {
   try {
     const teacherEmailQuery =
-      "SELECT teachers.email FROM teachers, classrooms WHERE teachers.username=classrooms.teacherUsername AND classrooms.id=?";
-    return await pool.query(teacherEmailQuery, classId);
+      "SELECT teachers.username, teachers.email FROM teachers, classrooms WHERE teachers.username=classrooms.teacherUsername AND classrooms.id=?";
+    const teacherInfo = await pool.query(teacherEmailQuery, classId);
+    return teacherInfo[0];
   } catch (error) {
     console.error(
-      "Error while trying to retrieve teachers email for the given class: " +
+      "Error while trying to retrieve teacher information for the given class: " +
         error
     );
     throw error;
@@ -181,5 +182,70 @@ export async function getStudentCodesForTeacher(username) {
       "Error while trying to store teacher authentication code: " + error
     );
     throw error;
+  }
+}
+
+export async function getStudentsForClass(classId) {
+  try {
+    const getStudentsQuery = "SELECT `username` FROM classesEnrolled WHERE classId = ?;";
+    return pool.query(getStudentsQuery, classId);
+  } catch (error) {
+    console.error(
+        "Error while trying to store teacher authentication code: " + error
+    );
+    throw error;
+  }
+}
+
+export async function insertNewHwTasks(createdTasks) {
+  try {
+    let insertHwTasksQuery = "INSERT INTO `tasks`(`title`, `description`, `type`, `assignedToStudent`, " +
+        "`assignedByTeacher`, `startdate`, `duedate`, `status`, `concernsArticle`) VALUES ";
+    const taskValueStr = "(?,?,?,?,?,?,?,?,?), ";
+    const taskValues = [];
+    let insertCategoriesQuery = "INSERT INTO `taskCategories`(`taskId`, `categoryId`) VALUES ";
+    const catValueStr = "(?,?), ";
+    const catValues = [];
+    for (let i = 0; i < createdTasks.length; i++){
+      const task = createdTasks[i];
+      insertHwTasksQuery += taskValueStr;
+      taskValues[taskValues.length] = task.title;
+      taskValues[taskValues.length] = task.description;
+      taskValues[taskValues.length] = task.hwType.id;
+      taskValues[taskValues.length] = task.assignedToStudent;
+      taskValues[taskValues.length] = task.assignedByTeacher;
+      taskValues[taskValues.length] = task.startDate;
+      taskValues[taskValues.length] = task.dueDate;
+      taskValues[taskValues.length] = task.status.id;
+      taskValues[taskValues.length] = task.articleTitle;
+    }
+    insertHwTasksQuery = insertHwTasksQuery.slice(0, -2); // remove last comma
+    const tasksResult = await pool.query(insertHwTasksQuery, taskValues);
+
+    const taskIDs = [];
+    if (tasksResult['warningStatus'] === 0) {
+      // insert categories
+      for (let i = 0; i < tasksResult['affectedRows']; i++) {
+        const firstTaskId = Number(tasksResult['insertId']);
+        taskIDs[i] = firstTaskId + i;
+        for (let j = 0; j < createdTasks[i].gradingCategories.length; j++) {
+          insertCategoriesQuery += catValueStr;
+          catValues[catValues.length] = taskIDs[i];
+          catValues[catValues.length] = createdTasks[i].gradingCategories[j];
+        }
+      }
+    } else {
+      throw Error("Error while storing homework tasks");
+    }
+    insertCategoriesQuery = insertCategoriesQuery.slice(0, -2); // remove last comma
+    const catResult = await pool.query(insertCategoriesQuery, catValues);
+    if (catResult['warningStatus'] === 0) {
+      return taskIDs;
+    } else {
+      throw Error("Error while storing homework task categories, please update the task categories");
+    }
+  } catch (error) {
+    console.error("Error while storing homework tasks: " + error);
+    return error;
   }
 }

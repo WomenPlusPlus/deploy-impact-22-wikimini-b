@@ -1,4 +1,5 @@
-import {TeacherHwList} from "../models/domain-objects.js";
+import {HwTask, HwType, Status, TeacherHwList} from "../models/domain-objects.js";
+import * as dbAdapter from "../adapters/database-adapter.js";
 
 export async function gradeHwTask(taskId, gradings) {
 
@@ -23,18 +24,6 @@ export async function getHwTask(hwTaskId) {
 
 }
 
-export async function getGradedHwForStudent(username) {
-
-}
-
-export async function getDoneHwForStudent(username) {
-
-}
-
-export async function getLateHwForStudent(username) {
-
-}
-
 export async function getHwForStudent(username) {
 
 }
@@ -48,8 +37,22 @@ export async function getHwByClass(classId) {
 }
 
 // add new homework task for all students in the class
+// classId, title, description, gradingCategories, startDate, dueDate
 export async function addNewHwTaskForClass(classId, newHwTask) {
-
+    // get teacher for class
+    const teacherInfo = await dbAdapter.getTeacherForClass(classId);
+    newHwTask.assignedByTeacher = teacherInfo['username'];
+    // create a new task for each student
+    const students = await dbAdapter.getStudentsForClass(classId);
+    const createdTasks = [];
+    for (let i = 0; i < students.length; i++){
+        const task = new HwTask(newHwTask.title, newHwTask.description, newHwTask.assignedByTeacher, students[i].username, newHwTask.gradingCategories,
+            newHwTask.startDate, newHwTask.dueDate);
+        newHwTask.hwType = HwType.Write;
+        newHwTask.status = Status.Assigned;
+        createdTasks[i] = task;
+    }
+    return dbAdapter.insertNewHwTasks(createdTasks);
 }
 
 // add new grading category

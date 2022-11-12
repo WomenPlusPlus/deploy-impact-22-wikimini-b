@@ -65,7 +65,8 @@ export const doStudentSignUp = async (req, res) => {
       throw Error("The signup code is not valid");
     }
     // get teacher email
-    const email = dbAdapter.getTeacherEmailForClass(studentInfos.result["id"]);
+    const teacherInfo = await dbAdapter.getTeacherForClass(studentInfos.result["id"]);
+    const email = teacherInfo['email'];
     const credentials = new Credentials(username, password, email);
     const studentSignUpResult = await createNewAccount(credentials);
     res.status(200).json(studentSignUpResult);

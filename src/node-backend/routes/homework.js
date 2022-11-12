@@ -86,7 +86,8 @@ router.post('/gradeHwTask', async function (req, res) {
 });
 
 // add new homework task: needs {classId, title, description, gradingCategories, startDate, dueDate}
-// gradingCategories: {{topic = Topics.Language: {category1, category2,...}}, {topic = Topics.Media: {cat1, cat2}}?
+// gradingCategories: [list of category IDs]
+// returns taskIDs (list of taskIds)
 router.post('/addNewHwForClass', async function (req, res) {
     try {
         const {classId, title, description, gradingCategories, startDate, dueDate} = req.body;

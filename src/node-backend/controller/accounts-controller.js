@@ -86,20 +86,21 @@ export const doStudentLogin = async (req, res) => {
 };
 
 export const doTeacherLogin = async (req, res) => {
-  try {
-    const { user, password } = req.body;
-    const userInfo = await dbAdapter.getTeacherInfo(user);
-    if (userInfo["isVerified"] === 0) {
-      throw Error(
-        "The user did not verify their email address, not proceeding with login"
-      );
+    try {
+        const {username, password} = req.body;
+        const userInfo = await dbAdapter.getTeacherInfo(username);
+        if (userInfo['isVerified'] === 0) {
+            throw Error("The user did not verify their email address, not proceeding with login");
+        }
+        const credentials = new Credentials(userInfo['username'], password);
+        const loginResult = await login(credentials);
+        res.status(200).json(loginResult);
+    } catch (error) {
+        res.status(408).json({ message: error.message });
     }
     const credentials = new Credentials(userInfo["username"], password);
     const loginResult = await login(credentials);
     res.status(200).json(loginResult);
-  } catch (error) {
-    res.status(408).json({ message: error.message });
-  }
 };
 
 async function login(credentials = new Credentials()) {

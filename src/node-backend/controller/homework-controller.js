@@ -1,7 +1,20 @@
-import {GradingCategory, HwTask, HwType, Status, TeacherHwList, Topic} from "../models/domain-objects.js";
+import {Achievement, GradingCategory, HwTask, HwType, Status, TeacherHwList, Topic} from "../models/domain-objects.js";
 import * as dbAdapter from "../adapters/database-adapter.js";
 
 const dbNull = null;
+
+export async function checkAchievements(username) {
+
+    // if the achievement has been met, return the achievement as a list, otherwise return en empty list
+    // return []; // empty list
+    return [Achievement.FirstArticle];
+}
+
+
+export async function studentHelpRequest(username, hwTaskId, question) {
+
+}
+
 
 export async function gradeHwTask(taskId, gradings) {
 

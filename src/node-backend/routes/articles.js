@@ -27,7 +27,7 @@ router.post('/getArticle', async function (req, res) {
     }
 });
 
-// lock article for editing (how to implement?)
+// lock article for editing (how to implement?) needs {true or false} (lock/unlock)
 router.post('/lockArticle', async function (req, res) {
     try {
         const {articleTitle} = req.body;
@@ -65,6 +65,17 @@ router.post('/approveArticle', async function (req, res) {
     try {
         const {articleTitle} = req.body;
         const result = await articleController.approveArticle(articleTitle);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+});
+
+// get random articles needs {numberOfRandomArticles}
+router.post('/getRandomArticles', async function (req, res) {
+    try {
+        const {numberOfRandomArticles} = req.body;
+        const result = await articleController.getRandomArticles(numberOfRandomArticles);
         res.status(200).json(result);
     } catch (error) {
         res.status(409).json({ message: error.message });

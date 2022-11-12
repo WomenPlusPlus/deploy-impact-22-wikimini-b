@@ -30,6 +30,10 @@ export const HwType = Object.freeze({
     Write: {id:1 , desc: "Write an article about..."}
 });
 
+export const Achievement = {
+    FirstArticle: "First Article written!"
+}
+
 export function TeacherHwList(currentHw, plannedHw, pastHw) {
     this.current = currentHw;
     this.planned = plannedHw;

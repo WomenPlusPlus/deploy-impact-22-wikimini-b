@@ -74,6 +74,17 @@ router.post('/changeHwTaskStatus', async function (req, res) {
     }
 });
 
+// student needs help, needs {username, hwTaskId, question}
+router.post('/studentNeedsHelp', async function (req, res) {
+    try {
+        const {username, hwTaskId, question} = req.body;
+        const result = await hwController.studentHelpRequest(username, hwTaskId, question);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+});
+
 // grade homework task: {taskId, gradings}
 router.post('/gradeHwTask', async function (req, res) {
     try {
@@ -114,6 +125,17 @@ router.post('/addGradingCategory', async function (req, res) {
 router.post('/getGradingCategories', async function (req, res) {
     try {
         const result = await hwController.getGradingCategories();
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(413).json({ message: error.message });
+    }
+});
+
+// check for achievements: needs {username} of the student, returns list of Achievement() objects
+router.post('/getAchievements', async function (req, res) {
+    try {
+        const {username} = req.body;
+        const result = await hwController.checkAchievements(username);
         res.status(200).json(result);
     } catch (error) {
         res.status(413).json({ message: error.message });

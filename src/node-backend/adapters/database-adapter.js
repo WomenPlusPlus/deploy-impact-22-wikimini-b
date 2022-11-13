@@ -1,5 +1,11 @@
 import { pool } from "./database-connection.js";
 
+const selectHwTaskQueryTemplate = "SELECT taskId as 'taskId', tasks.title, tasks.description, tasks.type, tasks.assignedToStudent, " +
+    "tasks.assignedByTeacher, date(tasks.startdate) as 'startdate', date(tasks.duedate) as 'duedate', " +
+    "date(tasks.donedate) as 'donedate', date(tasks.gradeddate) as 'gradeddate', tasks.status, " +
+    "tasks.concernsArticle, categories.id as 'categoryId' FROM tasks, categories, taskCategories " +
+    "WHERE tasks.id=taskCategories.taskId AND taskCategories.categoryId=categories.id";
+
 export async function addStudentCodes(classId, studentInfos) {
   try {
     let insertStudentCodeQuery =
@@ -252,15 +258,23 @@ export async function insertNewHwTasks(createdTasks) {
 
 export function getHwTask(hwTaskId) {
   try {
-    const getHwTaskQuery = "SELECT taskId as 'tasks.id', tasks.title, tasks.description, tasks.type, tasks.assignedToStudent, " +
-        "tasks.assignedByTeacher, date(tasks.startdate) as 'startdate', date(tasks.duedate) as 'duedate', " +
-        "date(tasks.donedate) as 'donedate', date(tasks.gradeddate) as 'gradeddate', tasks.status, " +
-        "tasks.concernsArticle, categories.id as 'categoryId' FROM tasks, categories, taskCategories " +
-        "WHERE tasks.id=taskCategories.taskId AND taskCategories.categoryId=categories.id AND tasks.id = ?;";
+    const getHwTaskQuery = selectHwTaskQueryTemplate + " AND tasks.id = ?;";
     return pool.query(getHwTaskQuery, hwTaskId);
   } catch (error) {
     console.error(
-        "Error while trying to store teacher authentication code: " + error
+        "Error while trying to get homework task: " + error
+    );
+    throw error;
+  }
+}
+
+export function getHwForStudent(username) {
+  try {
+    const getHwForStudentQuery = selectHwTaskQueryTemplate + " AND tasks.assignedToStudent = ?;";
+    return pool.query(getHwForStudentQuery, username);
+  } catch (error) {
+    console.error(
+        "Error while trying to get the assigned homework for a student: " + error
     );
     throw error;
   }

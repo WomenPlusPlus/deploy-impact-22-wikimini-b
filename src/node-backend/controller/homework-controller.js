@@ -1,7 +1,14 @@
-import {Achievement, GradingCategory, HwTask, HwType, Status, TeacherHwList, Topic} from "../models/domain-objects.js";
+import {
+    Achievement,
+    GradingCategory,
+    HwTask,
+    HwType,
+    Status,
+    StudentHwList,
+    TeacherHwList,
+    Topic
+} from "../models/domain-objects.js";
 import * as dbAdapter from "../adapters/database-adapter.js";
-
-const dbNull = null;
 
 export async function checkAchievements(username) {
 
@@ -35,31 +42,73 @@ export async function updateArticleTitleForHwTask(articleTitle, articleUrl) {
 
 }
 
+// works if the selectTasksTemplateQuery is used
+function convertDbTasks(dbResult) {
+    const tasks = [];
+    for (let i = 0; i < dbResult.length; i++) {
+        const taskId = dbResult[i]['taskId'];
+        const title = dbResult[i]['title'];
+        const description = dbResult[i]['description'];
+        const assignedByTeacher = dbResult[i]['assignedByTeacher'];
+        const assignedToStudent = dbResult[i]['assignedToStudent'];
+        const startDate = dbResult[i]['startdate'];
+        const dueDate = dbResult[i]['duedate'];
+        const hwType = Object.keys(HwType).find(k => HwType[k]['id'] === dbResult[i]['type']);
+        const doneDate = dbResult[i]['donedate'] === null ? false : dbResult[i]['donedate'];
+        const gradedDate = dbResult[i]['gradeddate'] === null ? false : dbResult[i]['gradeddate'];
+        const status = Object.keys(Status).find(k => Status[k]['id'] === dbResult[i]['status']);
+        const article = dbResult[i]['concernsArticle'] === null ? false : dbResult[i]['concernsArticle'];
+        const gradingCategories = [];
+        while (taskId === dbResult[i]['taskId']) {
+            gradingCategories[i] = dbResult[i]['categoryId'];
+            i++;
+            if (i === dbResult.length - 1) {
+                break;
+            }
+        }
+        const task = new HwTask(title, description,
+            assignedByTeacher, assignedToStudent,
+            gradingCategories, startDate, dueDate);
+        task.id = taskId;
+        task.hwType = hwType;
+        task.doneDate = doneDate;
+        task.gradedDate = gradedDate;
+        task.status = status;
+        task.articleTitle = article;
+        tasks[tasks.length] = task;
+    }
+    return tasks;
+}
+
 export async function getHwTask(hwTaskId) {
     const result = await dbAdapter.getHwTask(hwTaskId);
-    const hwType = Object.keys(HwType).find(k => HwType[k]['id'] === result[0]['type']);
-    const doneDate = result[0]['donedate'] === dbNull ? false : result[0]['donedate'];
-    const gradedDate = result[0]['gradeddate'] === dbNull ? false : result[0]['gradeddate'];
-    const status = Object.keys(Status).find(k => Status[k]['id'] === result[0]['status']);
-    const article = result[0]['concernsArticle'] === dbNull ? false : result[0]['concernsArticle'];
-    const gradingCategories = [];
-    for (let i = 0; i < result.length; i++) {
-        gradingCategories[i] = result[i]['categoryId'];
-    }
-    const task = new HwTask(result[0]['title'], result[0]['description'],
-        result[0]['assignedByTeacher'], result[0]['assignedToStudent'],
-        gradingCategories, result[0]['startdate'],result[0]['duedate']);
-    task.id = result[0]['taskId'];
-    task.hwType = hwType;
-    task.doneDate = doneDate;
-    task.gradedDate = gradedDate;
-    task.status = status;
-    task.articleTitle = article;
-    return task;
+    return convertDbTasks(result)[0];
+}
+
+function isCurrent(task) {
+    return task.doneDate === false && new Date(task.startDate) <= Date.now() && new Date(task.dueDate) >= Date.now();
+}
+
+function isLate(task) {
+    return task.doneDate === false && new Date(task.startDate) <= Date.now() && new Date(task.dueDate) < Date.now();
+}
+
+function isDone(task) {
+    return task.doneDate !== false && task.gradedDate === false;
+}
+
+function isGraded(task) {
+    return task.doneDate !== false && task.gradedDate !== false;
 }
 
 export async function getHwForStudent(username) {
-
+    const result = await dbAdapter.getHwForStudent(username);
+    const allHomework = convertDbTasks(result);
+    const current = allHomework.filter(task => isCurrent(task));
+    const late = allHomework.filter(task => isLate(task));
+    const done = allHomework.filter(task => isDone(task));
+    const graded = allHomework.filter(task => isGraded(task));
+    return new StudentHwList(current, late, done, graded);
 }
 
 // returns three lists inside the TeacherHwList() object

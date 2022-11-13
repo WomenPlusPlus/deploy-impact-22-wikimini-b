@@ -15,12 +15,6 @@ export async function downloadStudentCodes(classId) {
 
 }
 
-
-export async function sendStudentCodesPerEmail(classId) {
-
-}
-
-
 export async function getJoiningStudents(classId) {
 
 }

@@ -245,6 +245,6 @@ const generateMessage = (code) => {
   return (
     "Please enter the code " +
     code +
-    " while signing up, by clicking on the followinlink: \n\n + http://localhost:4200/signup"
+    " while signing up, by clicking on the following link: \n\n + http://localhost:4200/signup"
   );
 };

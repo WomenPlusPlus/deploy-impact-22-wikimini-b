@@ -45,18 +45,6 @@ router.post('/getJoiningStudents', async function (req, res) {
     }
 });
 
-// send personal codes via email, pass classId and list of selected student names and emails
-// needs {classId, joiningStudents}, returns {status: true/false, failedStudents: []}
-router.post('/sendStudentCodesPerEmail', async function (req, res) {
-    try {
-        const {classId} = req.body;
-        const result = await classroomController.sendStudentCodesPerEmail(classId);
-        res.status(200).json(result);
-    } catch (error) {
-        res.status(409).json({ message: error.message });
-    }
-});
-
 // download personal code sheet (return file?) -> to be checked by frontend what we need, pass classId
 // needs {classId}, returns file, format to be defined
 router.post('/downloadStudentCodes', async function (req, res) {

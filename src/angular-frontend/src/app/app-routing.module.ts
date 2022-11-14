@@ -8,6 +8,11 @@ import { WrapperComponent } from './modules/signup/components/wrapper/wrapper.co
 
 const routes: Routes = [
   {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'home'
+  },
+  {
     path: "home",
     component: HomepageComponent,
     children: [

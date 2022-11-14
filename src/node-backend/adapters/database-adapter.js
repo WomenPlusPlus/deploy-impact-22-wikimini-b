@@ -1,5 +1,16 @@
 import { pool } from "./database-connection.js";
 
+export function createClassroom(username, classname) {
+    try {
+        const newClassroomQuery = "INSERT INTO `classrooms`(`name`,`teacherUsername`) VALUES (?, ?)";
+        return pool.query(newClassroomQuery, [classname, username]);
+    } catch (error) {
+        console.error("Error while storing student codes: " + error);
+        return error;
+    }
+}
+
+
 export async function addStudentCodes(classId, studentInfos) {
   try {
     let insertStudentCodeQuery =
@@ -21,6 +32,16 @@ export async function addStudentCodes(classId, studentInfos) {
     values = values.slice(0, -2); // remove last comma
     insertStudentCodeQuery += values;
     return pool.query(insertStudentCodeQuery);
+  } catch (error) {
+    console.error("Error while storing student codes: " + error);
+    return error;
+  }
+}
+
+export async function getStudentCodes(classId) {
+  try {
+    const getStudentCodesQuery = "SELECT * FROM classroomcodes WHERE classId=?";
+    return pool.query(getStudentCodesQuery, classId);
   } catch (error) {
     console.error("Error while storing student codes: " + error);
     return error;
@@ -97,16 +118,16 @@ export async function enrollStudentInClass(username, classId) {
 }
 
 export async function registerTeacher(username, email) {
-  try {
-    const insertTeacherQuery =
+    try {
+        const insertTeacherQuery =
       "INSERT INTO `teachers`(`username`, `email`) VALUES (?,?)";
-    return pool.query(insertTeacherQuery, [username, email]);
-  } catch (error) {
-    console.error(
+        return pool.query(insertTeacherQuery, [username, email]);
+    } catch (error) {
+        console.error(
       "Error while trying to register teacher in database: " + error
     );
-    throw error;
-  }
+        throw error;
+    }
 }
 
 export async function registerTeacherAuthCode(username, authCode) {
@@ -123,52 +144,52 @@ export async function registerTeacherAuthCode(username, authCode) {
 }
 
 export async function registerTeacherAsVerified(username) {
-  try {
-    const updateTeacherQuery =
+    try {
+        const updateTeacherQuery =
       "UPDATE `teachers` SET `isVerified`=1 WHERE `username`=?";
-    return pool.query(updateTeacherQuery, username);
-  } catch (error) {
-    console.error(
+        return pool.query(updateTeacherQuery, username);
+    } catch (error) {
+        console.error(
       "Error while trying to register teacher as verified in db: " + error
     );
-    throw error;
-  }
+        throw error;
+    }
 }
 
 export async function getTeacherAuthCode(username) {
-  try {
-    const teacherAuthQuery =
+    try {
+        const teacherAuthQuery =
       "SELECT `authCode` FROM `teacherAuth` WHERE `teacherAuth`.`username`=?";
-    const result = await pool.query(teacherAuthQuery, username);
-    if (result.length === 1) {
-      return result[0]["authCode"];
-    } else {
-      throw Error("Error while trying to verify authentication code");
-    }
-  } catch (error) {
-    console.error(
+        const result = await pool.query(teacherAuthQuery, username);
+        if (result.length === 1) {
+            return result[0]["authCode"];
+        } else {
+            throw Error("Error while trying to verify authentication code");
+        }
+    } catch (error) {
+        console.error(
       "Error while trying to retrieve authentication code: " + error
     );
-    throw error;
-  }
+        throw error;
+    }
 }
 
 export async function getTeacherInfo(user) {
-  try {
-    const teacherUsernameQuery =
+    try {
+        const teacherUsernameQuery =
       "SELECT `username`, `email`, `isVerified` FROM `teachers` WHERE `teachers`.`username`=? OR `teachers`.`email`=?";
-    const result = await pool.query(teacherUsernameQuery, [user, user]);
-    if (result.length === 1) {
-      return result[0];
-    } else {
-      throw Error(
+        const result = await pool.query(teacherUsernameQuery, [user, user]);
+        if (result.length === 1) {
+            return result[0];
+        } else {
+            throw Error(
         "Error while trying to find teacher with the provided login credentials"
       );
+        }
+    } catch (error) {
+        console.error("Error while trying to retrieve user: " + error);
+        throw error;
     }
-  } catch (error) {
-    console.error("Error while trying to retrieve user: " + error);
-    throw error;
-  }
 }
 
 export async function getStudentCodesForTeacher(username) {

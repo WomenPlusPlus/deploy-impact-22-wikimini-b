@@ -1,0 +1,7 @@
+export enum ClassroomCreationStatus {
+    CLASSROOM_CREATION_NAMING = 0,
+    CLASSROOM_CREATION_ADD = 1,
+    CLASSROOM_CREATION_INVITE = 2,
+    CLASSROOM_CREATION_SUCCESS = 3
+
+  }

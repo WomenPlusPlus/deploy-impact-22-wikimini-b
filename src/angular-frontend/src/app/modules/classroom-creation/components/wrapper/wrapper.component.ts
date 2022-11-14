@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ClassroomCreationSharedService } from '../../classroom-creation-shared.service';
 
 @Component({
   selector: 'app-wrapper',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WrapperComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public ccShared: ClassroomCreationSharedService
+  ) { }
 
   ngOnInit(): void {
   }

@@ -10,7 +10,6 @@ export class SignupSharedService {
   public signupStatus = SignupStatus.SIGNUP_CHOICE;
 
   constructor() {
-    console.log('hello')
   }
 
   setSignupStatus(status: any){

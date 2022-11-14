@@ -34,7 +34,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 // import { MatRippleModule } from '@angular/material/core';
 // Material Popups & Modals
 // import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
-// import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 // import { MatSnackBarModule } from '@angular/material/snack-bar';
 // import { MatTooltipModule } from '@angular/material/tooltip';
 // Material Data tables
@@ -76,7 +76,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     // MatProgressBarModule,
     // MatRippleModule,
     // MatBottomSheetModule,
-    // MatDialogModule,
+    MatDialogModule,
     // MatSnackBarModule,
     // MatTooltipModule,
     // MatPaginatorModule,
@@ -113,7 +113,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     // MatProgressBarModule,
     // MatRippleModule,
     // MatBottomSheetModule,
-    // MatDialogModule,
+    MatDialogModule,
     // MatSnackBarModule,
     // MatTooltipModule,
     // MatPaginatorModule,

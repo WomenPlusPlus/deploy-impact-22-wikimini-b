@@ -11,6 +11,7 @@ import { LoginModule } from './modules/login/login.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './modules/material/material/material.module';
 import { ClassroomCreationModule } from './modules/classroom-creation/classroom-creation.module';
+import { ClassroomModule } from './modules/classroom/classroom.module';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { ClassroomCreationModule } from './modules/classroom-creation/classroom-
     BrowserAnimationsModule,
     MaterialModule,
     ClassroomCreationModule,
+    ClassroomModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

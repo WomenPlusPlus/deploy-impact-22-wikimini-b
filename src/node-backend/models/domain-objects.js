@@ -10,21 +10,25 @@ export function JoiningStudent(fullName, email = "No email set") {
     this.joinCode = false;
 }
 
-export const Status = {
-    Created: "Created",
-    Assigned: "Assigned",
-    InProgress: "In Progress",
-    NeedsHelp: "Needs Help",
-    StudentDone: "Done",
-    Grading: "Grading",
-    Finished: "Finished"
-};
+export const Status = Object.freeze({
+    Created: {id: 1, desc: "Created"},
+    Assigned: {id: 2, desc: "Assigned"}, // assigned to a student
+    InProgress: {id: 3, desc: "In Progress"}, // student opens the task the first time
+    NeedsHelp: {id: 4, desc: "Needs Help"}, // student requests help
+    StudentDone: {id: 5, desc: "Done"}, // student submits the task
+    Grading: {id: 6, desc: "Grading"}, // teacher starts grading
+    Finished: {id: 7, desc: "Finished"} // teacher returns graded task
+});
 
-export const Topic = {
-    Language: "Language",
-    Media: "Media Literacy",
-    Subject: "Subject understanding"
-}
+export const Topic = Object.freeze({
+    Language: {id: 1, desc: "Language"},
+    Media: {id: 2, desc: "Media Literacy"},
+    Subject: {id: 5, desc: "Subject understanding"}
+});
+
+export const HwType = Object.freeze({
+    Write: {id:1 , desc: "Write an article about..."}
+});
 
 export const Achievement = {
     FirstArticle: "First Article written!"
@@ -58,8 +62,9 @@ export function HwTask(title = "New Homework",
     this.dueDate = dueDate;
     this.doneDate = false;
     this.gradedDate = false;
-    this.status = Status.Assigned;
+    this.status = Status.Created;
     this.articleTitle = "No article selected";
+    this.hwType = HwType.Write;
 }
 
 export function Grading(gradingCategory, grade, comment) {
@@ -68,7 +73,8 @@ export function Grading(gradingCategory, grade, comment) {
     this.comment = comment;
 }
 
-export function GradingCategory(topic, category) {
+export function GradingCategory(topic, categoryId, categoryName) {
     this.topic = topic;
-    this.category = category;
+    this.name = categoryName;
+    this.id = categoryId;
 }

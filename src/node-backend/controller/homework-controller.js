@@ -11,19 +11,25 @@ import {
 import * as dbAdapter from "../adapters/database-adapter.js";
 import {checkForAchievement} from "../adapters/database-adapter.js";
 
+const queryResult= " SELECT COUNT( taskStatus) AS type FROM tasks, taskstatus WHERE assignedToStudent='student2' AND (taskStatus = 'done' OR taskStatus = 'finished' OR taskStatus = 'gradings')";
+
 export async function checkAchievements(username) {
     // check for achievements in database
+   try{
+        
     const queryResult = await dbAdapter.checkForAchievement(username);
+    return pool.query(queryResult, [username]);
     // now you need to check if what your query returns fulfills the achievement:
     // for example, if you want to know if the student has at least one finished article, and your query returns all finished articles of the student,
-    // you need to check if the length of the query result is at least 1
+    // you need to check if the length of the query result is at least 1       
     if (queryResult.length >= 1) {
         // achievement condition is met, so you create the object for the achievement and return it
+        console( queryResult + "Success viewed.")
         return [Achievement.FirstArticle];
     } else {
         // achievement condition is not met, so you return the empty list
         return [];
-    }
+    }}
 }
 
 

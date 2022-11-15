@@ -10,6 +10,11 @@ export function JoiningStudent(fullName, email = "No email set") {
     this.joinCode = false;
 }
 
+export const Lock = Object.freeze({
+    Lock: "lock",
+    Unlock: "unlock"
+})
+
 export const Status = Object.freeze({
     Created: {id: 1, desc: "Created"},
     Assigned: {id: 2, desc: "Assigned"}, // assigned to a student

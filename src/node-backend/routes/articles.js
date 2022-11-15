@@ -27,11 +27,11 @@ router.post('/getArticle', async function (req, res) {
     }
 });
 
-// lock article for editing (how to implement?) needs {true or false} (lock/unlock)
+// lock article for editing: needs {articleTitle, lockSwitch} lockSwitch should be Lock.Lock or Lock.Unlock
 router.post('/lockArticle', async function (req, res) {
     try {
-        const {articleTitle} = req.body;
-        const result = await articleController.lockArticle(articleTitle);
+        const {articleTitle, lockSwitch} = req.body;
+        const result = await articleController.lockArticle(articleTitle, lockSwitch);
         res.status(200).json(result);
     } catch (error) {
         res.status(409).json({ message: error.message });
@@ -49,11 +49,11 @@ router.post('/saveArticle', async function (req, res) {
     }
 });
 
-// create new article (not published)
+// create new article, needs {articleTitle, categoryName}
 router.post('/createArticle', async function (req, res) {
     try {
-        const {articleTitle} = req.body;
-        const result = await articleController.createArticle(articleTitle);
+        const {articleTitle, categoryName} = req.body;
+        const result = await articleController.createArticle(articleTitle, categoryName);
         res.status(200).json(result);
     } catch (error) {
         res.status(409).json({ message: error.message });

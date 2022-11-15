@@ -18,10 +18,11 @@ export async function request(params) {
     return wiki.request(params);
 }
 
-export async function getRandomArticle() {
-    wiki.
+export async function createEmptyArticleInCategory(articleTitle, categoryName) {
+    return wiki.create(articleTitle,
+        'This is a newly created article! Edit it to add content ' + '[[Category:' + categoryName + ']]',
+        'New article');
 }
-
 
 // export async function login(credentials) {
 //     return wiki.login(credentials);

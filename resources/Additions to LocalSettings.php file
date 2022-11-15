@@ -1,12 +1,5 @@
-$wgGroupPermissions['*']['edit'] = false;
-# Disable for users, too: by default 'user' is allowed to edit, even if '*' is not.
-$wgGroupPermissions['user']['edit'] = false;
-# Make it so users with confirmed email addresses are in the group.
-$wgAutopromote['emailconfirmed'] = APCOND_EMAILCONFIRMED;
-# Hide group from user list.
-$wgImplicitGroups[] = 'emailconfirmed';
-# Finally, set it to true for the desired group.
-$wgGroupPermissions['emailconfirmed']['edit'] = true;
+# add an additional protection level restricting edit/move/etc.
+$wgRestrictionLevels[] = 'edit-locked';
 
 # student and teacher rights
 
@@ -15,6 +8,9 @@ $wgGroupPermissions['student']['edit'] = true;
 $wgGroupPermissions['teacher']['edit'] = true;
 $wgGroupPermissions['teacher']['upload'] = true;
 $wgGroupPermissions['student']['upload'] = true;
+# give the "edit-locked" permission to users in the "students" and "teachers" groups
+$wgGroupPermissions['teacher']['edit-locked'] = true;
+$wgGroupPermissions['sysop']['edit-locked'] = true;
 
 # allow everyone to create an account
 $wgGroupPermissions['*']['createaccount'] = true;
@@ -24,3 +20,13 @@ $wgHiddenPrefs['student'] = 'email';
 
 # hides the possibility to change the skin
 # $wgHiddenPrefs[*] = 'skin';
+
+$wgSMTP = [
+    'host' => 'ssl://smtp.gmail.com',  // hostname of the email server
+    'IDHost' => 'localhost/mediawiki',
+    'port' => 465,
+    'username' => 'thewikifactory@gmail.com', // user of the email account
+    'password' => 'rgegknltijasdrob',  // app password of the email account
+    'auth' => true
+];
+

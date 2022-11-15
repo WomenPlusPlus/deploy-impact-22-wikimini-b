@@ -20,8 +20,17 @@ export async function getRandomArticles(numberOfRandomArticles) {
     return pages.flatMap(o => o[titleKey]);
 }
 
-export async function saveArticle(articleTitle) {
-
+export async function saveArticle(articleTitle, articleContent) {
+    const token = await wikiAdapter.getEditToken();
+    const categories = wikiAdapter.getCategoriesAsString(articleTitle);
+    const apiResponse = await wikiAdapter.request({
+        action: "edit",
+        title: articleTitle,
+        text: articleContent + categories,
+        nocreate: 1,
+        token: token
+    });
+    return apiResponse;
 }
 
 export async function approveArticle(articleTitle) {

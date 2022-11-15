@@ -24,6 +24,20 @@ export async function createEmptyArticleInCategory(articleTitle, categoryName) {
         'New article');
 }
 
+export async function getCategoriesAsString(articleTitle) {
+    const response = await request({
+        action: "query",
+        prop: "categories",
+        titles: articleTitle
+    });
+    const categories = response["query"]["pages"][0]["categories"];
+    if (typeof categories !== "undefined") {
+        return categories.flatMap(cat => " [[" + cat["title"] + "]] ");
+    } else {
+        return "";
+    }
+}
+
 // export async function login(credentials) {
 //     return wiki.login(credentials);
 // }

@@ -38,11 +38,11 @@ router.post('/lockArticle', async function (req, res) {
     }
 });
 
-// update/save article
+// update/save article, needs {articleTitle, articleContent}
 router.post('/saveArticle', async function (req, res) {
     try {
-        const {articleTitle} = req.body;
-        const result = await articleController.saveArticle(articleTitle);
+        const {articleTitle, articleContent} = req.body;
+        const result = await articleController.saveArticle(articleTitle, articleContent);
         res.status(200).json(result);
     } catch (error) {
         res.status(409).json({ message: error.message });

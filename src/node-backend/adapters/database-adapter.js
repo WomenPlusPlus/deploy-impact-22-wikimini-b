@@ -1,10 +1,49 @@
 import { pool } from "./database-connection.js";
+import {HwTask, HwType, Status} from "../models/domain-objects.js";
 
 const selectHwTaskQueryTemplate = "SELECT taskId as 'taskId', tasks.title, tasks.description, tasks.type, tasks.assignedToStudent, " +
     "tasks.assignedByTeacher, date(tasks.startdate) as 'startdate', date(tasks.duedate) as 'duedate', " +
     "date(tasks.donedate) as 'donedate', date(tasks.gradeddate) as 'gradeddate', tasks.status, " +
     "tasks.concernsArticle, categories.id as 'categoryId' FROM tasks, categories, taskCategories " +
     "WHERE tasks.id=taskCategories.taskId AND taskCategories.categoryId=categories.id";
+
+// works if the selectTasksTemplateQuery is used
+export function convertDbTasks(dbResult) {
+    const tasks = [];
+    for (let i = 0; i < dbResult.length; i++) {
+        const taskId = dbResult[i]['taskId'];
+        const title = dbResult[i]['title'];
+        const description = dbResult[i]['description'];
+        const assignedByTeacher = dbResult[i]['assignedByTeacher'];
+        const assignedToStudent = dbResult[i]['assignedToStudent'];
+        const startDate = dbResult[i]['startdate'];
+        const dueDate = dbResult[i]['duedate'];
+        const hwType = Object.keys(HwType).find(k => HwType[k]['id'] === dbResult[i]['type']);
+        const doneDate = dbResult[i]['donedate'] === null ? false : dbResult[i]['donedate'];
+        const gradedDate = dbResult[i]['gradeddate'] === null ? false : dbResult[i]['gradeddate'];
+        const status = Object.keys(Status).find(k => Status[k]['id'] === dbResult[i]['status']);
+        const article = dbResult[i]['concernsArticle'] === null ? false : dbResult[i]['concernsArticle'];
+        const gradingCategories = [];
+        while (taskId === dbResult[i]['taskId']) {
+            gradingCategories[i] = dbResult[i]['categoryId'];
+            i++;
+            if (i === dbResult.length - 1) {
+                break;
+            }
+        }
+        const task = new HwTask(title, description,
+            assignedByTeacher, assignedToStudent,
+            gradingCategories, startDate, dueDate);
+        task.id = taskId;
+        task.hwType = hwType;
+        task.doneDate = doneDate;
+        task.gradedDate = gradedDate;
+        task.status = status;
+        task.articleTitle = article;
+        tasks[tasks.length] = task;
+    }
+    return tasks;
+}
 
 export function createClassroom(username, classname) {
     try {

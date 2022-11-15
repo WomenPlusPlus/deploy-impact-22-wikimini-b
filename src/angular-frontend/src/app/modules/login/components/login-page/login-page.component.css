@@ -1,57 +1,133 @@
 .wrapper {
-    height: 100vh;
-    background-color: #24a79d;
+  height: 100vh;
+  background-color: #24a79d;
 }
 
 .nav-buttons {
-    padding: 1em;
-    display: flex;
-    justify-content: flex-end;
+  padding: 1em;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .footer {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    padding-top: 5em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding-top: 5em;
 }
 
 .login-panel {
-    display: flex !important;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: -110px;
 }
 
 .top {
-    padding-top: 5em;
-    display: flex;
-    width: 50vw;
-    flex-direction: row;
-    justify-content: space-between;
+  padding-top: 5em;
+  display: flex;
+  width: 50vw;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .form-panel {
-    width: 75vw;
-    height: 55vh;
-    background-color: white;
-    display: flex;
-    flex-direction: row;
-    border: 2px solid black;
-    border-radius: 15px;
-    padding: 1em;
-    justify-content: space-between;
+  width: 75vw;
+  height: 55vh;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  border: 2px solid black;
+  border-radius: 15px;
+  padding: 1em;
+  justify-content: space-between;
 }
 
 .form-panel > div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
 }
 
 .forgot-password {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
+}
+
+.labels {
+  font-family: "M PLUS 1";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  color: #4f4f4f;
+  flex: none;
+  order: 0;
+  flex-grow: 1;
+}
+
+input {
+  text-indent: 10px;
+}
+.input {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  width: 250px;
+  height: 25px;
+
+  /* Black Colors/White */
+
+  background: #ffffff;
+  /* Grey Colors/Gray 2 */
+
+  border: 3px solid #4f4f4f;
+  border-radius: 16px;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+
+.wlcm-back {
+  font-family: "M PLUS 1";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 30px;
+  text-align: center;
+  letter-spacing: 0.02em;
+  color: #4f4f4f;
+}
+
+.manrope-bold-white-40px {
+  font-family: "Manrope", sans-serif;
+  font-size: 40px;
+  color: white;
+  font-weight: 700;
+  padding-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.forgot-pass {
+  width: 290px;
+  height: 30px;
+  font-family: "M PLUS 1";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 30px;
+  letter-spacing: 0.02em;
+  color: #84beff;
+  transform: rotate(-0.34deg);
+  flex: none;
+  order: 0;
+  flex-grow: 0;
 }

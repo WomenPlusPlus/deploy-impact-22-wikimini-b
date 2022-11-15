@@ -18,9 +18,14 @@ export async function request(params) {
     return wiki.request(params);
 }
 
-export async function login(credentials) {
-    return wiki.login(credentials);
+export async function getRandomArticle() {
+    wiki.
 }
+
+
+// export async function login(credentials) {
+//     return wiki.login(credentials);
+// }
 
 export async function getEditToken() {
     return getTokenOfType("csrf");

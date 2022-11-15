@@ -1,5 +1,7 @@
-export async function getRandomArticles(numberOfRandomArticles) {
+import * as wikiAdapter from "../adapters/wiki-adapter.js"
 
+export async function getRandomArticles(numberOfRandomArticles) {
+    wikiAdapter.
 }
 
 export async function saveArticle(articleTitle) {

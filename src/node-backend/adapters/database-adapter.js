@@ -311,3 +311,16 @@ export function addGradingCategory(topicId, gradingCategoryName) {
     throw error;
   }
 }
+
+export function checkForAchievement(username) {
+    try {
+        // checking for achievements query with a ? where you want to pass the username
+        const achievementsQuery = "";
+        return pool.query(achievementsQuery, username);
+    } catch (error) {
+        console.error(
+            "Error while trying to check for achievements: " + error
+        );
+        throw error;
+    }
+}

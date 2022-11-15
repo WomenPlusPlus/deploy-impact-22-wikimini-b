@@ -1,13 +1,22 @@
 import {Achievement, GradingCategory, HwTask, HwType, Status, TeacherHwList, Topic} from "../models/domain-objects.js";
 import * as dbAdapter from "../adapters/database-adapter.js";
+import {checkForAchievement} from "../adapters/database-adapter.js";
 
 const dbNull = null;
 
 export async function checkAchievements(username) {
-
-    // if the achievement has been met, return the achievement as a list, otherwise return en empty list
-    // return []; // empty list
-    return [Achievement.FirstArticle];
+    // check for achievements in database
+    const queryResult = await dbAdapter.checkForAchievement(username);
+    // now you need to check if what your query returns fulfills the achievement:
+    // for example, if you want to know if the student has at least one finished article, and your query returns all finished articles of the student,
+    // you need to check if the length of the query result is at least 1
+    if (queryResult.length >= 1) {
+        // achievement condition is met, so you create the object for the achievement and return it
+        return [Achievement.FirstArticle];
+    } else {
+        // achievement condition is not met, so you return the empty list
+        return [];
+    }
 }
 
 

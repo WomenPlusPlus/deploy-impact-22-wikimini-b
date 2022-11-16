@@ -107,6 +107,7 @@ input {
   flex: none;
   order: 0;
   flex-grow: 1;
+  margin: 10px 0px;
 }
 
 .form {
@@ -120,30 +121,20 @@ input {
   align-items: center;
   width: 250px;
   height: 25px;
-
-  /* Black Colors/White */
-
   background: #ffffff;
-  /* Grey Colors/Gray 2 */
-
   border: 3px solid #4f4f4f;
   border-radius: 16px;
-
-  /* Inside auto layout */
-
   flex: none;
   order: 1;
   flex-grow: 0;
+  margin: 9px 0px;
 }
 
 .note-email {
-
-  /* Small Text Regular */
-
   font-family: "M PLUS 1";
   font-style: normal;
   font-weight: 400;
-  font-size: 18px;
+  font-size: 15px;
   line-height: 24px;
 
   color: #4f4f4f;
@@ -152,4 +143,19 @@ input {
 
   order: 0;
   flex-grow: 0;
+}
+
+.owl {
+  width: 100px;
+  height: 120px;
+  left: 187px;
+  top: 110px; 
+}
+
+.wikimini {
+  padding-top: 10px;
+  width: 230px;
+  height: 900px;
+  left: 92px;
+  top: 35px;
 }

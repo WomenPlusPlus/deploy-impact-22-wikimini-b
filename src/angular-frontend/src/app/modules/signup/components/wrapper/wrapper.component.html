@@ -8,7 +8,7 @@
       />
     </button>
 
-    <button [routerLink]="['/home']" class="flex-row-item">
+    <button [routerLink]="['/home']" (click)="signupShared.resetStatus()" class="flex-row-item">
       <img
         class="flex-row-item"
         src="../.../../../../../../assets/wrapper assets/x.png"

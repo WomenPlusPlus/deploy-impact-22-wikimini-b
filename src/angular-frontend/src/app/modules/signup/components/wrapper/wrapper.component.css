@@ -1,6 +1,8 @@
 .main-content {
-  height: 100vh;
+  /* height: 100vh; */
   background-color: #24a79d;
+  background-image:  url(../../../../../assets/photos/background.png);
+  background-repeat: repeat;
 }
 
 .flex-row-item {
@@ -68,5 +70,6 @@ color: #FFFFFF;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  padding-top: 5em;
+  padding-bottom: 5em;
+  /* padding-top: 5em; */
 }

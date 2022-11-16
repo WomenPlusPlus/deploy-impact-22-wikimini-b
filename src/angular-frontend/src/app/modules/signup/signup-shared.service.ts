@@ -84,4 +84,8 @@ export class SignupSharedService {
       }
     }
   }
+
+  resetStatus() {
+    this.signupStatus = SignupStatus.SIGNUP_CHOICE;
+  }
 }

@@ -1,6 +1,6 @@
 <div class="signup-panel">
   <div class="top">
-    <p>OWL</p>
+    <img class="owl" src="assets/photos/owl.png" alt="owl"/>
 
     <span class="manrope-bold-white-40px">Create an account</span>
     <p></p>
@@ -8,7 +8,7 @@
   <div class="form-panel">
     <div>
       <p class="wlcm-teach">Welcome Teachers!</p>
-      <p>Wikimini</p>
+      <img class="wikimini" src="assets/photos/wikimini.png" alt="wikimini" />
       <p class="descr">
         Your online classroom to teach medialiteracy, language and any topic to
         your heart's desire.
@@ -17,40 +17,40 @@
     <div>
       <!-- [formGroup]="userForm" -->
       <form class="form">
-        <label class="labels">User name</label><br />
+        <label class="labels">User name</label>
         <input
           class="input"
           formControlName="username"
           placeholder="User name"
-        /><br /><br />
+        />
         <div
           *ngIf="
             this.signupShared.signupStatus !=
             signupShared.SignupStatusEnum.SIGNUP_FORM_STUDENT
           "
         >
-          <label class="labels">Email</label><br />
+          <label class="labels">Email</label>
           <input
             class="input"
             formControlName="email"
             placeholder="Email"
-          /><br /><br />
+          />
         </div>
         <div class="note-email">
           Please use school email address if possible
         </div>
-        <label class="labels">Password</label><br />
+        <label class="labels">Password</label>
         <input
           class="input"
           formControlName="password"
           placeholder="Password"
-        /><br /><br />
-        <label class="labels">Password Confirmation</label><br />
+        />
+        <label class="labels">Password Confirmation</label>
         <input
           class="input"
           formControlName="passwordConfirm"
           placeholder="Password Confirmation"
-        /><br /><br />
+        />
       </form>
     </div>
   </div>

@@ -71,7 +71,7 @@ export class SignupSharedService {
         break;
       }
       case SignupStatus.SIGNUP_EMAIL_CONFIRMATION: {
-        // Shouldn't be able to go forward
+        this.signupStatus = SignupStatus.SIGNUP_SUCCESS_TEACHER
         break;
       }
       case SignupStatus.SIGNUP_SUCCESS_STUDENT: {

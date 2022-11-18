@@ -1,5 +1,6 @@
 .nav-3 {
   display: flex;
+  height: 9em;
 }
 
 .nav-btn {
@@ -69,7 +70,7 @@
 .wikimini {
   padding-top: 10px;
   width: 110px;
-  height: 30px;
+  height: 30px !important;
   left: 92px;
   top: 35px;
 }

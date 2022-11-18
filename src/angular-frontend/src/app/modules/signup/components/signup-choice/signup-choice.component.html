@@ -12,7 +12,12 @@
             <img  src="../../../../../assets/signup-choice/Illustration-glasses.png" alt="Illustration glasses"/> 
         </div>
          <div class="teacher">
-            <button  (click)="signupShared.setSignupStatus(signupShared.SignupStatusEnum.SIGNUP_FORM_TEACHER)"> I'm a Teacher</button>
+            <button (click)="signupShared.setSignupStatus(signupShared.SignupStatusEnum.SIGNUP_FORM_TEACHER)"> 
+                <span class="inner">
+
+                I'm a Teacher
+            </span>
+            </button>
         </div>
         <div class="books">
             <img  src="../../../../../assets/signup-choice/noto-v1_books.png"/>
@@ -25,7 +30,12 @@
             <img  src="../../../../../assets/signup-choice/Illustratio-student.png"  alt="Illustratio-student"/>  
         </div>
         <div class="student">
-            <button  (click)="signupShared.setSignupStatus(signupShared.SignupStatusEnum.SIGNUP_CODE_STUDENT)">I'm a Student</button> 
+            <button  (click)="signupShared.setSignupStatus(signupShared.SignupStatusEnum.SIGNUP_CODE_STUDENT)">
+            
+            <span class="inner">
+                
+                I'm a Student </span>
+            </button> 
         </div>
     </div>
 </div> 

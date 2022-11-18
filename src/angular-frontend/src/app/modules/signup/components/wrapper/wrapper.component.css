@@ -1,6 +1,8 @@
 .main-content {
-  height: 100vh;
+  /* height: 100vh; */
   background-color: #24a79d;
+  background-image:  url(../../../../../assets/photos/background.png);
+  background-repeat: repeat;
 }
 
 .flex-row-item {
@@ -26,6 +28,18 @@
   font-weight: 700;
   padding-top: 20px;
   z-index: 1;
+  font-family: 'M PLUS 1';
+font-style: normal;
+font-weight: 400;
+font-size: 22px;
+line-height: 30px;
+/* identical to box height, or 136% */
+
+letter-spacing: 0.02em;
+
+/* Black Colors/White */
+
+color: #FFFFFF;
 }
 
 .logInButton {
@@ -44,11 +58,18 @@
 .logInText {
   text-align: end;
   text-justify: bottom;
+  font-family: 'M PLUS 1';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 30px;
+  letter-spacing: 0.02em;
 }
 
 .footer {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  padding-top: 5em;
+  padding-bottom: 5em;
+  /* padding-top: 5em; */
 }

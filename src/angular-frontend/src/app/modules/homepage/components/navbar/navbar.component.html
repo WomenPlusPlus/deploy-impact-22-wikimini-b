@@ -1,26 +1,34 @@
 <nav class="nav nav-3">
-    <a class="nav-logo" routerLink="/home">Logo</a>
-    <ul class="nav-list">
-      <li>
-        <a href="#">Encyclopedia</a>
-      </li>
-      <li>
-        <a routerLink="classroom">My classroom</a>
-      </li>
-      <li>
-        <a href="#">For parents</a>
-      </li>
-      <li>
-        <a href="#">For teachers</a>
-      </li>
-    </ul>
-    <div class="userButtons">
-      <button [routerLink]="['/login']" routerLinkActive="router-link-active"  class="nav-btn button-shadow">Login</button>
-      <button [routerLink]="['/signup']" class="nav-btn button-shadow">Sign Up</button>
-    </div>
+  <a class="nav-logo" routerLink="/home">
+    <img class="owl" src="assets/photos/owl.png" alt="owl" />
+    <img class="wikimini" src="assets/photos/wikimini.png" alt="wikimini" />
+  </a>
+
+<div class="div-a">
+  <a class="home-a" href="#">Encyclopedia</a>
+
+  <a class="home-a" routerLink="classroom">My classroom</a>
+
+  <a class="home-a" href="#">For parents</a>
+
+  <a class="home-a" href="#">For teachers</a>
+</div>
+
+  <div class="userButtons">
+    <button
+      [routerLink]="['/login']"
+      routerLinkActive="router-link-active"
+      class="nav-btn button-shadow"
+    >
+      Login
+    </button>
+    <button [routerLink]="['/signup']" class="nav-btn button-shadow">
+      Sign Up
+    </button>
+  </div>
 </nav>
 <div class="index">
   <button *ngFor="let letter of lettersArr">
-    {{letter}}
+    {{ letter }}
   </button>
 </div>

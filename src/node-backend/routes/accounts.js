@@ -1,16 +1,23 @@
 import express from "express";
-import * as signupController from "../controller/accounts-controller.js";
+import * as accountsController from "../controller/accounts-controller.js";
 export const router = express.Router();
-// to test: use postman, select Body -> raw type, json, format: "username":"exampleUser, "password":"examplePassword"
-// teacher sign up
-router.post('/teacherSignup', signupController.doTeacherSignUp);
-router.post('/teacherEmailConfirmed', signupController.confirmTeacherAccount);
 
-// students sign up
-router.post('/studentSignup', signupController.doStudentSignUp);
+// complete path: /accounts/...
 
-// students log in
-router.post('/studentLogin', signupController.doStudentLogin);
+// teacher sign up: needs {username, password, email}
+router.post('/teacherSignup', accountsController.doTeacherSignUp);
 
-// teacher log in
-router.post('/teacherLogin', signupController.doTeacherLogin);
+// teacher email confirmation: needs {username, authCode}
+router.post('/confirmEmail', accountsController.confirmTeacherAccount);
+
+// students sign up: needs {username, password, code}
+router.post('/studentSignup', accountsController.doStudentSignUp);
+
+// students log in: needs {username, password}
+router.post('/studentLogin', accountsController.doStudentLogin);
+
+// teachers log in: needs {username or email, password}
+router.post('/teacherLogin', accountsController.doTeacherLogin);
+
+// share sign up codes: needs {username, email}
+router.post('/shareCodesWithParents', accountsController.shareCodesWithParents);

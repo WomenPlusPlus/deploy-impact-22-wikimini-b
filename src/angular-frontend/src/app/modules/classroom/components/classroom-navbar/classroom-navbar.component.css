@@ -1,0 +1,21 @@
+#wrapper {
+    display: flex !important;
+    flex-direction: row;
+    width: 100vw;
+    justify-content: space-between;
+}
+
+#left {
+    display: flex;
+    padding-left: 3em;
+}
+
+#right {
+    display: flex;
+    padding-right: 3em;
+}
+
+a {
+    padding: 1em;
+    font-size: 1.5em;
+}

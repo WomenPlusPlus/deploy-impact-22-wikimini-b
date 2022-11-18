@@ -1,0 +1,93 @@
+<div class="main-content">
+  <div class="nav-buttons">
+    <button *ngIf="signupShared.signupStatus != signupShared.SignupStatusEnum.SIGNUP_CHOICE; else elseBlock" class="flex-row-item" (click)="signupShared.getPreviousStatus()">
+      <img
+        class="flex-row-item"
+        src="../../../../../assets/wrapper assets/chevron-left-1@2x.png"
+        alt="chevron-left"
+      />
+    </button>
+    <ng-template #elseBlock><div></div></ng-template>
+
+    <button [routerLink]="['/home']" (click)="signupShared.resetStatus()" class="flex-row-item">
+      <img
+        class="flex-row-item"
+        src="../.../../../../../../assets/wrapper assets/x.png"
+        alt="x"
+      />
+    </button>
+  </div>
+
+  <app-signup-choice
+    *ngIf="
+      signupShared.signupStatus === signupShared.SignupStatusEnum.SIGNUP_CHOICE
+    "
+  ></app-signup-choice>
+  <app-signup-code
+    *ngIf="
+      signupShared.signupStatus ===
+      signupShared.SignupStatusEnum.SIGNUP_CODE_STUDENT
+    "
+  ></app-signup-code>
+  <app-signup-form
+    *ngIf="
+      signupShared.signupStatus ===
+        signupShared.SignupStatusEnum.SIGNUP_FORM_STUDENT ||
+      signupShared.signupStatus ===
+        signupShared.SignupStatusEnum.SIGNUP_FORM_TEACHER
+    "
+  ></app-signup-form>
+  <app-signup-email-confirmation
+    *ngIf="
+      signupShared.signupStatus ===
+      signupShared.SignupStatusEnum.SIGNUP_EMAIL_CONFIRMATION
+    "
+  ></app-signup-email-confirmation>
+  <app-signup-success
+    *ngIf="
+      signupShared.signupStatus ===
+        signupShared.SignupStatusEnum.SIGNUP_SUCCESS_STUDENT ||
+      signupShared.signupStatus ===
+        signupShared.SignupStatusEnum.SIGNUP_SUCCESS_TEACHER
+    "
+  ></app-signup-success>
+  <div *ngIf="signupShared.signupStatus != signupShared.SignupStatusEnum.SIGNUP_EMAIL_CONFIRMATION" class="footer">
+    <div class="haveAccountLoginButton">
+      <p class="Mplus1-bold-white-15px">Already have an account?</p>
+      <button class="logInButton">
+        <span class="logInText"> LOG IN </span>
+      </button>
+    </div>
+    <button class="button-shadow" (click)="signupShared.getNextStatus()">
+      Next
+
+      <svg
+        width="25"
+        height="26"
+        viewBox="0 0 25 26"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M5.20831 13H19.7916"
+          stroke="black"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M12.5 5.70837L19.7917 13L12.5 20.2917"
+          stroke="black"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </button>
+  </div>
+  <!-- <div class="haveAccountLoginButton">
+    <p class="Mplus1-bold-white-15px">Already have an account?</p>
+    <button class="logInButton"><span class="logInText"> Log In </span></button>
+  </div> -->
+</div>
+

@@ -57,25 +57,20 @@ export function createClassroom(username, classname) {
 
 export async function addStudentCodes(classId, studentInfos) {
   try {
-    let insertStudentCodeQuery =
-      "INSERT INTO `classroomcodes`(`classID`,`studentJoinCode`,`studentFullName`,`parentEmail`) VALUES ";
-    let values = "";
+    let insertStudentCodeQuery = "INSERT INTO `classroomcodes`(`classID`,`studentJoinCode`,`studentFullName`,`parentEmail`) VALUES ";
+    let valuesStr = "";
+    const parameters = [];
     studentInfos.forEach((student) => {
-      let row =
-        "('" +
-        classId +
-        "', '" +
-        student.joinCode +
-        "', '" +
-        student.fullName +
-        "', '" +
-        student.email +
-        "'), ";
-      values += row;
+      let row = "(?, ?, ?, ?), ";
+      parameters[parameters.length] = classId;
+      parameters[parameters.length] = student.joinCode;
+      parameters[parameters.length] = student.fullName;
+      parameters[parameters.length] = student.email;
+      valuesStr += row;
     });
-    values = values.slice(0, -2); // remove last comma
-    insertStudentCodeQuery += values;
-    return pool.query(insertStudentCodeQuery);
+    valuesStr = valuesStr.slice(0, -2); // remove last comma
+    insertStudentCodeQuery += valuesStr;
+    return pool.query(insertStudentCodeQuery, parameters);
   } catch (error) {
     console.error("Error while storing student codes: " + error);
     return error;

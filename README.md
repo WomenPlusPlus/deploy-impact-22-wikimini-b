@@ -11,7 +11,7 @@ This repository is the base for our vision of what Wikimini, the encyclopedia fo
     - Getting Apache and MySQL running
     - Creating your database
     - Editing PHP.ini
-       - you should also look for "intl" in the php.ini file and uncomment the intl extension line (remove the ;), and then restart the server
+       - you should also look for "intl" in the php.ini file and uncomment the intl extension line (remove the `;`), and then restart the server
     - Setting up MediaWiki
 - after finishing the setup, add the code from the file docs/Additions to LocalSettings.php to your LocalSettings.php file and restart the XAMPP services
     

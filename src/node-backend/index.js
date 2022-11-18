@@ -6,7 +6,7 @@ import * as homework from "./routes/homework.js";
 import * as articles from "./routes/articles.js";
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 8080
 
 /**
  * Middleware

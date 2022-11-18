@@ -5,11 +5,11 @@ export const router = express.Router();
 // complete path: /articles/...
 
 // get article search results for search term, needs max number of results as resultLimit and search term as {searchTerm, resultLimit}
-// format: [title1, title2, title3]
+// returns SearchResult object
 router.post('/searchArticles', async function (req, res) {
     try {
-        const {searchTerm} = req.body;
-        const result = await articleController.searchArticles(searchTerm);
+        const {searchTerm, resultLimit} = req.body;
+        const result = await articleController.searchArticles(searchTerm, resultLimit);
         res.status(200).json(result);
     } catch (error) {
         res.status(409).json({ message: error.message });

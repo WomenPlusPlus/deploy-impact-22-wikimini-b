@@ -1,15 +1,16 @@
 import * as wikiAdapter from "../adapters/wiki-adapter.js"
-import {Lock} from "../models/domain-objects.js";
+import {Lock, SearchResult} from "../models/domain-objects.js";
 
 const protectAction = "protect";
 const queryAction = "query";
+const searchAction = "opensearch";
 const listRandom = "random";
+const listProtected = "protectedtitles";
 const titleKey = "title";
 const lockProtection = "edit-locked";
 const protectionsKey = "protections";
 const editAction = "edit";
 const editKey = "edit";
-const protectedListKey = "protectedtitles";
 
 export async function getRandomArticles(numberOfRandomArticles) {
     const apiResponse = await wikiAdapter.request({
@@ -62,11 +63,11 @@ export async function lockArticle(articleTitle, lockSwitch) {
 export async function isArticleLocked(articleTitle) {
     const result = await wikiAdapter.request({
         action: queryAction,
-        list: protectedListKey,
+        list: listProtected,
         ptnamespace: "0",
         ptlevel: lockProtection
     });
-    const protectedArticles = result[queryAction][protectedListKey];
+    const protectedArticles = result[queryAction][listProtected];
     if (articleTitle in protectedArticles) {
         return Lock.Lock;
     } else {
@@ -116,6 +117,16 @@ export async function getHtmlArticle(articleTitle) {
     
 }
 
-export async function searchArticles(searchTerm) {
-
+export async function searchArticles(searchTerm, resultLimit) {
+    const apiResponse = await wikiAdapter.request({
+        action: searchAction,
+        search: searchTerm,
+        namespace: 0,
+        limit: resultLimit
+    });
+    const searchTermResponse = apiResponse[0];
+    const articles = apiResponse[1];
+    const descriptions = apiResponse[2];
+    const links = apiResponse[3];
+    return new SearchResult(searchTermResponse, articles, descriptions, links);
 }

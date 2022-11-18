@@ -41,10 +41,6 @@ export async function saveArticle(articleTitle, articleContent) {
     }
 }
 
-export async function approveArticle(articleTitle) {
-    
-}
-
 export async function createArticle(articleTitle, categoryName) {
     return await wikiAdapter.createEmptyArticleInCategory(articleTitle, categoryName);
 }
@@ -112,10 +108,6 @@ async function unlock(articleTitle) {
     } else {
         throw Error("Error while unlocking article: " + apiResponse);
     }
-}
-
-export async function getHtmlArticle(articleTitle) {
-    
 }
 
 export async function searchArticles(searchTerm, resultLimit) {

@@ -16,17 +16,6 @@ router.post('/searchArticles', async function (req, res) {
     }
 });
 
-// get article (title), return html
-router.post('/getArticle', async function (req, res) {
-    try {
-        const {articleTitle} = req.body;
-        const result = await articleController.getHtmlArticle(articleTitle);
-        res.status(200).json(result);
-    } catch (error) {
-        res.status(409).json({ message: error.message });
-    }
-});
-
 // lock article for editing: needs {articleTitle, lockSwitch} lockSwitch should be Lock.Lock or Lock.Unlock
 router.post('/lockArticle', async function (req, res) {
     try {
@@ -60,22 +49,11 @@ router.post('/saveArticle', async function (req, res) {
     }
 });
 
-// create new article, needs {articleTitle, categoryName}
+// create new article, needs {articleTitle, categoryName}, leave categoryName as "" to not add any category
 router.post('/createArticle', async function (req, res) {
     try {
         const {articleTitle, categoryName} = req.body;
         const result = await articleController.createArticle(articleTitle, categoryName);
-        res.status(200).json(result);
-    } catch (error) {
-        res.status(409).json({ message: error.message });
-    }
-});
-
-// approve and publish article
-router.post('/approveArticle', async function (req, res) {
-    try {
-        const {articleTitle} = req.body;
-        const result = await articleController.approveArticle(articleTitle);
         res.status(200).json(result);
     } catch (error) {
         res.status(409).json({ message: error.message });

@@ -5,11 +5,9 @@ import {
     HwType,
     Status,
     StudentHwList,
-    TeacherHwList,
     Topic
 } from "../models/domain-objects.js";
 import * as dbAdapter from "../adapters/database-adapter.js";
-import {checkForAchievement} from "../adapters/database-adapter.js";
 
 export async function checkAchievements(username) {
     // check for achievements in database
@@ -24,31 +22,6 @@ export async function checkAchievements(username) {
         // achievement condition is not met, so you return the empty list
         return [];
     }
-}
-
-
-export async function studentHelpRequest(username, hwTaskId, question) {
-
-}
-
-
-export async function gradeHwTask(taskId, gradings) {
-
-}
-
-
-export async function updateHwTaskStatus(taskId, newStatus, datetime) {
-
-}
-
-
-export async function editHwTask(taskId, taskWithUpdates) {
-
-}
-
-
-export async function updateArticleTitleForHwTask(articleTitle, articleUrl) {
-
 }
 
 export async function getHwTask(hwTaskId) {
@@ -82,14 +55,6 @@ export async function getHwForStudent(username) {
     return new StudentHwList(current, late, done, graded);
 }
 
-// returns three lists inside the TeacherHwList() object
-export async function getHwByClass(classId) {
-    // return homework tasks assgined by the teacher of the class with startdate <= today and not marked as done
-    // return homework assigned by teacher of class with startdate > today
-    // return homework assgined by the teacher of the class with startdate <= today and marked as done
-    return new TeacherHwList();
-}
-
 // add new homework task for all students in the class
 // classId, title, description, gradingCategories, startDate, dueDate
 export async function addNewHwTaskForClass(classId, newHwTask) {
@@ -112,8 +77,6 @@ export async function addNewHwTaskForClass(classId, newHwTask) {
 
 // add new grading category
 export async function addGradingCategory(topicId, gradingCategoryName) {
-    // const topicId = newGradingCategory.topic.id;
-    // const gradingCategoryName = newGradingCategory.name;
     const result = await dbAdapter.addGradingCategory(topicId, gradingCategoryName);
     if (result['warningStatus'] === 0) {
         return Number(result['insertId']);

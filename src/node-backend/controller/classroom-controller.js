@@ -11,14 +11,9 @@ export const getClassroomById = async (req, res) => {
   }
 };
 
-export async function downloadStudentCodes(classId) {
-
-}
-
 export async function getJoiningStudents(classId) {
     return dbAdapter.getStudentCodes(classId);
 }
-
 
 export async function createClassroom(username, classname) {
     const queryResult = await dbAdapter.createClassroom(username, classname);
@@ -28,7 +23,6 @@ export async function createClassroom(username, classname) {
         throw Error("Error while trying to create new classroom");
     }
 }
-
 
 export async function saveJoiningStudents(studentNamesEmails, classId) {
     studentNamesEmails.forEach(student => {

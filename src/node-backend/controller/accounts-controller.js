@@ -34,6 +34,7 @@ export const doTeacherSignUp = async (req, res) => {
     res.status(405).json({ message: error.message });
   }
 };
+
 export const confirmTeacherAccount = async (req, res) => {
   try {
     const { username, authCode } = req.body;
@@ -49,6 +50,7 @@ export const confirmTeacherAccount = async (req, res) => {
     res.status(406).json({ message: error.message });
   }
 };
+
 export const doStudentSignUp = async (req, res) => {
   try {
     const { username, password, code } = req.body;
@@ -189,7 +191,7 @@ export async function sendTeacherConfirmationMail(username, email) {
 }
 
 async function registerUserAsTeacher(username) {
-  // login with a bot account that has the right to change usergroups (safety issue?),
+  // login with a bot account that has the right to change usergroups (check for safety in the future),
   const token = await wikiAdapter.getLocalEditToken();
   await wikiAdapter
     .request({

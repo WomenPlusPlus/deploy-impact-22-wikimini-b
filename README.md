@@ -1,5 +1,5 @@
 # Wikimini - by The Wiki Factory
-This repository is the base for our vision of what Wikimini, the encyclopedia for kids, could be like in the future. Follow the instructions below it to install and run it on your local machine. Documentation can be found in the docs folder, our source code can be found in scr/node-backend and src/angular-frontend, and the designs are behind the links included below. We also want to thank all the great people who make their libraries publicly usable which are mentioned [here](inlcude link to the file).
+This repository is the base for our vision of what Wikimini, the encyclopedia for kids, could be like in the future. Follow the instructions below it to install and run it on your local machine. Documentation can be found in the docs folder, our source code can be found in scr/node-backend and src/angular-frontend, and the designs are behind the links included below. We also want to thank all the great people who make their libraries publicly usable which are mentioned [here](https://github.com/WomenPlusPlus/deploy-impact-22-wikimini-b/blob/fc41254ce5760e2c2f5537097950e46167efcede/docs/third-parties.md).
 
 ## Designs
 The designs were created using Figma, you can find them [here](https://www.figma.com/file/GyaAuxiHncjTtKnC7duPUv/Wikimini?node-id=498%3A1589&t=2wMIdq0J9amxzalS-1).

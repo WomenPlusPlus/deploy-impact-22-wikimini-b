@@ -1,5 +1,5 @@
-# deploy-impact-22-wikimini-b
-Repository for Team wikimini-b for deploy(impact) 2022
+# Wikimini - by The Wiki Factory
+This repository is the base for our vision of what Wikimini, the encyclopedia for kids, could be like in the future. Follow the instructions below it to install and run it on your local machine. Documentation can be found in the docs folder, our source code can be found in scr/node-backend and src/angular-frontend, and the designs are behind the links included below.
 
 # Git Workflow
 
@@ -31,6 +31,7 @@ Repository for Team wikimini-b for deploy(impact) 2022
     - Editing PHP.ini
        - you should also look for "intl" in the php.ini file and uncomment the intl extension line (remove the ;), and then restart the server
     - Setting up MediaWiki
+- after finishing the setup, add the code from the file docs/Additions to LocalSettings.php to your LocalSettings.php file and restart the XAMPP services
     
 ## Run Wikimini (to be completed)
 

@@ -25,6 +25,7 @@
 
 .top {
   padding-top: 5em;
+  margin-top: 20px;
   display: flex;
   width: 50vw;
   flex-direction: row;
@@ -57,12 +58,11 @@
   font-family: "Manrope", sans-serif;
   font-size: 40px;
   color: white;
-  /* font-weight: 700; */
+  font-weight: 700;
   padding-top: 20px;
   display: flex;
   justify-content: center;
 }
-
 .conf-sent {
   font-family: "M PLUS 1";
   font-style: normal;
@@ -70,7 +70,7 @@
   font-size: 17px;
   text-align: center;
   letter-spacing: 0.02em;
-  margin-bottom: 10px;
+  margin: 35px 0px;
   color: #4f4f4f;
 }
 
@@ -97,14 +97,15 @@
 }
 
 .cel-left {
-  width: 190px;
-  height: 175px;
+  width: 120px;
+  height: 190px;
+  margin-right: 20px;
 }
 
 .cel-right {
-  width: 190px;
-  height: 175px;
-  margin-left: -85px;
+  width: 230px;
+  height: 207px;
+  margin-left: -100px;
 }
 
 

@@ -6,6 +6,7 @@ const queryAction = "query";
 const searchAction = "opensearch";
 const listRandom = "random";
 const listProtected = "protectedtitles";
+const listCategories = "allcategories";
 const titleKey = "title";
 const lockProtection = "edit-locked";
 const protectionsKey = "protections";
@@ -129,4 +130,37 @@ export async function searchArticles(searchTerm, resultLimit) {
     const descriptions = apiResponse[2];
     const links = apiResponse[3];
     return new SearchResult(searchTermResponse, articles, descriptions, links);
+}
+
+export async function getCategories() {
+    const apiResponse = await wikiAdapter.request({
+        action: queryAction,
+        list: listCategories,
+        aclimit: "500"
+    });
+    return apiResponse[queryAction][listCategories].flatMap(cat => cat["category"]);
+}
+
+export async function getCategoryOfArticle(articleName) {
+    return wikiAdapter.getCategoriesOfArticle(articleName);
+}
+
+export async function addCategoriesToArticle(articleName, categories) {
+    let categoriesString = "";
+    categories.forEach(cat => {
+        categoriesString += " [[Category:" + cat + "]] ";
+    })
+    const token = await wikiAdapter.getEditToken();
+    const apiResponse = await wikiAdapter.request({
+        action: editAction,
+        title: articleName,
+        nocreate: 1,
+        appendtext: categoriesString,
+        token: token
+    });
+    if (apiResponse[editAction]["result"] === "Success") {
+        return true;
+    } else {
+        throw new Error("Error while trying to add categories to article: " + apiResponse);
+    }
 }

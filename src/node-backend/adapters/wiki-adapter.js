@@ -24,7 +24,7 @@ export async function createEmptyArticleInCategory(articleTitle, categoryName) {
         'New article');
 }
 
-export async function getCategoriesAsString(articleTitle) {
+export async function getCategoriesOfArticle(articleTitle) {
     const response = await request({
         action: "query",
         prop: "categories",
@@ -32,10 +32,15 @@ export async function getCategoriesAsString(articleTitle) {
     });
     const categories = response["query"]["pages"][0]["categories"];
     if (typeof categories !== "undefined") {
-        return categories.flatMap(cat => " [[" + cat["title"] + "]] ");
+        return categories.flatMap(cat => cat["title"]);
     } else {
-        return "";
+        return [];
     }
+}
+
+export async function getCategoriesAsString(articleTitle) {
+    const categories = getCategoriesOfArticle(articleTitle);
+    return categories.flatMap(cat => " [[" + cat + "]] ");
 }
 
 // export async function login(credentials) {

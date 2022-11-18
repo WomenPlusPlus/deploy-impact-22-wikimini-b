@@ -92,3 +92,35 @@ router.post('/getRandomArticles', async function (req, res) {
         res.status(409).json({ message: error.message });
     }
 });
+
+// get article categories, doesn't need input
+router.post('/getCategories', async function (req, res) {
+    try {
+        const result = await articleController.getCategories();
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+});
+
+// get categories of article, needs {articleName}, returns list of category names as ["Category:Name"]
+router.post('/getCategoriesOfArticle', async function (req, res) {
+    try {
+        const {articleName} = req.body;
+        const result = await articleController.getCategoryOfArticle(articleName);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+});
+
+// set categories of article, needs articleName and list of category names to add as {articleName, categories}
+router.post('/addCategoriesToArticle', async function (req, res) {
+    try {
+        const {articleName, categories} = req.body;
+        const result = await articleController.addCategoriesToArticle(articleName, categories);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+});

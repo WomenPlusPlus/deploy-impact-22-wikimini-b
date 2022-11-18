@@ -47,3 +47,9 @@ Repository for Team wikimini-b for deploy(impact) 2022
 ## Installing MariaDB
 - https://www.mariadbtutorial.com/getting-started/install-mariadb/
 - keep configurations as is (in HeidiSQL)
+
+## Running The App
+- clone repo on your machine
+- open bash terminal and `cd src/angular-frontend && npm i && cd ../node-backend && npm i` to install node modules
+- to start frontend, run `npm start` in angular-frontend directory
+- to start backendend, run `npm start` in node-backend directory

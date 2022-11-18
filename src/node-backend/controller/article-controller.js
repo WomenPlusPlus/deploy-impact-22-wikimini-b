@@ -22,15 +22,14 @@ export async function getRandomArticles(numberOfRandomArticles) {
 
 export async function saveArticle(articleTitle, articleContent) {
     const token = await wikiAdapter.getEditToken();
-    const categories = wikiAdapter.getCategoriesAsString(articleTitle);
-    const apiResponse = await wikiAdapter.request({
+    const categories = await wikiAdapter.getCategoriesAsString(articleTitle);
+    return wikiAdapter.request({
         action: "edit",
         title: articleTitle,
         text: articleContent + categories,
         nocreate: 1,
         token: token
     });
-    return apiResponse;
 }
 
 export async function approveArticle(articleTitle) {

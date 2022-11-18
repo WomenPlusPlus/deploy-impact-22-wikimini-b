@@ -12,19 +12,19 @@ const wiki = await mwn.init({
 });
 
 export async function request(params) {
-    // add this or not? --> for error handling task
-    // params.errorformat = 'raw';
-    // params.errorsuselocal = true;
     return wiki.request(params);
 }
 
 export async function createEmptyArticleInCategory(articleTitle, categoryName) {
-    return wiki.create(articleTitle,
-        'This is a newly created article! Edit it to add content ' + '[[Category:' + categoryName + ']]',
-        'New article');
+    let category = "";
+    if (categoryName !== "") {
+        category = "[[Category:" + categoryName + "]]";
+    }
+    return wiki.create(articleTitle, "This is a newly created article! Edit it to add content " + category,
+        "New article");
 }
 
-export async function getCategoriesAsString(articleTitle) {
+export async function getCategoriesOfArticle(articleTitle) {
     const response = await request({
         action: "query",
         prop: "categories",
@@ -32,15 +32,16 @@ export async function getCategoriesAsString(articleTitle) {
     });
     const categories = response["query"]["pages"][0]["categories"];
     if (typeof categories !== "undefined") {
-        return categories.flatMap(cat => " [[" + cat["title"] + "]] ");
+        return categories.flatMap(cat => cat["title"]);
     } else {
-        return "";
+        return [];
     }
 }
 
-// export async function login(credentials) {
-//     return wiki.login(credentials);
-// }
+export async function getCategoriesAsString(articleTitle) {
+    const categories = getCategoriesOfArticle(articleTitle);
+    return categories.flatMap(cat => " [[" + cat + "]] ");
+}
 
 export async function getEditToken() {
     return getTokenOfType("csrf");

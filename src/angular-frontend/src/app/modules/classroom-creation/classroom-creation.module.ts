@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { WrapperComponent } from './components/wrapper/wrapper.component';
 import { ClassroomCreationNamingComponent } from './components/classroom-creation-naming/classroom-creation-naming.component';
 import { ClassroomCreationAddStudentsComponent } from './components/classroom-creation-add-students/classroom-creation-add-students.component';
+import { ClassroomCreationInviteStudentsComponent } from './components/classroom-creation-invite-students/classroom-creation-invite-students.component';
+import { ClassroomCreationInviteSuccessComponent } from './components/classroom-creation-invite-success/classroom-creation-invite-success.component';
 
 
 
@@ -10,7 +12,9 @@ import { ClassroomCreationAddStudentsComponent } from './components/classroom-cr
   declarations: [
     WrapperComponent,
     ClassroomCreationNamingComponent,
-    ClassroomCreationAddStudentsComponent
+    ClassroomCreationAddStudentsComponent,
+    ClassroomCreationInviteStudentsComponent,
+    ClassroomCreationInviteSuccessComponent
   ],
   imports: [
     CommonModule

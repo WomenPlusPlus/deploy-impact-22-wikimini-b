@@ -5,18 +5,6 @@ export const router = express.Router();
 
 // complete path: /homework/...
 
-// get current homework for a teacher: needs classId as {classId}
-// returns HwTask lists as domain-objects.TeacherHwList {current: [hwTasks], planned: [hwTasks], past: [hwTasks]}
-router.post('/hwByClass', async function (req, res) {
-    try {
-        const {classId} = req.body;
-        const result = await hwController.getHwByClass(classId);
-        res.status(200).json(result);
-    } catch (error) {
-        res.status(409).json({ message: error.message });
-    }
-});
-
 // get current homework for a student: needs student username as {username}
 // returns StudentHwList object
 router.post('/hwForStudent', async function (req, res) {
@@ -34,62 +22,6 @@ router.post('/getHwTask', async function (req, res) {
     try {
         const {hwTaskId} = req.body;
         const result = await hwController.getHwTask(hwTaskId);
-        res.status(200).json(result);
-    } catch (error) {
-        res.status(409).json({ message: error.message });
-    }
-});
-
-// update article title to a homework task by hw task id, needs {taskId, articleTitle}
-router.post('/updateArticleTitleForHwTask', async function (req, res) {
-    try {
-        const {taskId, articleTitle} = req.body;
-        const result = await hwController.updateArticleTitleForHwTask(taskId, articleTitle);
-        res.status(200).json(result);
-    } catch (error) {
-        res.status(409).json({ message: error.message });
-    }
-});
-
-// // edit homework task (by teacher): {taskId, title, description, gradingCategories, startDate, dueDate}
-// router.post('/updateHwTask', async function (req, res) {
-//     try {
-//         const {taskId, title, description, gradingCategories, startDate, dueDate} = req.body;
-//         const taskWithUpdates = new HwTask(title, description, gradingCategories, startDate, dueDate);
-//         const result = await hwController.editHwTask(taskId, taskWithUpdates);
-//         res.status(200).json(result);
-//     } catch (error) {
-//         res.status(409).json({ message: error.message });
-//     }
-// });
-
-// homework task status change: {taskId, newStatus, datetime}
-router.post('/changeHwTaskStatus', async function (req, res) {
-    try {
-        const {taskId, newStatus, datetime} = req.body;
-        const result = await hwController.updateHwTaskStatus(taskId, newStatus, datetime);
-        res.status(200).json(result);
-    } catch (error) {
-        res.status(409).json({ message: error.message });
-    }
-});
-
-// student needs help, needs {username, hwTaskId, question}
-router.post('/studentNeedsHelp', async function (req, res) {
-    try {
-        const {username, hwTaskId, question} = req.body;
-        const result = await hwController.studentHelpRequest(username, hwTaskId, question);
-        res.status(200).json(result);
-    } catch (error) {
-        res.status(409).json({ message: error.message });
-    }
-});
-
-// grade homework task: {taskId, gradings}
-router.post('/gradeHwTask', async function (req, res) {
-    try {
-        const {taskId, gradings} = req.body;
-        const result = await hwController.gradeHwTask(taskId, gradings);
         res.status(200).json(result);
     } catch (error) {
         res.status(409).json({ message: error.message });

@@ -1,16 +1,19 @@
 <div id="creation-wrapper">
     <div id="content">
         <app-classroom-creation-naming *ngIf="ccShared.ClassroomCreationStatus == ccShared.ClassroomCreationStatusEnum.CLASSROOM_CREATION_NAMING"></app-classroom-creation-naming>
+        <app-classroom-creation-add-students *ngIf="ccShared.ClassroomCreationStatus == ccShared.ClassroomCreationStatusEnum.CLASSROOM_CREATION_ADD"></app-classroom-creation-add-students>
+        <app-classroom-creation-invite-students *ngIf="ccShared.ClassroomCreationStatus == ccShared.ClassroomCreationStatusEnum.CLASSROOM_CREATION_INVITE"></app-classroom-creation-invite-students>
+        <app-classroom-creation-invite-success *ngIf="ccShared.ClassroomCreationStatus == ccShared.ClassroomCreationStatusEnum.CLASSROOM_CREATION_SUCCESS"></app-classroom-creation-invite-success>
     </div>
 
     <div id="footer">
-        <a>Back</a>
+        <a (click)="ccShared.getPreviousStatus()">Back</a>
         <div>
             <span class="dot"></span>
             <span class="dot"></span>
             <span class="dot"></span>
         </div>
-        <button  class="nav-btn button-shadow">
+        <button (click)="ccShared.getNextStatus()" class="nav-btn button-shadow">
             Next
         </button>
     </div>

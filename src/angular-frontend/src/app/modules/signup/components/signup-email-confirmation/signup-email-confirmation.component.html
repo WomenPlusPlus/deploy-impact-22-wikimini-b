@@ -12,8 +12,10 @@
         confirm the validity of your email adress. Check your email and tap the
         link we sent you.
       </p>
-      <img class="wikimini" src="assets/photos/owl-invite.png" alt="wikimini" />
-      <p class="descr">
+      <a [routerLink]="['/emailConfirmed']">
+        <img class="wikimini" src="assets/photos/owl-invite.png" alt="wikimini" />
+      </a>
+      <p routerLink="emailConfirmed">
         Dind't get a confirmation email? Check your spam folder or
         <span class="send-again"> SEND AGAIN </span>
       </p>

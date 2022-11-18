@@ -1,12 +1,13 @@
 <div class="main-content">
   <div class="nav-buttons">
-    <button class="flex-row-item" (click)="signupShared.getPreviousStatus()">
+    <button *ngIf="signupShared.signupStatus != signupShared.SignupStatusEnum.SIGNUP_CHOICE; else elseBlock" class="flex-row-item" (click)="signupShared.getPreviousStatus()">
       <img
         class="flex-row-item"
         src="../../../../../assets/wrapper assets/chevron-left-1@2x.png"
         alt="chevron-left"
       />
     </button>
+    <ng-template #elseBlock><div></div></ng-template>
 
     <button [routerLink]="['/home']" (click)="signupShared.resetStatus()" class="flex-row-item">
       <img
@@ -50,7 +51,7 @@
         signupShared.SignupStatusEnum.SIGNUP_SUCCESS_TEACHER
     "
   ></app-signup-success>
-  <div class="footer">
+  <div *ngIf="signupShared.signupStatus != signupShared.SignupStatusEnum.SIGNUP_EMAIL_CONFIRMATION" class="footer">
     <div class="haveAccountLoginButton">
       <p class="Mplus1-bold-white-15px">Already have an account?</p>
       <button class="logInButton">

@@ -38,7 +38,7 @@ router.post('/lockArticle', async function (req, res) {
     }
 });
 
-// update/save article, needs {articleTitle, articleContent}
+// update/save article, needs {articleTitle, articleContent}, returns true is it worked
 router.post('/saveArticle', async function (req, res) {
     try {
         const {articleTitle, articleContent} = req.body;

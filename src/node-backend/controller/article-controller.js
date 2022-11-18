@@ -7,6 +7,7 @@ const listRandom = "random";
 const titleKey = "title";
 const lockProtection = "edit-locked";
 const protectionsKey = "protections";
+const editAction = "edit";
 const editKey = "edit";
 
 export async function getRandomArticles(numberOfRandomArticles) {
@@ -23,13 +24,18 @@ export async function getRandomArticles(numberOfRandomArticles) {
 export async function saveArticle(articleTitle, articleContent) {
     const token = await wikiAdapter.getEditToken();
     const categories = await wikiAdapter.getCategoriesAsString(articleTitle);
-    return wikiAdapter.request({
-        action: "edit",
+    const result = await wikiAdapter.request({
+        action: editAction,
         title: articleTitle,
         text: articleContent + categories,
         nocreate: 1,
         token: token
     });
+    if (result[editAction]["result"] === "Success") {
+        return true;
+    } else {
+        throw new Error("Error while trying to save article: " + result);
+    }
 }
 
 export async function approveArticle(articleTitle) {

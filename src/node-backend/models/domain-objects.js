@@ -10,6 +10,18 @@ export function JoiningStudent(fullName, email = "No email set") {
     this.joinCode = false;
 }
 
+export function SearchResult(searchTerm, articles, descriptions, links) {
+    this.searchTerm = searchTerm;
+    this.articles = articles;
+    this.descriptions = descriptions;
+    this.links = links;
+}
+
+export const Lock = Object.freeze({
+    Lock: "lock",
+    Unlock: "unlock"
+})
+
 export const Status = Object.freeze({
     Created: {id: 1, desc: "Created"},
     Assigned: {id: 2, desc: "Assigned"}, // assigned to a student

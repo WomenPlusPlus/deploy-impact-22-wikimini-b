@@ -5,11 +5,11 @@ export const router = express.Router();
 // complete path: /articles/...
 
 // get article search results for search term, needs max number of results as resultLimit and search term as {searchTerm, resultLimit}
-// format: [title1, title2, title3]
+// returns SearchResult object
 router.post('/searchArticles', async function (req, res) {
     try {
-        const {searchTerm} = req.body;
-        const result = await articleController.searchArticles(searchTerm);
+        const {searchTerm, resultLimit} = req.body;
+        const result = await articleController.searchArticles(searchTerm, resultLimit);
         res.status(200).json(result);
     } catch (error) {
         res.status(409).json({ message: error.message });
@@ -27,33 +27,44 @@ router.post('/getArticle', async function (req, res) {
     }
 });
 
-// lock article for editing (how to implement?) needs {true or false} (lock/unlock)
+// lock article for editing: needs {articleTitle, lockSwitch} lockSwitch should be Lock.Lock or Lock.Unlock
 router.post('/lockArticle', async function (req, res) {
     try {
-        const {articleTitle} = req.body;
-        const result = await articleController.lockArticle(articleTitle);
+        const {articleTitle, lockSwitch} = req.body;
+        const result = await articleController.lockArticle(articleTitle, lockSwitch);
         res.status(200).json(result);
     } catch (error) {
         res.status(409).json({ message: error.message });
     }
 });
 
-// update/save article
+// check if article is locked, needs {articleTitle}, returns Lock.Lock or Lock.Unlock
+router.post('/isArticleLocked', async function (req, res) {
+    try {
+        const {articleTitle} = req.body;
+        const result = await articleController.isArticleLocked(articleTitle);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+});
+
+// update/save article, needs {articleTitle, articleContent}, returns true is it worked
 router.post('/saveArticle', async function (req, res) {
     try {
-        const {articleTitle} = req.body;
-        const result = await articleController.saveArticle(articleTitle);
+        const {articleTitle, articleContent} = req.body;
+        const result = await articleController.saveArticle(articleTitle, articleContent);
         res.status(200).json(result);
     } catch (error) {
         res.status(409).json({ message: error.message });
     }
 });
 
-// create new article (not published)
+// create new article, needs {articleTitle, categoryName}
 router.post('/createArticle', async function (req, res) {
     try {
-        const {articleTitle} = req.body;
-        const result = await articleController.createArticle(articleTitle);
+        const {articleTitle, categoryName} = req.body;
+        const result = await articleController.createArticle(articleTitle, categoryName);
         res.status(200).json(result);
     } catch (error) {
         res.status(409).json({ message: error.message });

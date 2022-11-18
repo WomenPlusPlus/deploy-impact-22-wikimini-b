@@ -9,6 +9,7 @@ const lockProtection = "edit-locked";
 const protectionsKey = "protections";
 const editAction = "edit";
 const editKey = "edit";
+const protectedListKey = "protectedtitles";
 
 export async function getRandomArticles(numberOfRandomArticles) {
     const apiResponse = await wikiAdapter.request({
@@ -56,7 +57,21 @@ export async function lockArticle(articleTitle, lockSwitch) {
     } else {
         throw Error("Invalid value passed for locking or unlocking article: " + lockSwitch)
     }
+}
 
+export async function isArticleLocked(articleTitle) {
+    const result = await wikiAdapter.request({
+        action: queryAction,
+        list: protectedListKey,
+        ptnamespace: "0",
+        ptlevel: lockProtection
+    });
+    const protectedArticles = result[queryAction][protectedListKey];
+    if (articleTitle in protectedArticles) {
+        return Lock.Lock;
+    } else {
+        return Lock.Unlock;
+    }
 }
 
 function hoursLater(hours) {

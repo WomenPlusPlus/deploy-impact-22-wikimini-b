@@ -38,6 +38,17 @@ router.post('/lockArticle', async function (req, res) {
     }
 });
 
+// check if article is locked, needs {articleTitle}, returns Lock.Lock or Lock.Unlock
+router.post('/isArticleLocked', async function (req, res) {
+    try {
+        const {articleTitle} = req.body;
+        const result = await articleController.isArticleLocked(articleTitle);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+});
+
 // update/save article, needs {articleTitle, articleContent}, returns true is it worked
 router.post('/saveArticle', async function (req, res) {
     try {

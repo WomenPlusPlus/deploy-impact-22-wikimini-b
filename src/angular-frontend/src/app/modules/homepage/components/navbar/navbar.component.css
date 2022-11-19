@@ -16,10 +16,9 @@
   align-items: center;
   font-family: Montserrat, sans-serif;
   background-color: white;
-  /* padding: 20px 30px; */
   color: var(--nav-color);
-  margin-bottom: 1em;
   border-bottom: var(--nav-border) solid 1px;
+  justify-content: space-around;
 }
 
 .nav-logo {
@@ -45,6 +44,7 @@
   background-color: #EF724E;
   justify-content: space-evenly;
   align-content: center;
+  height: 5em;
 }
 
 .index > button {
@@ -59,8 +59,9 @@
 }
 
 .owl {
-  width: 40.35px;
-  height: 50.27px;
+  /* width: 40.35px; */
+  width: 3em;
+  /* height: 50.27px; */
   left: 61.09px;
   top: 47.82px;
   margin-right: 10px;
@@ -69,7 +70,7 @@
 
 .wikimini {
   padding-top: 10px;
-  width: 110px;
+  /* width: 110px; */
   height: 30px !important;
   left: 92px;
   top: 35px;

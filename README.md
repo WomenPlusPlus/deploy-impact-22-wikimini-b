@@ -40,4 +40,4 @@ The designs were created using Figma, you can find them [here](https://www.figma
 ### Running The App
 - open bash terminal and `cd src/angular-frontend && npm i && cd ../node-backend && npm i` to install any missing node modules
 - to start frontend, run `npm start` in angular-frontend directory
-- to start backendend, run `npm start` in node-backend directory
+- to start backendend, run `npm start` in node-backend directory, and click on "start" Apache and MySQL services in XAMPP control panel 

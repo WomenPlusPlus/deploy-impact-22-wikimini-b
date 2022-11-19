@@ -1,5 +1,5 @@
 #welcome-wrapper {
-  height: 50vh;
+  /* height: 50vh; */
   background-color: #fcb112;
   background-image: url(../../../../../assets/photos/background.png);
   background-repeat: repeat;
@@ -57,6 +57,7 @@
   padding: 30px 0px;
   display: flex;
   justify-content: center;
+  margin: 0 !important;
 }
 
 .search-inp {
